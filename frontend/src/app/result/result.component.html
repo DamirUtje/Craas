@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid container-fluid-craas">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <p class="navbar-brand paragraphLogo" style="font-size: 40px">
+      <p class="navbar-brand paragraphLogo paragraphLogoResult">
         <a href="#" style="text-decoration: none;">
           <span style='color: blue'>C</span>
           <span style='color: red'>r</span>
@@ -39,14 +39,17 @@
   </div>
 </nav>
 
+
 <div class="container">
   <div class="row">
-    <div class="col-lg-2">Count 0815</div>
+    <div class="container">
 
-    <div ng-controller="ExampleController as vm" class="container">
-      <br>
+      <div class="result-count">{{allItems.length}} results found</div>
+
       <!-- items being paged -->
-      <div *ngFor="let item of pagedItems">{{item.name}}</div>
+      <div *ngFor="let item of pagedItems">
+        {{item.name}}
+      </div>
 
       <!-- pager -->
       <ul *ngIf="pager.pages && pager.pages.length" class="pagination">

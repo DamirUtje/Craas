@@ -1,4 +1,18 @@
 input[type=text] {
-  margin-left: 20px;
   width: 550px;
+}
+
+.container-fluid-craas {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.paragraphLogoResult {
+  font-size: 40px;
+}
+
+.result-count {
+  margin-bottom: 20px;
+  color: #808080;
+  font-family: arial,sans-serif;
 }
