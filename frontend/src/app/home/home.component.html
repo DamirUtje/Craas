@@ -1,0 +1,23 @@
+<form (submit)="onSubmit()">
+  <div class="content-wrapper">
+    <div style="text-align:center">
+      <h1>
+        <p class="paragraphLogo" style="font-size: 85px">
+          <span style='color: blue'>C</span>
+          <span style='color: red'>r</span>
+          <span style='color: orange'>a</span>
+          <span style='color: blue'>a</span>
+          <span style='color: green'>s</span>
+        </p>
+      </h1>
+    </div>
+    <div>
+      <input [(ngModel)]="searchString" name="searchString" class="form-control advancedSearchTextBox" placeholder="Search...">
+    </div>
+    <div id="button-wrapper">
+      <button class="btn btn-primary">Search</button>
+    </div>
+  </div>
+</form>
+
+
