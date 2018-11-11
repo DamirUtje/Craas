@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { DataService } from '../_service/data.service';
 import { PagerService } from '../_service';
 
 @Component({
@@ -8,8 +9,11 @@ import { PagerService } from '../_service';
 })
 export class ResultComponent implements OnInit {
 
+  inputString: string;
+
   constructor(
-    private pagerService: PagerService
+    private pagerService: PagerService,
+    private dataService: DataService
   ) { }
 
   // array of all items to be paged
@@ -22,53 +26,9 @@ export class ResultComponent implements OnInit {
   pagedItems: any[];
 
   ngOnInit() {
-    this.allItems = [
-      {
-        "name": "Item 1"
-      },
-      {
-        "name": "Item 2"
-      },
-      {
-        "name": "Item 3"
-      },
-      {
-        "name": "Item 4"
-      },
-      {
-        "name": "Item 5"
-      },
-      {
-        "name": "Item 6"
-      },
-      {
-        "name": "Item 7"
-      },
-      {
-        "name": "Item 8"
-      },
-      {
-        "name": "Item 9"
-      },
-      {
-        "name": "Item 10"
-      },
-      {
-        "name": "Item 11"
-      },
-      {
-        "name": "Item 12"
-      },
-      {
-        "name": "Item 13"
-      },
-      {
-        "name": "Item 14"
-      },
-      {
-        "name": "Item 15"
-      }];
 
+    this.inputString = this.dataService.getSearchString();
+    this.allItems = this.dataService.getFakeData();
     this.setPage(1);
   }
 
@@ -82,6 +42,15 @@ export class ResultComponent implements OnInit {
 
     // get current page of items
     this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
+  }
+
+  onSubmit() {
+
+    // TODO: fetch Data by searchString
+
+    if(this.inputString){
+
+    }
   }
 
 }

@@ -1,23 +1,33 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { DataService } from '../_service/data.service';
+import { LoadOptions } from '../_model/loadOptions';
+import { ResultComponent } from "../result";
+
 @Component({
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css']
 })
+
 export class HomeComponent {
+
   searchString : string;
 
-  constructor(
-    private router: Router
-  ) {
+  constructor(private router: Router, private dataService: DataService) {
   }
 
   onSubmit() {
 
-    // TODO: fetch Data
+    if(this.searchString) {
 
-    this.router.navigate(['/result']);
+      // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
 
+      this.dataService.setSearchString(this.searchString.trim());
+
+      this.router.navigate(['/result']);
+
+    }
+    else { }
   }
 }

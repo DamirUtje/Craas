@@ -1,12 +1,6 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid container-fluid-craas">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       <p class="navbar-brand paragraphLogo paragraphLogoResult">
         <a href="#" style="text-decoration: none;">
           <span style='color: blue'>C</span>
@@ -19,11 +13,17 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control advancedSearchTextBox" placeholder="Search...">
+        <form (submit)="onSubmit()" class="navbar-form navbar-left" role="search">
+
+          <!-- see more examples https://bootsnipp.com/tags/search -->
+          <div class="input-group searchBox">
+            <input [(ngModel)]="inputString" type="text" class="form-control" name="x" placeholder="Search...">
+            <span class="input-group-btn">
+              <button (click)="onSubmit()" class="btn btn-primary" type="button">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
         </form>
       </ul>
       <!--
@@ -43,12 +43,15 @@
 <div class="container">
   <div class="row">
     <div class="container">
-
       <div class="result-count">{{allItems.length}} results found</div>
 
       <!-- items being paged -->
       <div *ngFor="let item of pagedItems">
-        {{item.name}}
+        <h3><a href="#">{{inputString}} {{item.name}}</a></h3>
+        <a href="#" class="text-success">https://www.nordakademie-gs.de/</a>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.
+        </p>
       </div>
 
       <!-- pager -->
