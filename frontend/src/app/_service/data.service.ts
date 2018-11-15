@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from "@angular/router";
 
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, throwError } from "rxjs"
+import { map, catchError } from "rxjs/operators"
 
 import { Result } from '../_model/result';
 import { LoadOptions } from '../_model/loadOptions';
+import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
 @Injectable()
 export class DataService {
@@ -25,7 +26,6 @@ export class DataService {
   }
 
   getFakeData() {
-
     return [
       {
         "name": "Item 1"
@@ -74,26 +74,38 @@ export class DataService {
       }];
   }
 
+  // https://codecraft.tv/courses/angular/http/http-with-observables/
+  getResults(): Result[] {
+
+    var tempArray: Result[] = [];
+    this.http.get('http://jsonplaceholder.typicode.com/posts').subscribe(
+      data => {
+        for (var i=0; i<1000; i++)
+          tempArray.push(<Result>data[i]);
+      },
+      error=> {
+        console.log("Error in recieving data");
+      },
+      () => {
+        console.log(tempArray);
+      }
+    );
+
+    return tempArray;
+    //return this.http.get('https://jsonplaceholder.typicode.com/posts/');
+  }
 
   getByOptions(loadOptions: LoadOptions): Observable<Result[]> {
 
     return this.http.get<Result[]>('/result');
   }
 
-  getByOptions(searchString: string): Observable<Result[]> {
+  getByString(searchString: string): Observable<Result[]> {
 
     const options = searchString ?
       { params: new HttpParams().set('name', searchString) } : {};
 
     return this.http.get<Result[]>('/result', options);
-  }
-
-  getById(id: number) {
-    return this.http.get('/result' + id);
-  }
-
-  createStats(result: Result) {
-    return this.http.post('/result/stats', result);
   }
 }
 

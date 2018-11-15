@@ -14,8 +14,6 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <form (submit)="onSubmit()" class="navbar-form navbar-left" role="search">
-
-          <!-- see more examples https://bootsnipp.com/tags/search -->
           <div class="input-group searchBox">
             <input [(ngModel)]="inputString" type="text" class="form-control" name="x" placeholder="Search...">
             <span class="input-group-btn">
@@ -43,7 +41,7 @@
 <div class="container">
   <div class="row">
     <div class="container">
-      <div class="result-count">{{allItems.length}} results found</div>
+      <div class="result-count">{{allItems?.length}} results found (23 ms)</div>
 
       <!-- items being paged -->
       <div *ngFor="let item of pagedItems">

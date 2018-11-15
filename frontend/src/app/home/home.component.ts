@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { DataService } from '../_service/data.service';
 import { LoadOptions } from '../_model/loadOptions';
-import { ResultComponent } from "../result";
 
 @Component({
   templateUrl: 'home.component.html',
@@ -12,7 +11,7 @@ import { ResultComponent } from "../result";
 
 export class HomeComponent {
 
-  searchString : string;
+  private searchString : string;
 
   constructor(private router: Router, private dataService: DataService) {
   }
@@ -26,7 +25,6 @@ export class HomeComponent {
       this.dataService.setSearchString(this.searchString.trim());
 
       this.router.navigate(['/result']);
-
     }
     else { }
   }

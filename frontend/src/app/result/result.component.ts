@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import { DataService } from '../_service/data.service';
 import { PagerService } from '../_service';
+
+import { Result } from '../_model/result';
 
 @Component({
   templateUrl: 'result.component.html',
@@ -16,20 +20,26 @@ export class ResultComponent implements OnInit {
     private dataService: DataService
   ) { }
 
-  // array of all items to be paged
+  private allResults: Result[];
+  private pagedResults: Result[];
   private allItems: any[];
+  private pagedItems: any[];
+  private pager: any = {};
 
-  // pager object
-  pager: any = {};
-
-  // paged items
-  pagedItems: any[];
-
-  ngOnInit() {
+    ngOnInit() {
 
     this.inputString = this.dataService.getSearchString();
     this.allItems = this.dataService.getFakeData();
     this.setPage(1);
+
+    this.loadData();
+
+    console.log(JSON.stringify(this.allResults));
+
+  }
+
+  loadData(): void {
+    this.allResults = this.dataService.getResults();
   }
 
   setPage(page: number) {
@@ -38,9 +48,11 @@ export class ResultComponent implements OnInit {
     }
 
     // get pager object from service
+    //this.pager = this.pagerService.getPager(this.allItems.length, page);
     this.pager = this.pagerService.getPager(this.allItems.length, page);
 
     // get current page of items
+    //this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
