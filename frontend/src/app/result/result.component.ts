@@ -34,7 +34,7 @@ export class ResultComponent implements OnInit {
 
     this.loadData();
 
-    console.log(JSON.stringify(this.allResults));
+    console.log(this.allResults);
 
   }
 

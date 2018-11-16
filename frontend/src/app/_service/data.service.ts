@@ -80,14 +80,14 @@ export class DataService {
     var tempArray: Result[] = [];
     this.http.get('http://jsonplaceholder.typicode.com/posts').subscribe(
       data => {
-        for (var i=0; i<1000; i++)
-          tempArray.push(<Result>data[i]);
+        for (var v in data)
+          tempArray.push(data[v]);
       },
       error=> {
         console.log("Error in recieving data");
       },
       () => {
-        console.log(tempArray);
+        //console.log(tempArray);
       }
     );
 
