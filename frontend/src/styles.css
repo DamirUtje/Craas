@@ -3,6 +3,16 @@
   font-family: arial,sans-serif;
 }
 
+.roundInput {
+  border-radius: 25px;
+}
+
 .advancedSearchTextBox {
+  height: 45px;
+}
+
+.roundBtn {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
   height: 45px;
 }

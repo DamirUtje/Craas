@@ -26,23 +26,8 @@ export class DataService {
   }
 
   // https://codecraft.tv/courses/angular/http/http-with-observables/
-  getResults(): Result[] {
-
-    var tempArray: Result[] = [];
-    this.http.get('http://jsonplaceholder.typicode.com/posts').subscribe(
-      data => {
-        for (var v in data)
-          tempArray.push(data[v]);
-      },
-      error=> {
-        console.log("Error in recieving data");
-      },
-      () => {
-        console.log("Fetching done");
-      }
-    );
-
-    return tempArray;
+  getData(): Observable<Result[]> {
+    return this.http.get('http://jsonplaceholder.typicode.com/posts');
   }
 
   getByOptions(loadOptions: LoadOptions): Observable<Result[]> {

@@ -4,7 +4,6 @@ import { DataService } from '../_service/data.service';
 import { PagerService } from '../_service';
 
 import { Result } from '../_model/result';
-import {Observable} from "rxjs";
 
 @Component({
   templateUrl: 'result.component.html',
@@ -23,18 +22,29 @@ export class ResultComponent implements OnInit {
   pagedResults: Result[] = Result[0];
   pager: any = {};
 
-    ngOnInit() {
+  ngOnInit() {
 
     this.inputString = this.dataService.getSearchString();
 
-    this.allResults = this.dataService.getResults();
+    this.loadData();
+  }
 
-
-    console.log(this.allResults);
-    console.log(this.allResults.length);
-
-    this.setPage(1);
-
+  loadData() {
+    let tpmArray: Result[] = [];
+    this.dataService.getData().subscribe(
+      data => {
+        for (var v in data)
+          tpmArray.push(data[v]);
+      },
+      error=> {
+        console.log("Error in recieving data");
+      },
+      () => {
+        console.log("Fetching done");
+        this.allResults = tpmArray;
+        this.setPage(1);
+      }
+    );
   }
 
   setPage(page: number) {

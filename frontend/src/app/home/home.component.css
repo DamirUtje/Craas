@@ -1,16 +1,12 @@
 .content-wrapper {
   width: 50%;
   margin: 0 auto;
-  margin-top: 15%;
+  margin-top: 10%;
   position: relative;
   display: table;
-}
-
-button {
-  display: block;
-  margin: 20px auto;
 }
 
 .paragraphLogoMain {
   font-size: 85px;
 }
+

@@ -11,32 +11,31 @@
         </a>
       </p>
     </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <form (submit)="onSubmit()" class="navbar-form navbar-left" role="search">
-          <div class="input-group searchBox">
-            <input [(ngModel)]="inputString" type="text" class="form-control" name="x" placeholder="Search...">
-            <span class="input-group-btn">
-              <button (click)="onSubmit()" class="btn btn-primary" type="button">
+    <ul class="nav navbar-nav">
+      <form (submit)="onSubmit()" class="navbar-form navbar-left" role="search">
+        <div class="input-group searchBox">
+          <input [(ngModel)]="inputString" type="text" class="form-control roundInput" name="inputString"
+                 placeholder="Search...">
+          <span class="input-group-btn">
+              <button (click)="onSubmit()" class="btn btn-primary btn-block roundBtnResult" type="button">
                 <span class="glyphicon glyphicon-search"></span>
               </button>
             </span>
-          </div>
-        </form>
-      </ul>
-      <!--
-      <ul class="nav navbar-nav">
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Sign Up</a></li>
-        <li><a href="#">Login</a></li>
-      </ul> -->
-    </div>
+        </div>
+      </form>
+    </ul>
+    <!--
+    <ul class="nav navbar-nav">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Sign Up</a></li>
+      <li><a href="#">Login</a></li>
+    </ul>
+    -->
   </div>
 </nav>
-
 
 <div class="container">
   <div class="row">
@@ -45,7 +44,7 @@
 
       <!-- items being paged -->
       <div *ngFor="let item of pagedResults">
-        <h3><a href="#">{{inputString}} {{item.title}}</a></h3>
+        <h3><a href="#">{{item.title}}</a></h3>
         <a href="#" class="text-success">https://www.nordakademie-gs.de/</a>
         <p>
           {{item.body}}
