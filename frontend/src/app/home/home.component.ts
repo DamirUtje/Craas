@@ -11,7 +11,7 @@ import { LoadOptions } from '../_model/loadOptions';
 
 export class HomeComponent {
 
-  private searchString : string;
+  searchString : string;
 
   constructor(private router: Router, private dataService: DataService) {
   }

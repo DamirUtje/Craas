@@ -41,14 +41,14 @@
 <div class="container">
   <div class="row">
     <div class="container">
-      <div class="result-count">{{allItems?.length}} results found (23 ms)</div>
+      <div class="result-count">{{allResults?.length}} results found (23 ms)</div>
 
       <!-- items being paged -->
-      <div *ngFor="let item of pagedItems">
-        <h3><a href="#">{{inputString}} {{item.name}}</a></h3>
+      <div *ngFor="let item of pagedResults">
+        <h3><a href="#">{{inputString}} {{item.title}}</a></h3>
         <a href="#" class="text-success">https://www.nordakademie-gs.de/</a>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.
+          {{item.body}}
         </p>
       </div>
 
