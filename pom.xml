@@ -10,6 +10,20 @@
 
 	<name>craas</name>
 	<description>Criminals as a service - Master project</description>
+	<organization>
+		<name>zapliance GmbH</name>
+		<url>https://www.zapliance.com/de/</url>
+	</organization>
+	<developers>
+		<developer>
+			<name>Damir Utjesanovic</name>
+			<email>damir.utjesanovic@nordakademie.org</email>
+		</developer>
+		<developer>
+			<name>Frank Bracker</name>
+			<email>frank.bracker@nordakademie.org</email>
+		</developer>
+	</developers>
 
 	<parent>
 			<groupId>org.springframework.boot</groupId>
