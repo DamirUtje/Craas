@@ -39,10 +39,10 @@
 	</properties>
 
 	<dependencies>
-	    <dependency>
+<!-- 	    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -68,6 +68,7 @@
 		<dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
+		    <version>1.4.197</version>
 		    <scope>runtime</scope>
 		</dependency>
 	</dependencies>
@@ -107,6 +108,7 @@
 					</execution>
 				</executions>
 			</plugin>
+		    
 		</plugins>
 	</build>
 
