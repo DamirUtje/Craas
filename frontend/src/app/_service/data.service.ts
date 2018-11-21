@@ -27,7 +27,7 @@ export class DataService {
 
   // https://codecraft.tv/courses/angular/http/http-with-observables/
   getData(): Observable<Result[]> {
-    return this.http.get('http://jsonplaceholder.typicode.com/posts');
+    return this.http.get<Result[]>('http://jsonplaceholder.typicode.com/posts');
   }
 
   getByOptions(loadOptions: LoadOptions): Observable<Result[]> {
