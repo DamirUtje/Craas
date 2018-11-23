@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DataService } from '../_service/data.service';
+import { ResultService } from '../_service/result.service';
 import { PagerService } from '../_service';
 
 import { Result } from '../_model/result';
@@ -15,18 +15,38 @@ export class ResultComponent implements OnInit {
 
   constructor(
     private pagerService: PagerService,
-    private dataService: DataService
+    private dataService: ResultService
   ) { }
 
-  allResults: Result[] = Result[0];
-  pagedResults: Result[] = Result[0];
+  allResults: Result[]; //= Result[0];
+  pagedResults: Result[]; // = Result[0];
   pager: any = {};
 
   ngOnInit() {
 
     this.inputString = this.dataService.getSearchString();
 
-    this.loadData();
+    this.loadResults();
+    //this.loadData();
+  }
+
+  loadResults(): void {
+    //this.dataService.search().subscribe(results => {},{},this.allResults = results);
+    let tpmArray: Result[] = [];
+    this.dataService.search().subscribe(
+      data => {
+        for (var v in data)
+          tpmArray.push(data[v]);
+      },
+      error=> {
+        console.log("Error in recieving data");
+      },
+      () => {
+        console.log("Fetching done");
+        this.allResults = tpmArray;
+        this.setPage(1);
+      }
+    );
   }
 
   loadData() {

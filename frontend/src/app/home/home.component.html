@@ -12,16 +12,14 @@
       </h1>
     </div>
     <div class="input-group">
-      <input [(ngModel)]="searchString" type="text" class="form-control advancedSearchTextBox roundInput" name="searchString"
-             placeholder="Search...">
+      <input [(ngModel)]="inputString" type="text" class="form-control advancedSearchTextBox roundInput" name="searchString"
+             placeholder="Search..." autofocus>
       <span class="input-group-btn">
               <button (click)="onSubmit()" class="btn btn-primary btn-block roundBtn" type="button">
                 <span class="glyphicon glyphicon-search"></span>
               </button>
       </span>
     </div>
-
-
   </div>
 </form>
 

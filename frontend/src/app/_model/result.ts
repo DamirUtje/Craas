@@ -1,11 +1,11 @@
-/* export interface Result {
+export interface Result {
   id: number;
-  name: string;
-  description: string;
+  vorname: string;
+  nachname: string;
   //..and so on
 }
-*/
 
+/*
 export class Result {
   constructor(
     public id: number,
@@ -14,4 +14,4 @@ export class Result {
     public body: string
   ) {}
 }
-
+*/

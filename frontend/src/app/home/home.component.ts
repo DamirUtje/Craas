@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DataService } from '../_service/data.service';
-import { LoadOptions } from '../_model/loadOptions';
+import { ResultService } from '../_service/result.service';
 
 @Component({
   templateUrl: 'home.component.html',
@@ -11,19 +10,18 @@ import { LoadOptions } from '../_model/loadOptions';
 
 export class HomeComponent {
 
-  searchString : string;
+  inputString : string;
 
-  constructor(private router: Router, private dataService: DataService) {
+  constructor(private router: Router, private resultService: ResultService) {
   }
 
   onSubmit() {
 
-    if(this.searchString) {
+    if(this.inputString) {
 
       // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
 
-      this.dataService.setSearchString(this.searchString.trim());
-
+      this.resultService.setSearchString(this.inputString);
       this.router.navigate(['/result']);
     }
     else { }

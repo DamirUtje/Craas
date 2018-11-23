@@ -12,7 +12,7 @@ import { ResultComponent } from './result';
 import { DetailComponent } from './detail';
 
 import { PagerService } from './_service/pager.service';
-import { DataService } from './_service/data.service';
+import { ResultService } from './_service/result.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { DataService } from './_service/data.service';
   ],
   providers: [
     PagerService,
-    DataService
+    ResultService
   ],
   bootstrap: [AppComponent]
 })
