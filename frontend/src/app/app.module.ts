@@ -1,18 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { routing }        from './app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {routing} from './app-routing.module';
 
-import { HomeComponent } from './home';
-import { ResultComponent } from './result';
-import { DetailComponent } from './detail';
+import {HomeComponent} from './home';
+import {ResultComponent} from './result';
+import {DetailComponent} from './detail';
 
-import { PagerService } from './_service/pager.service';
-import { ResultService } from './_service/result.service';
+import {PagerService} from './_service/pager.service';
+import {ResultService} from './_service/result.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { ResultService } from './_service/result.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     PagerService,
@@ -34,4 +35,5 @@ import { ResultService } from './_service/result.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

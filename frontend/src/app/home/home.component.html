@@ -1,4 +1,4 @@
-<form (submit)="onSubmit()">
+<form (submit)="onSearch(searchField.value)">
   <div class="content-wrapper">
     <div style="text-align:center">
       <h1>
@@ -11,15 +11,25 @@
         </p>
       </h1>
     </div>
-    <div class="input-group">
-      <input [(ngModel)]="inputString" type="text" class="form-control advancedSearchTextBox roundInput" name="searchString"
+    <div class="input-group input-group-ex">
+      <input [formControl]="searchField" type="text" class="form-control input-group-ex" name="searchString"
              placeholder="Search..." autofocus>
       <span class="input-group-btn">
-              <button (click)="onSubmit()" class="btn btn-primary btn-block roundBtn" type="button">
+              <button (click)="onSearch()" class="btn btn-primary input-group-ex" type="button">
                 <span class="glyphicon glyphicon-search"></span>
               </button>
       </span>
     </div>
+
+    <div class="text-center">
+      <p class="loading-indicator" *ngIf="loading">Loading...</p>
+    </div>
+    <ul class="list-group list-group-hover">
+      <li class="list-group-item" *ngFor="let result of results | async" (click)="onSearch(result.vorname + ' ' + result.nachname)">
+        {{ result.vorname }} {{ result.nachname }}
+      </li>
+    </ul>
+
   </div>
 </form>
 

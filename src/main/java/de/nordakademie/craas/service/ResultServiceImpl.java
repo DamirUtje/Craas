@@ -14,8 +14,12 @@ public class ResultServiceImpl implements ResultService {
     private ResultDAO resultDAO;
 
     @Override
-    public List<Result> getResultByTerm(String term) {
+    public List<Result> getResults(String term) {
+        return resultDAO.loadResults(term);
+    }
 
-        return resultDAO.loadDataByTerm(term);
+    @Override
+    public List<Result> getSuggestions(String term) {
+        return resultDAO.loadSuggestions(term);
     }
 }

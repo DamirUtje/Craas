@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
-import { ResultService } from '../_service/result.service';
-import { PagerService } from '../_service';
+import {ResultService, PagerService} from '../_service';
 
-import { Result } from '../_model/result';
+import {Result} from '../_model';
 
 @Component({
   templateUrl: 'result.component.html',
@@ -11,52 +11,33 @@ import { Result } from '../_model/result';
 })
 export class ResultComponent implements OnInit {
 
-  inputString: string;
+  searchTerm: string;
 
   constructor(
     private pagerService: PagerService,
-    private dataService: ResultService
-  ) { }
+    private dataService: ResultService,
+    private activeRoute: ActivatedRoute) {
+    this.activeRoute.params.subscribe(params => {
+      this.searchTerm = params['term'];
+    });
+  }
 
-  allResults: Result[]; //= Result[0];
-  pagedResults: Result[]; // = Result[0];
+  allResults: Result[];
+  pagedResults: Result[];
   pager: any = {};
 
   ngOnInit() {
-
-    this.inputString = this.dataService.getSearchString();
-
     this.loadResults();
-    //this.loadData();
   }
 
   loadResults(): void {
-    //this.dataService.search().subscribe(results => {},{},this.allResults = results);
     let tpmArray: Result[] = [];
-    this.dataService.search().subscribe(
+    this.dataService.loadResults(this.searchTerm).subscribe(
       data => {
         for (var v in data)
           tpmArray.push(data[v]);
       },
-      error=> {
-        console.log("Error in recieving data");
-      },
-      () => {
-        console.log("Fetching done");
-        this.allResults = tpmArray;
-        this.setPage(1);
-      }
-    );
-  }
-
-  loadData() {
-    let tpmArray: Result[] = [];
-    this.dataService.getData().subscribe(
-      data => {
-        for (var v in data)
-          tpmArray.push(data[v]);
-      },
-      error=> {
+      error => {
         console.log("Error in recieving data");
       },
       () => {
@@ -83,7 +64,7 @@ export class ResultComponent implements OnInit {
 
     // TODO: fetch Data by searchString
 
-    if(this.inputString){
+    if (this.searchTerm) {
 
     }
   }

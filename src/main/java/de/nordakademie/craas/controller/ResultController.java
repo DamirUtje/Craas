@@ -19,6 +19,12 @@ public class ResultController {
     @RequestMapping(value="/query")
     public List<Result> query(@RequestParam("term") String term){
 
-        return resultService.getResultByTerm(term);
+        return resultService.getResults(term);
+    }
+
+    @RequestMapping(value="/suggest")
+    public List<Result> suggest(@RequestParam("term") String term){
+
+        return resultService.getSuggestions(term);
     }
 }

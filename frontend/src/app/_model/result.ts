@@ -5,13 +5,3 @@ export interface Result {
   //..and so on
 }
 
-/*
-export class Result {
-  constructor(
-    public id: number,
-    public userId: number,
-    public title: string,
-    public body: string
-  ) {}
-}
-*/

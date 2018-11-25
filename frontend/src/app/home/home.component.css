@@ -1,7 +1,6 @@
 .content-wrapper {
   width: 50%;
-  margin: 0 auto;
-  margin-top: 10%;
+  margin: 10% auto 0;
   position: relative;
   display: table;
 }
@@ -10,3 +9,15 @@
   font-size: 85px;
 }
 
+.input-group-ex {
+  height: 40px;
+}
+
+.loading-indicator {
+  font-size: 14px;
+  color: #808080;
+}
+
+.list-group-hover .list-group-item:hover {
+  background-color: #d9d9d9;
+}

@@ -5,6 +5,6 @@ import de.nordakademie.craas.model.Result;
 import java.util.List;
 
 public interface ResultService {
-
-    List<Result> getResultByTerm(String term);
+    List<Result> getResults(String term);
+    List<Result> getSuggestions(String term);
 }

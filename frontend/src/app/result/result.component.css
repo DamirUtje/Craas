@@ -13,11 +13,6 @@
   font-family: arial,sans-serif;
 }
 
-.roundBtnResult {
-  border-top-right-radius: 25px;
-  border-bottom-right-radius: 25px;
-}
-
 .searchBox {
   width: 600px;
 }

@@ -14,7 +14,7 @@
     <ul class="nav navbar-nav">
       <form (submit)="onSubmit()" class="navbar-form navbar-left" role="search">
         <div class="input-group searchBox">
-          <input [(ngModel)]="inputString" type="text" class="form-control roundInput" name="inputString"
+          <input [(ngModel)]="searchTerm" type="text" class="form-control roundInput" name="inputString"
                  placeholder="Search...">
           <span class="input-group-btn">
               <button (click)="onSubmit()" class="btn btn-primary roundBtnResult" type="button">
