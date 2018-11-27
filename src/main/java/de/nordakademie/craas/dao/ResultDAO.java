@@ -3,6 +3,7 @@ package de.nordakademie.craas.dao;
 import de.nordakademie.craas.model.Result;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,9 @@ public class ResultDAO {
     private List<Result> loadData(String sql){
         List<Result> results = new ArrayList<>();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:h2:/home/damir/test.h2.db", "", "");
+        	//"jdbc:h2:/home/damir/test.h2.db"
+//        	"jdbc:h2:tcp:"+getCurrentFileDirectory() +"test.h2.db"
+            Connection conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "", "");
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
@@ -44,5 +47,15 @@ public class ResultDAO {
             ex.printStackTrace();
         }
         return results;
+        
     }
+    
+	public String getCurrentFileDirectory() {
+		//output example: C:\Users\Frank\git\CraasDataService\
+		String currentDir = null;
+		File currentDirFile = null;
+		currentDirFile = new File("");
+		currentDir = currentDirFile.getAbsolutePath();
+		return currentDir;
+	}
 }
