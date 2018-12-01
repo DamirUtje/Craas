@@ -11,8 +11,7 @@ import java.util.List;
 public class ResultDAO {
 
     public List<Result> loadResults(String term) {
-        String sql = String.format("SELECT * FROM UN_SL_INDIVIDUAL WHERE " +
-                "CAST(FIRST_NAME AS VARCHAR_IGNORECASE) LIKE '%s%%'", term);
+        String sql = "SELECT * FROM UN_SL_INDIVIDUAL";
         return loadData(sql);
     }
 

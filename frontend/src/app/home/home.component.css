@@ -8,16 +8,3 @@
 .paragraphLogoMain {
   font-size: 85px;
 }
-
-.input-group-ex {
-  height: 40px;
-}
-
-.loading-indicator {
-  font-size: 14px;
-  color: #808080;
-}
-
-.list-group-hover .list-group-item:hover {
-  background-color: #d9d9d9;
-}

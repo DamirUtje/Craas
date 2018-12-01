@@ -1,5 +1,4 @@
 .container-fluid-craas {
-  margin-top: 15px;
   margin-bottom: 10px;
 }
 
@@ -10,19 +9,42 @@
 .result-count {
   margin-bottom: 20px;
   color: #808080;
-  font-family: arial,sans-serif;
 }
 
 .searchBox {
   width: 600px;
 }
 
-@media only screen
-and (max-width : 320px) {
+.pagination-container {
+  margin: 20px;
+}
+
+.list-group-ex {
+  max-height: 400px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media only screen and (max-width : 320px) {
+  .list-group-ex {
+    overflow-y: hidden;
+    max-height: initial;
+  }
+}
+
+@media only screen and (max-width : 320px) {
   .searchBox {
     width: 100%;
   }
 }
 
+@media only screen and (max-width : 320px) {
+  .result-count {
+    text-align: center;
+  }
+}
 
-
+.list-group-search {
+  position:absolute;
+  z-index: 999;
+}

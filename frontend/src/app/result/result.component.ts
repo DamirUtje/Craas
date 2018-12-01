@@ -4,6 +4,9 @@ import {ActivatedRoute} from "@angular/router";
 import {ResultService, PagerService} from '../_service';
 
 import {Result} from '../_model';
+import {FormControl} from "@angular/forms";
+import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 
 @Component({
   templateUrl: 'result.component.html',
@@ -11,28 +14,40 @@ import {Result} from '../_model';
 })
 export class ResultComponent implements OnInit {
 
-  searchTerm: string;
+  searchField: FormControl = new FormControl();
+  suggestions: Observable<Result[]>;
+  loading: boolean = false;
 
   constructor(
     private pagerService: PagerService,
-    private dataService: ResultService,
+    private resultService: ResultService,
     private activeRoute: ActivatedRoute) {
     this.activeRoute.params.subscribe(params => {
-      this.searchTerm = params['term'];
+      this.searchField.setValue(params['term']);
     });
   }
 
   allResults: Result[];
   pagedResults: Result[];
   pager: any = {};
+  selectedResult: Result;
 
   ngOnInit() {
+    this.suggestions = this.searchField.valueChanges.pipe(
+      debounceTime(100),
+      distinctUntilChanged(),
+      tap(_ => (this.loading = true)),
+      switchMap(term => term ?
+        this.resultService.loadSuggestions(term) : of([])),
+      tap(_ => (this.loading = false))
+    );
     this.loadResults();
   }
 
+  // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
   loadResults(): void {
     let tpmArray: Result[] = [];
-    this.dataService.loadResults(this.searchTerm).subscribe(
+    this.resultService.loadResults(this.searchField.value).subscribe(
       data => {
         for (var v in data)
           tpmArray.push(data[v]);
@@ -44,6 +59,7 @@ export class ResultComponent implements OnInit {
         console.log("Fetching done");
         this.allResults = tpmArray;
         this.setPage(1);
+        this.selectedResult = tpmArray[0];
       }
     );
   }
@@ -60,11 +76,42 @@ export class ResultComponent implements OnInit {
     this.pagedResults = this.allResults.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  onSubmit() {
+  onResultSelected(result: Result){
+    this.selectedResult = result;
+  }
 
-    // TODO: fetch Data by searchString
+  onSuggestionSelected(result: Result){
+    if (result) {
 
-    if (this.searchTerm) {
+      //alert(result.vorname);
+      this.searchField.setValue(result.vorname + " " + result.nachname);
+      // start search
+
+    }
+  }
+
+  onKeyDown(event) {
+
+    alert(event);
+    if (event.keyCode == 40) {
+
+    }
+  }
+
+  onFocus(event) {
+
+    alert(event);
+    if (event.keyCode == 40) {
+
+    }
+  }
+
+  onSubmit(result: Result) {
+
+    if (result) {
+      this.onSuggestionSelected(result);
+      // start search
+
 
     }
   }

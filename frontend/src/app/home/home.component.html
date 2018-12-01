@@ -11,21 +11,21 @@
         </p>
       </h1>
     </div>
-    <div class="input-group input-group-ex">
-      <input [formControl]="searchField" type="text" class="form-control input-group-ex" name="searchString"
+    <div class="input-group">
+      <input [formControl]="searchField" type="text" class="form-control" name="searchString"
              placeholder="Search..." autofocus>
-      <span class="input-group-btn">
-              <button (click)="onSearch()" class="btn btn-primary input-group-ex" type="button">
-                <span class="glyphicon glyphicon-search"></span>
-              </button>
-      </span>
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="onSearch(searchField.value)">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
     </div>
 
     <div class="text-center">
       <p class="loading-indicator" *ngIf="loading">Loading...</p>
     </div>
-    <ul class="list-group list-group-hover">
-      <li class="list-group-item" *ngFor="let result of results | async" (click)="onSearch(result.vorname + ' ' + result.nachname)">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-action py-1" *ngFor="let result of results | async" (click)="onSearch(result.vorname + ' ' + result.nachname)">
         {{ result.vorname }} {{ result.nachname }}
       </li>
     </ul>

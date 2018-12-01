@@ -1,41 +1,73 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid container-fluid-craas">
-    <div class="navbar-header">
-      <p class="navbar-brand paragraphLogo paragraphLogoResult">
-        <a href="#" style="text-decoration: none;">
-          <span style='color: blue'>C</span>
-          <span style='color: red'>r</span>
-          <span style='color: orange'>a</span>
-          <span style='color: blue'>a</span>
-          <span style='color: green'>s</span>
-        </a>
-      </p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid-craas">
+  <a class="navbar-brand" href="#">
+    <p class="navbar-brand paragraphLogo paragraphLogoResult">
+      <a href="#" style="text-decoration: none;">
+        <span style='color: blue'>C</span>
+        <span style='color: red'>r</span>
+        <span style='color: orange'>a</span>
+        <span style='color: blue'>a</span>
+        <span style='color: green'>s</span>
+      </a>
+    </p>
+  </a>
+  <form (submit)="onSubmit()"> <!-- class="mx-2 my-auto d-inline w-100"> -->
+    <div class="input-group">
+      <input [formControl]="searchField" type="text" class="form-control" name="searchString"
+             placeholder="Search..." autofocus>
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="onSubmit()">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
     </div>
-    <ul class="nav navbar-nav">
-      <form (submit)="onSubmit()" class="navbar-form navbar-left" role="search">
-        <div class="input-group searchBox">
-          <input [(ngModel)]="searchTerm" type="text" class="form-control roundInput" name="inputString"
-                 placeholder="Search...">
-          <span class="input-group-btn">
-              <button (click)="onSubmit()" class="btn btn-primary roundBtnResult" type="button">
-                <span class="glyphicon glyphicon-search"></span>
-              </button>
-            </span>
-        </div>
-      </form>
+
+    <div class="text-center">
+      <p class="loading-indicator" *ngIf="loading">Loading...</p>
+    </div>
+
+    <ul>
+      <li tabIndex="0">item 1</li>
+      <li tabIndex="0">item 2</li>
+      <li tabIndex="0">item 3</li>
+      <li tabIndex="0">item 4</li>
+      <li tabIndex="0">item 5</li>
+      <li tabIndex="0">item 6</li>
+      <li tabIndex="0">item 7</li>
+      <li tabIndex="0">item 8</li>
     </ul>
 
-    <ul class="nav navbar-nav">
-      <li><a href="#">Filter</a></li>
-
-    </ul>
     <!--
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Sign Up</a></li>
-      <li><a href="#">Login</a></li>
+    <ul class="list-group list-group-search">
+      <li class="list-group-item list-group-item-active py-1" *ngFor="let result of suggestions | async">
+        {{ result.vorname }} {{ result.nachname }}
+      </li>
     </ul>
     -->
-  </div>
+
+    <!--
+    <div class="dropdown">
+      <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">
+        <span id="selected">Chose option</span><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Option 1</a></li>
+        <li><a href="#">Option 2</a></li>
+        <li><a href="#">Option 3</a></li>
+        <li><a href="#">Option 4</a></li>
+      </ul>
+    </div>
+    -->
+
+    <!--
+   <select class="list-group list-group-search">
+    <option class="list-group-item list-group-item-action py-1" *ngFor="let result of suggestions | async"
+        (focus)="onSuggestionSelected(result)" (click)="onSubmit(result)">
+      {{ result.vorname }} {{ result.nachname }}
+    </option>
+  </select>
+  -->
+
+
+  </form>
 </nav>
 
 <div class="container">
@@ -43,33 +75,64 @@
     <div class="container">
       <div class="result-count">{{allResults?.length}} results found (23 ms)</div>
 
-      <!-- items being paged -->
-      <div *ngFor="let item of pagedResults">
-        <h3><a href="#">{{item.vorname}}</a></h3>
-        <a href="#" class="text-success">https://www.nordakademie-gs.de/</a>
-        <p>
-          {{item.nachname}}
-        </p>
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <ul class="list-group list-group-flush list-group-ex">
+            <li class="list-group-item list-group-item-action" *ngFor="let result of pagedResults">
+              <a (click)="onResultSelected(result)">
+              <h5>{{result.vorname}}</h5>
+              <p>
+                {{ result.vorname }} {{ result.nachname }}
+              </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Grid column -->
+        <div class="col-md-6 mb-md-0 mb-3">
+
+          <!-- Content -->
+          <h5>{{selectedResult?.vorname}} {{selectedResult?.nachname}}</h5>
+          <p>Lorem ipsum, dolor sit amet</p>
+
+        </div>
+        <!-- Grid column -->
+
       </div>
+      <!-- Grid row -->
 
       <!-- pager -->
-      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-        <li [ngClass]="{disabled:pager.currentPage === 1}">
-          <a (click)="setPage(1)">First</a>
-        </li>
-        <li [ngClass]="{disabled:pager.currentPage === 1}">
-          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
-        </li>
-        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-          <a (click)="setPage(page)">{{page}}</a>
-        </li>
-        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-          <a (click)="setPage(pager.currentPage + 1)">Next</a>
-        </li>
-        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-          <a (click)="setPage(pager.totalPages)">Last</a>
-        </li>
-      </ul>
+      <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-center">
+        <ul class="pagination pagination flex-sm-wrap">
+          <div class="pagination-container">
+            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a class="page-link" (click)="setPage(1)"><i class="fas fa-angle-double-left"></i></a>
+              </li>
+              <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                <a class="page-link" (click)="setPage(pager.currentPage - 1)"><i class="fas fa-angle-left"></i></a>
+              </li>
+              <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a class="page-link" (click)="setPage(page)">{{page}}</a>
+              </li>
+              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a class="page-link" (click)="setPage(pager.currentPage + 1)"><i class="fas fa-angle-right"></i></a>
+              </li>
+              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a class="page-link" (click)="setPage(pager.totalPages)"><i class="fas fa-angle-double-right"></i></a>
+              </li>
+            </ul>
+          </div>
+        </ul>
+      </nav>
+      </div>
+      <!-- pager -->
     </div>
   </div>
 </div>
