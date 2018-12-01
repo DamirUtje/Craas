@@ -16,7 +16,7 @@ public class ResultDAO {
     }
 
     public List<Result> loadSuggestions(String term) {
-        String sql = String.format("SELECT TOP 10 * FROM UN_SL_INDIVIDUAL WHERE " +
+        String sql = String.format("SELECT TOP 10 * FROM STAGING.CRIMINALS_NOW WHERE " +
                 "CAST(FIRST_NAME AS VARCHAR_IGNORECASE) LIKE '%s%%'", term);
         return loadData(sql);
     }
@@ -24,7 +24,7 @@ public class ResultDAO {
     private List<Result> loadData(String sql){
         List<Result> results = new ArrayList<>();
         try {
-            Connection conn = DriverManager.getConnection("jdbc:h2:/home/damir/test.h2.db", "", "");
+            Connection conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/craas_db", "sa", "");
             PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
