@@ -31,9 +31,9 @@ public class ResultDAO {
             if (resultSet != null) {
                 while (resultSet.next()) {
 
-                    Result result = new Result(resultSet.getInt("DATAID"),
+                    Result result = new Result(resultSet.getInt("ID"),
                             resultSet.getString("FIRST_NAME"),
-                            resultSet.getString("SECOND_NAME"));
+                            resultSet.getString("NAME"));
 
                     results.add(result);
                 }
