@@ -13,6 +13,7 @@ import {DetailComponent} from './detail';
 
 import {PagerService} from './_service/pager.service';
 import {ResultService} from './_service/result.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ResultService} from './_service/result.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NoopAnimationsModule
   ],
   providers: [
     PagerService,

@@ -10,12 +10,12 @@
       </a>
     </p>
   </a>
-  <form (submit)="onSubmit()"> <!-- class="mx-2 my-auto d-inline w-100"> -->
+  <form (submit)="onSubmit(null)"> <!-- class="mx-2 my-auto d-inline w-100"> -->
     <div class="input-group">
       <input [formControl]="searchField" type="text" class="form-control" name="searchString"
              placeholder="Search..." autofocus>
       <div class="input-group-append">
-        <button class="btn btn-primary" type="button" (click)="onSubmit()">
+        <button class="btn btn-primary" type="button" (click)="onSubmit(null)">
           <i class="fa fa-search"></i>
         </button>
       </div>
@@ -24,25 +24,12 @@
     <div class="text-center">
       <p class="loading-indicator" *ngIf="loading">Loading...</p>
     </div>
-
-    <ul>
-      <li tabIndex="0">item 1</li>
-      <li tabIndex="0">item 2</li>
-      <li tabIndex="0">item 3</li>
-      <li tabIndex="0">item 4</li>
-      <li tabIndex="0">item 5</li>
-      <li tabIndex="0">item 6</li>
-      <li tabIndex="0">item 7</li>
-      <li tabIndex="0">item 8</li>
-    </ul>
-
-    <!--
     <ul class="list-group list-group-search">
       <li class="list-group-item list-group-item-active py-1" *ngFor="let result of suggestions | async">
         {{ result.vorname }} {{ result.nachname }}
       </li>
     </ul>
-    -->
+
 
     <!--
     <div class="dropdown">
