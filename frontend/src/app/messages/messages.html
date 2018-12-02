@@ -1,0 +1,7 @@
+<div *ngIf="messageService.messages.length">
+  <h6>Messages</h6>
+  <mat-icon matSuffix (click)="messageService.clear()">delete</mat-icon>
+  <ol>
+    <li *ngFor='let message of messageService.messages'> {{message}} </li>
+  </ol>
+</div>

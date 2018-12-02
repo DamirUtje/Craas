@@ -11,7 +11,7 @@ import java.util.List;
 public class ResultDAO {
 
     public List<Result> loadResults(String term) {
-        String sql = "SELECT * FROM UN_SL_INDIVIDUAL";
+        String sql = "SELECT TOP 50 * FROM STAGING.CRIMINALS_NOW";
         return loadData(sql);
     }
 

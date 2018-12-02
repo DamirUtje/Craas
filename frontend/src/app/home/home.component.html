@@ -1,35 +1,26 @@
-<form (submit)="onSearch(searchField.value)">
+<form [formGroup]='startForm' (submit)="onSubmit()">
   <div class="content-wrapper">
-    <div style="text-align:center">
-      <h1>
-        <p class="paragraphLogo paragraphLogoMain">
-          <span style='color: blue'>C</span>
+    <h1>
+      <p class="paragraphLogo paragraphLogoMain">
+        <span style='color: blue'>C</span>
           <span style='color: red'>r</span>
           <span style='color: orange'>a</span>
           <span style='color: blue'>a</span>
           <span style='color: green'>s</span>
-        </p>
-      </h1>
-    </div>
-    <div class="input-group">
-      <input [formControl]="searchField" type="text" class="form-control" name="searchString"
-             placeholder="Search..." autofocus>
-      <div class="input-group-append">
-        <button class="btn btn-primary" type="button" (click)="onSearch(searchField.value)">
-          <i class="fa fa-search"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="text-center">
-      <p class="loading-indicator" *ngIf="loading">Loading...</p>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-action py-1" *ngFor="let result of results | async" (click)="onSearch(result.vorname + ' ' + result.nachname)">
-        {{ result.vorname }} {{ result.nachname }}
-      </li>
-    </ul>
-
+      </p>
+    </h1>
+    <mat-form-field class="form-input-field">
+      <input matInput placeholder="Search..." [matAutocomplete]="auto" formControlName='userInput' autofocus>
+      <mat-icon matSuffix (click)="onSubmit()">search</mat-icon>
+    </mat-form-field>
+    <mat-spinner *ngIf="loading" [diameter]="24"></mat-spinner>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let result of suggestions | async" [value]="result" (onSelectionChange)="onSelect(result)">
+        <span>{{ result.vorname }}</span>
+        <small> | name: {{result.nachname}}</small>
+      </mat-option>
+    </mat-autocomplete>
+    <app-messages></app-messages>
   </div>
 </form>
 

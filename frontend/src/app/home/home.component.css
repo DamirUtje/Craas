@@ -3,8 +3,13 @@
   margin: 10% auto 0;
   position: relative;
   display: table;
+  text-align:center;
 }
 
 .paragraphLogoMain {
   font-size: 85px;
+}
+
+.form-input-field {
+  width: 100%;
 }

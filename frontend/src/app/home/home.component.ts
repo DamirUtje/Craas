@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {FormControl} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Observable, of} from "rxjs";
 import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
 
@@ -13,29 +13,50 @@ import {Result} from "../_model";
   styleUrls: ['home.component.css']
 })
 export class HomeComponent implements OnInit {
-  searchField: FormControl;
-  results: Observable<Result[]>;
+  selectedResult: Result;
+  suggestions: Observable<Result[]>;
   loading: boolean = false;
+  startForm: FormGroup;
 
-  constructor(private router: Router, private resultService: ResultService) {
+  constructor(private router: Router,
+              private resultService: ResultService,
+              private formBuilder: FormBuilder) {
   }
 
   // https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
   ngOnInit() {
-    this.searchField = new FormControl();
-    this.results = this.searchField.valueChanges.pipe(
+
+    this.startForm = this.formBuilder.group({
+      userInput: null
+    });
+
+    this.suggestions = this.startForm.get('userInput').valueChanges
+      .pipe(
       debounceTime(100),
       distinctUntilChanged(),
       tap(_ => (this.loading = true)),
-      switchMap(term => term ?
-        this.resultService.loadSuggestions(term) : of([])),
+      switchMap(input => input ?
+        this.resultService.loadSuggestions(input) : of([])),
       tap(_ => (this.loading = false))
     );
   }
 
-  onSearch(input: string) {
+  onSubmit() {
     // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
+    let input = this.selectedResult ?
+      this.selectedResult.vorname + " " + this.selectedResult.nachname :
+      this.startForm.get('userInput').value;
+
     if (input && input.trim())
       this.router.navigate(["/result", {term: input}]);
+  }
+
+  displayFn(result: Result) {
+    if (result) { return result.vorname + " " + result.nachname; }
+  }
+
+  onSelect(result: Result) {
+    this.selectedResult = result;
+    this.onSubmit();
   }
 }
