@@ -1,0 +1,12 @@
+<form [formGroup]='searchForm' (keydown.esc)="resetSearch('$event')">
+  <mat-form-field class="form-input-field">
+    <input matInput #userInput placeholder="Search..." formControlName='userInput' autofocus>
+    <mat-icon matSuffix (click)="onSubmit()">search</mat-icon>
+  </mat-form-field>
+  <mat-spinner *ngIf="loading" [diameter]="24"></mat-spinner>
+  <mat-selection-list (selectionChange)="onSelect($event)" dense>
+    <mat-list-option *ngFor="let result of suggestions | async" [value]="result">
+      {{ result.vorname }} {{result.nachname}}
+    </mat-list-option>
+  </mat-selection-list>
+</form>

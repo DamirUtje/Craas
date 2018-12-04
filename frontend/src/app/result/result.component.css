@@ -1,41 +1,12 @@
-.container-fluid-craas {
-  margin-bottom: 10px;
-}
-
 .paragraphLogoResult {
   font-size: 40px;
+
 }
 
 .result-count {
-  margin-bottom: 20px;
+  margin: 10px;
+  font-size: 12px;
   color: #808080;
-}
-
-.searchBox {
-  width: 600px;
-}
-
-.pagination-container {
-  margin: 20px;
-}
-
-.list-group-ex {
-  max-height: 400px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-@media only screen and (max-width : 320px) {
-  .list-group-ex {
-    overflow-y: hidden;
-    max-height: initial;
-  }
-}
-
-@media only screen and (max-width : 320px) {
-  .searchBox {
-    width: 100%;
-  }
 }
 
 @media only screen and (max-width : 320px) {
@@ -44,7 +15,34 @@
   }
 }
 
-.list-group-search {
-  position:absolute;
-  z-index: 999;
+.logo-link {
+  text-decoration: none;
+}
+
+.content-container {
+  margin: 10px;
+}
+
+/* hide creepy checkbox */
+::ng-deep.mat-pseudo-checkbox {
+  display: none !important;
+}
+
+.mat-drawer-container {
+  height: 100%;
+}
+
+.sidenav-ex {
+  width: 50%;
+}
+
+@media only screen and (max-width : 320px) {
+  .sidenav-ex {
+    width: 100%;
+  }
+}
+
+.mobile-toggle {
+  float: right;
+  margin-right: 20px;
 }

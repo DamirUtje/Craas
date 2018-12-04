@@ -3,7 +3,12 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatFormFieldModule, MatIconModule, MatInputModule, MatProgressSpinnerModule} from "@angular/material";
+import {
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
+  MatProgressSpinnerModule, MatSelectModule, MatSidenavModule
+} from "@angular/material";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -14,11 +19,12 @@ import {HomeComponent} from './home';
 import {ResultComponent} from './result';
 import {DetailComponent} from './detail';
 import {MessagesComponent} from './messages';
+import {SearchComponent} from "./search";
 
-import {PagerService} from './_service/pager.service';
 import {ResultService} from './_service/result.service';
 import {HttpErrorHandler} from './_service/http-error-handler.service';
 import {MessageService} from './_service/message.service';
+import {PagerService} from "./_service/pager.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +32,8 @@ import {MessageService} from './_service/message.service';
     AppComponent,
     ResultComponent,
     DetailComponent,
-    MessagesComponent
+    MessagesComponent,
+    SearchComponent
   ],
   imports: [
     routing,
@@ -40,13 +47,16 @@ import {MessageService} from './_service/message.service';
     MatAutocompleteModule,
     MatInputModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatListModule
   ],
   providers: [
-    PagerService,
     ResultService,
     HttpErrorHandler,
-    MessageService
+    MessageService,
+    PagerService
   ],
   bootstrap: [AppComponent]
 })
