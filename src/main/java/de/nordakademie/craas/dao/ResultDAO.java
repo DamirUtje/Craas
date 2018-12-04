@@ -33,7 +33,7 @@ public class ResultDAO {
 
                     Result result = new Result(resultSet.getInt("ID"),
                             resultSet.getString("FIRST_NAME"),
-                            resultSet.getString("NAME"));
+                            resultSet.getString("LAST_NAME"));
 
                     results.add(result);
                 }
