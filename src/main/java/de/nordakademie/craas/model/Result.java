@@ -12,8 +12,6 @@ import javax.persistence.*;
 @Table(name = "CRIMINALS_NOW")
 public class Result {
 
-    //private static final long serialVersionUID = -485136401822846850L;
-
     @Id
     @GeneratedValue
     private int id;
