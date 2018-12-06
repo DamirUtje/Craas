@@ -16,25 +16,23 @@ public class ResultDAO {
     protected EntityManager entityManager;
 
     public List<Result> loadResults(String term) {
-        //String sql = "SELECT TOP 50 * FROM STAGING.CRIMINALS_NOW";
+        String hql =
+                String.format("FROM Result as R WHERE lower(R.fullName) LIKE '%%s%%'", term.toLowerCase());
 
-        String hsql = "FROM Result as r";
-        return loadData(hsql, 100000);
+        return loadData(hql, 100000);
     }
 
     public List<Result> loadSuggestions(String term) {
-//        String sql = String.format("SELECT TOP 10 * FROM STAGING.CRIMINALS_NOW WHERE " +
-//                "CAST(FIRST_NAME AS VARCHAR_IGNORECASE) LIKE '%s%%'", term);
-        String hsql =
-                String.format("FROM Result as R WHERE R.fullName LIKE '%s%%'", term);
+        String hql =
+                String.format("FROM Result as R WHERE lower(R.fullName) LIKE '%s%%'", term.toLowerCase());
 
-        return loadData(hsql, 10);
+        return loadData(hql, 10);
     }
 
-    private List<Result> loadData(String hsql, int maxResults) {
+    private List<Result> loadData(String hql, int maxResults) {
         List<Result> results = new ArrayList<>();
         try {
-            results = entityManager.createQuery(hsql, Result.class)
+            results = entityManager.createQuery(hql, Result.class)
                     .setMaxResults(maxResults).getResultList();
         }
         catch (Exception ex) {
