@@ -27,8 +27,7 @@
     <mat-selection-list #resultList (selectionChange)="onResultSelected($event)">
       <mat-list-option *ngFor="let result of pagedResults" [value]="result">
         <h3 matLine> {{result.id}} </h3>
-        <p matLine> {{result.vorname}} </p>
-        <p matLine> {{result.nachname}} </p>
+        <p matLine> {{result.fullName}} </p>
       </mat-list-option>
     </mat-selection-list>
     <!-- pager -->
@@ -63,7 +62,7 @@
     <div [hidden]="!isMobile()">
       <mat-icon matSuffix (click)="sidenav.toggle()" class="mobile-toggle">close</mat-icon>
     </div>
-    hallo {{selectedResult?.vorname}} {{selectedResult?.nachname}}
+    hallo {{selectedResult?.fullName}}
   </mat-drawer>
 </mat-drawer-container>
 

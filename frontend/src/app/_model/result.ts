@@ -1,7 +1,8 @@
 export class Result {
   id: number;
-  vorname: string;
-  nachname: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
   //..and so on
 }
 

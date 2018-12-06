@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit {
   onSubmit(): void {
     // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
     let input = this.selectedResult ?
-      this.selectedResult.vorname + " " + this.selectedResult.nachname :
+      this.selectedResult.fullName :
       this.searchForm.get('userInput').value;
 
     if (input && input.trim())

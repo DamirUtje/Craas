@@ -1,8 +1,6 @@
 package de.nordakademie.craas.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Model for the Result.
@@ -11,32 +9,59 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "CRIMINALS_NOW")
 public class Result {
-	
-private static final long serialVersionUID = -485136401822846850L;
-	
-	@Id
-	@GeneratedValue
-	private int id;
-	private String vorname;
-	private String nachname;
 
-	
-	public Result(int id, String vorname, String nachname) {
-		this.id = id;
-		this.vorname = vorname;
-		this.nachname = nachname;
-	}
+    //private static final long serialVersionUID = -485136401822846850L;
 
-	public String getNachname() {
-		return nachname;
-	}
+    @Id
+    @GeneratedValue
+    private int id;
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+    @Column(name = "LAST_NAME")
+    private String lastName;
+    @Column(name = "FULL_NAME")
+    private String fullName;
 
-	public String getVorname() {
-		return vorname;
-	}
+    protected Result() {
+    }
 
-	public int getId() {
-		return id;
-	}
+    public Result(String firstName, String lastName, String fullName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }
