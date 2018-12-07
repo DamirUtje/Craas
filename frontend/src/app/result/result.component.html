@@ -24,7 +24,7 @@
 <mat-drawer-container>
   <mat-drawer-content>
 
-    <mat-selection-list #resultList (selectionChange)="onResultSelected($event)">
+    <mat-selection-list #resultList (selectionChange)="onResultSelected($event)" dense>
       <mat-list-option *ngFor="let result of pagedResults" [value]="result">
         <h3 matLine> {{result.id}} </h3>
         <p matLine> {{result.fullName}} </p>

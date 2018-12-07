@@ -1,5 +1,8 @@
 package de.nordakademie.craas.model;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +11,7 @@ import javax.persistence.*;
  *
  */
 
+@Indexed
 @Entity
 @Table(name = "CRIMINALS_NOW")
 public class Result {
@@ -15,10 +19,13 @@ public class Result {
     @Id
     @GeneratedValue
     private int id;
+    @Field
     @Column(name = "FIRST_NAME")
     private String firstName;
+    @Field
     @Column(name = "LAST_NAME")
     private String lastName;
+    @Field
     @Column(name = "FULL_NAME")
     private String fullName;
 

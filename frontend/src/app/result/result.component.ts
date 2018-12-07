@@ -31,18 +31,20 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
-    this.loadResults();
   }
+
   ngAfterViewInit(): void {
     this.activeRoute.params.subscribe(params => {
       this.searchComponent.setInput(params['term']);
     });
+    this.loadResults();
   }
 
   // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
   loadResults(): void {
     let tpmArray: Result[] = [];
-    this.resultService.loadResults("TODO Fix this").subscribe(
+    let term: string = this.searchComponent.searchForm.get('userInput').value;
+    this.resultService.loadResults(term).subscribe(
       data => {
         for (var v in data)
           tpmArray.push(data[v]);

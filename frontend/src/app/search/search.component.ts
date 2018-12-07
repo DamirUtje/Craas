@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
     let input = this.selectedResult ?
       this.selectedResult.fullName :
       this.searchForm.get('userInput').value;
-
+    
     if (input && input.trim())
       this.router.navigate(["/result", {term: input}]);
   }
