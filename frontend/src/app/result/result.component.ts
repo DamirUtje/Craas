@@ -1,20 +1,21 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 
 import {PagerService, ResultService} from '../_service';
 
 import {Result} from '../_model';
 import {SearchComponent} from "../search";
-import {MatListOption, MatSelectionList} from "@angular/material";
+import {MatListOption, MatSelectionList, MatSidenav} from "@angular/material";
 import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
   templateUrl: 'result.component.html',
-  styleUrls: ['result.component.css']
+  styleUrls: ['result.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ResultComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('sidenav') sideNav;
+  @ViewChild('sidenav') sideNav: MatSidenav;
   @ViewChild('search') searchComponent: SearchComponent;
   @ViewChild('resultList') selectionList: MatSelectionList;
 
@@ -26,11 +27,18 @@ export class ResultComponent implements OnInit, AfterViewInit {
   constructor(
     private resultService: ResultService,
     private activeRoute: ActivatedRoute,
-    private pagerService: PagerService) {
+    private pagerService: PagerService,
+    private router: Router) {
+    this.router.events.subscribe((event: Event)  => {
+      if (event instanceof NavigationStart) {
+        this.loadResults();
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.selectionList.selectedOptions = new SelectionModel<MatListOption>(false);
+    this.selectionList.selectedOptions =
+      new SelectionModel<MatListOption>(false);
   }
 
   ngAfterViewInit(): void {
@@ -40,27 +48,15 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.loadResults();
   }
 
-  // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
   loadResults(): void {
-    let tpmArray: Result[] = [];
-    let term: string = this.searchComponent.searchForm.get('userInput').value;
-    this.resultService.loadResults(term).subscribe(
-      data => {
-        for (var v in data)
-          tpmArray.push(data[v]);
-      },
-      error => {
-        console.log("Error in recieving data");
-      },
-      () => {
-        console.log("Fetching done");
-        this.allResults = tpmArray;
-        this.setPage(1);
-        this.selectedResult = tpmArray[0];
-      }
-    );
+    let term: string = this.searchComponent.getInput();
+    this.resultService.loadResults(term)
+      .subscribe(results => this.allResults = results,
+        () => {}, // error handling in service class
+        () => { this.setPage(1); });
   }
 
+  // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
   isMobile(): boolean {
     if(window.innerWidth <= 800 && window.innerHeight <= 600) {
       return true;
@@ -71,7 +67,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   setPage(page: number) {
     if (page < 1 || page > this.pager.totalPages) {
-      return;
+      //return; TODO remove?
     }
 
     // get pager object from service
@@ -79,6 +75,9 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
     // get current page of items
     this.pagedResults = this.allResults.slice(this.pager.startIndex, this.pager.endIndex + 1);
+
+    // set current selection
+    this.selectedResult = this.pagedResults[0];
   }
 
   onResultSelected(e): void {

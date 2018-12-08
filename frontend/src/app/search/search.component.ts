@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Injectable, OnInit, ViewChild} from '@angular/core';
 import {Result} from "../_model";
-import {Observable, of} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ResultService} from "../_service";
@@ -12,11 +12,13 @@ import {MatListOption} from "@angular/material";
   templateUrl: './search.html',
   styleUrls: ['search.component.css']
 })
+@Injectable()
 export class SearchComponent implements OnInit {
   selectedResult: Result;
   suggestions: Observable<Result[]>;
   loading: boolean = false;
   searchForm: FormGroup;
+  inputString: string;
 
   constructor(private router: Router,
               private resultService: ResultService,
@@ -48,12 +50,13 @@ export class SearchComponent implements OnInit {
 
   onSubmit(): void {
     // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
-    let input = this.selectedResult ?
+    this.inputString = this.selectedResult ?
       this.selectedResult.fullName :
-      this.searchForm.get('userInput').value;
-    
-    if (input && input.trim())
-      this.router.navigate(["/result", {term: input}]);
+      escape(this.searchForm.get('userInput').value);
+
+    if (this.inputString && this.inputString.trim()) {
+      this.router.navigate(["/result", {term: this.inputString}]);
+    }
   }
 
   onSelect(e): void {
@@ -62,9 +65,14 @@ export class SearchComponent implements OnInit {
   }
 
   setInput(param: any): void {
-    this.searchForm.get('userInput').setValue(param);
+    this.inputString = param.toString();
+    this.searchForm.get('userInput').setValue(this.inputString);
     this.resetSearch();
     this.changeDetector.detectChanges();
+  }
+
+  getInput(): string {
+    return this.inputString;
   }
 
   resetSearch() {
