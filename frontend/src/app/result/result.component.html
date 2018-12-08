@@ -62,7 +62,7 @@
     <div [hidden]="!isMobile()">
       <mat-icon matSuffix (click)="sidenav.toggle()" class="mobile-toggle">close</mat-icon>
     </div>
-    {{selectedResult?.fullName}}
+    <app-detail #detail></app-detail>
   </mat-drawer>
 </mat-drawer-container>
 

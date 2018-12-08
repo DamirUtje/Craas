@@ -7,22 +7,23 @@ import {Result} from '../_model';
 import {SearchComponent} from "../search";
 import {MatListOption, MatSelectionList, MatSidenav} from "@angular/material";
 import {SelectionModel} from "@angular/cdk/collections";
+import {DetailComponent} from "../detail";
 
 @Component({
   templateUrl: 'result.component.html',
-  styleUrls: ['result.component.css'],
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ['result.component.css']
 })
 export class ResultComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('sidenav') sideNav: MatSidenav;
   @ViewChild('search') searchComponent: SearchComponent;
+  @ViewChild('detail') detailView: DetailComponent;
+
+  @ViewChild('sidenav') sideNav: MatSidenav;
   @ViewChild('resultList') selectionList: MatSelectionList;
 
   allResults: Result[];
   pagedResults: Result[];
   pager: any = {};
-  selectedResult: Result;
 
   constructor(
     private resultService: ResultService,
@@ -77,13 +78,13 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.pagedResults = this.allResults.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
     // set current selection
-    this.selectedResult = this.pagedResults[0];
+    this.detailView.setSelection(this.pagedResults[0]);
   }
 
   onResultSelected(e): void {
-    this.selectedResult = e.option.value as Result;
+    this.detailView.setSelection(e.option.value as Result);
     if(this.isMobile())
-      this.sideNav.toggle();
+      this.sideNav.toggle().then(/*nothing to do*/);
   }
 }
 

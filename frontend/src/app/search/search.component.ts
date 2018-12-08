@@ -52,10 +52,11 @@ export class SearchComponent implements OnInit {
     // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
     this.inputString = this.selectedResult ?
       this.selectedResult.fullName :
-      escape(this.searchForm.get('userInput').value);
+      this.searchForm.get('userInput').value;
 
     if (this.inputString && this.inputString.trim()) {
-      this.router.navigate(["/result", {term: this.inputString}]);
+      this.router.navigate(["/result", {term: this.inputString}])
+        .then(/*nothing to do*/);
     }
   }
 
@@ -79,4 +80,8 @@ export class SearchComponent implements OnInit {
     this.suggestions = of([]);
     this.initSearch();
   }
+
+  // SELECT * FROM STAGING.US_TREASURY_SL_INDIVIDUAL where LASTNAME regexp '.*YARGEO.*'
+  //
+  // SELECT * FROM STAGING.CRIMINALS_NOW WHERE FULL_NAME regexp '.*YARGEO.*'
 }
