@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 
 import {PagerService, ResultService} from '../_service';
@@ -30,7 +30,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     private activeRoute: ActivatedRoute,
     private pagerService: PagerService,
     private router: Router) {
-    this.router.events.subscribe((event: Event)  => {
+    this.router.events.subscribe((event)  => {
       if (event instanceof NavigationStart) {
         this.loadResults();
       }
@@ -67,10 +67,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   setPage(page: number) {
-    if (page < 1 || page > this.pager.totalPages) {
-      //return; TODO remove?
-    }
-
     // get pager object from service
     this.pager = this.pagerService.getPager(this.allResults.length, page);
 

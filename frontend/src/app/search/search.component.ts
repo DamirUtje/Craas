@@ -80,8 +80,12 @@ export class SearchComponent implements OnInit {
     this.suggestions = of([]);
     this.initSearch();
   }
-
-  // SELECT * FROM STAGING.US_TREASURY_SL_INDIVIDUAL where LASTNAME regexp '.*YARGEO.*'
-  //
-  // SELECT * FROM STAGING.CRIMINALS_NOW WHERE FULL_NAME regexp '.*YARGEO.*'
 }
+
+// 1. Bug: Feldzuweisung Country?
+// SELECT * FROM STAGING.US_TREASURY_SL_INDIVIDUAL where LASTNAME regexp '.*YARGEO.*'
+// SELECT * FROM STAGING.CRIMINALS_NOW WHERE FULL_NAME regexp '.*YARGEO.*'
+
+// 2. Feature: EntityType => statt INDIVIDUAL = Person und statt ENTITY = Enterprise
+// 3. Statt FullName => DisplayName oder sogar zusätzlich
+// 4. Bug: Nach Möglichkeit alle unnötigen Leerzeichen entfernen, stört in der Suche

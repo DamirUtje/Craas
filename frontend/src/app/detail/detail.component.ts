@@ -8,10 +8,20 @@ import {Result} from "../_model";
 })
 export class DetailComponent {
 
-  selectedResult: Result;
+
+  selectedResult: { [id: string] : any; } = {};
 
   setSelection(result: Result) {
-    this.selectedResult = result;
+
+    if(result) {
+
+      for (let attribute in result) {
+        let value = result[attribute];
+        if(value)
+          this.selectedResult[attribute] = value;
+      }
+    }
+
   }
 }
 
