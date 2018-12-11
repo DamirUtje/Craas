@@ -1,4 +1,4 @@
-<form [formGroup]='searchForm' (ngSubmit)="onSubmit()" (keydown.esc)="resetSearch('$event')">
+<form [formGroup]='searchForm' (ngSubmit)="onSubmit()" (keydown.esc)="resetSearch()">
   <mat-form-field class="form-input-field">
     <input matInput #userInput placeholder="Search..." formControlName='userInput' autofocus>
     <mat-icon matSuffix (click)="onSubmit()">search</mat-icon>
