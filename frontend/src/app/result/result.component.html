@@ -27,7 +27,7 @@
     <mat-selection-list #resultList (selectionChange)="onResultSelected($event)" dense>
       <mat-list-option *ngFor="let result of pagedResults" [value]="result">
         <p matLine> {{result.id}} </p>
-        <p matLine> {{result.fullName}} </p>
+        <p matLine> {{result.displayName}} </p>
       </mat-list-option>
     </mat-selection-list>
     <!-- pager -->

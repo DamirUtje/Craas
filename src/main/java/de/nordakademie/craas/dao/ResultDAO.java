@@ -1,6 +1,7 @@
 package de.nordakademie.craas.dao;
 
 import de.nordakademie.craas.model.Result;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
@@ -23,16 +24,12 @@ public class ResultDAO {
     }
 
     public List<Result> loadResults(String term) {
-        String hql =
-                String.format("FROM Result as R WHERE lower(R.fullName) LIKE '%s%%'", term.toLowerCase());
-
         return search(term);
-        //return loadData(hql, 100000);
     }
 
     public List<Result> loadSuggestions(String term) {
         String hql =
-                String.format("FROM Result as R WHERE lower(R.fullName) LIKE '%s%%'", term.toLowerCase());
+                String.format("FROM Result as R WHERE lower(R.displayName) LIKE '%s%%'", term.toLowerCase());
 
         return loadData(hql, 10);
     }
@@ -62,7 +59,7 @@ public class ResultDAO {
         org.apache.lucene.search.Query query =
                 queryBuilder
                         .keyword()
-                        .onFields("firstName", "lastName", "fullName")
+                        .onFields(getSearchFields())
                         .matching(String.format("*%s*", searchString))
                         .createQuery();
 
@@ -74,4 +71,18 @@ public class ResultDAO {
 
         return results;
     }
+
+    private String[] getSearchFields() {
+
+        List<String> retValue = new ArrayList<>();
+
+        for (java.lang.reflect.Field field : Result.class.getDeclaredFields()) {
+
+            if(field.getAnnotation(Field.class) != null)
+                retValue.add(field.getName());
+        }
+
+        return retValue.toArray(new String[0]);
+    }
+
 }
