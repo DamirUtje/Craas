@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 import {PagerService, ResultService} from '../_service';
 
@@ -8,7 +8,6 @@ import {SearchComponent} from "../search";
 import {MatListOption, MatSelectionList, MatSidenav} from "@angular/material";
 import {SelectionModel} from "@angular/cdk/collections";
 import {DetailComponent} from "../detail";
-import {forEach} from "@angular/router/src/utils/collection";
 import {FormControl} from "@angular/forms";
 
 @Component({
@@ -38,7 +37,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     private pagerService: PagerService,
     private router: Router) {
     this.router.events.subscribe((event)  => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof NavigationEnd) {
         this.loadResults();
       }
     });
@@ -50,10 +49,14 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    let searchParam: string;
     this.activeRoute.params.subscribe(params => {
-      this.searchComponent.setInput(params['term']);
+        searchParam = params['term'];
     });
-    this.loadResults();
+    if(searchParam) {
+      this.searchComponent.setInput(searchParam);
+      this.loadResults();
+    }
   }
 
   loadResults(): void {

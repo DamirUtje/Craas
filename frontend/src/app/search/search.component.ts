@@ -65,8 +65,8 @@ export class SearchComponent implements OnInit {
     this.onSubmit();
   }
 
-  setInput(param: any): void {
-    this.inputString = param.toString();
+  setInput(param: string): void {
+    this.inputString = param;
     this.searchForm.get('userInput').setValue(this.inputString);
     this.resetSearch();
     this.changeDetector.detectChanges();
