@@ -1,11 +1,11 @@
-/* hide creepy checkbox */
-::ng-deep.mat-pseudo-checkbox {
-  display: none !important;
-}
-
 /* option text alignment */
 .mat-list-option {
   text-align: left;
+}
+
+/* hide checkbox */
+.hide-mat-checkbox ::ng-deep.mat-pseudo-checkbox {
+  display: none !important;
 }
 
 /* selection list style */

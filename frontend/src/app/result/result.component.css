@@ -1,6 +1,5 @@
 .paragraphLogoResult {
   font-size: 40px;
-
 }
 
 .result-count {
@@ -19,13 +18,13 @@
   text-decoration: none;
 }
 
-.content-container {
-  margin: 10px;
+/* hide checkbox */
+.hide-mat-checkbox ::ng-deep.mat-pseudo-checkbox {
+  display: none !important;
 }
 
-/* hide creepy checkbox */
-::ng-deep.mat-pseudo-checkbox {
-  display: none !important;
+.content-container {
+  margin: 10px;
 }
 
 .mat-drawer-container {

@@ -29,7 +29,8 @@ public class ResultDAO {
 
     public List<Result> loadSuggestions(String term) {
         String hql =
-                String.format("FROM Result as R WHERE lower(R.displayName) LIKE '%s%%'", term.toLowerCase());
+                String.format("FROM Result as R WHERE lower(R.displayName) LIKE '%s%%'",
+                        term.toLowerCase());
 
         return loadData(hql, 10);
     }
@@ -48,7 +49,6 @@ public class ResultDAO {
 
     @Transactional
     public List<Result> search(String searchString) {
-
         FullTextEntityManager fullTextEntityManager =
                 org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
 
@@ -59,6 +59,7 @@ public class ResultDAO {
         org.apache.lucene.search.Query query =
                 queryBuilder
                         .keyword()
+                        .fuzzy()
                         .onFields(getSearchFields())
                         .matching(String.format("*%s*", searchString))
                         .createQuery();
@@ -73,7 +74,6 @@ public class ResultDAO {
     }
 
     private String[] getSearchFields() {
-
         List<String> retValue = new ArrayList<>();
 
         for (java.lang.reflect.Field field : Result.class.getDeclaredFields()) {

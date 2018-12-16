@@ -9,7 +9,7 @@ import {MatListOption} from "@angular/material";
 
 @Component({
   selector: 'app-search',
-  templateUrl: './search.html',
+  templateUrl: './search.component.html',
   styleUrls: ['search.component.css']
 })
 @Injectable()

@@ -54,11 +54,13 @@ public class Result {
     @Field
     @Column(name = "ADDRESS")
     private String address;
+    @Column(name = "COUNTRY")
+    private String country;
 
     protected Result() {
     }
 
-    public Result(String displayName, String entityType, String listType, String regulationType, String categoryLabel, String listedOn, String lastDayUpdated, String firstName, String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth, String passportCountry, String address) {
+    public Result(String displayName, String entityType, String listType, String regulationType, String categoryLabel, String listedOn, String lastDayUpdated, String firstName, String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth, String passportCountry, String address, String country) {
         this.displayName = displayName;
         this.entityType = entityType;
         this.listType = listType;
@@ -73,6 +75,7 @@ public class Result {
         this.placeOfBirth = placeOfBirth;
         this.passportCountry = passportCountry;
         this.address = address;
+        this.country = country;
     }
 
     public int getId() {
@@ -193,5 +196,13 @@ public class Result {
 
     public void setLastDateUpdated(String lastDateUpdated) {
         this.lastDayUpdated = lastDateUpdated;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

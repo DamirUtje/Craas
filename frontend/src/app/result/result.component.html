@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid-craas">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <p class="navbar-brand paragraphLogo paragraphLogoResult">
       <a href="#" class="logo-link">
@@ -11,23 +11,41 @@
     </p>
   </a>
   <app-search #search></app-search>
-  <!--<mat-form-field>-->
-    <!--<mat-select placeholder="Toppings" [formControl]="toppings" multiple>-->
-      <!--<mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>-->
-    <!--</mat-select>-->
-  <!--</mat-form-field>-->
+  <mat-form-field>
+    <mat-select placeholder="Entity types" [formControl]="entities" multiple dense (selectionChange)="onFilterEntity($event)">
+      <mat-select-trigger>
+        {{entities.value ? (entities.value.length >= entityTypes?.length ? 'All' : entities.value) : ''}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">
+        <mat-icon>{{getIcon(entityType)}}</mat-icon>{{entityType}}
+      </mat-option>
+    </mat-select>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entities.value.length <= 0">error</mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="List types" [formControl]="crimeLists" multiple dense (selectionChange)="onFilterList($event)">
+      <mat-select-trigger>
+        {{crimeLists.value ? (crimeLists.value.length >= listTypes?.length ? 'All' : crimeLists.value) : ''}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let listType of listTypes" [value]="listType">{{listType}}</mat-option>
+    </mat-select>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="crimeLists.value.length <= 0">error</mat-icon>
+  </mat-form-field>
 </nav>
 
-<div class="result-count">{{allResults?.length}} results found (23 ms)</div>
+<div class="result-count">{{results?.length}} results found</div>
 
 <!-- https://stackblitz.com/edit/navbar-stackoverflow?file=app%2Fapp.component.html -->
 <mat-drawer-container>
   <mat-drawer-content>
 
     <mat-selection-list #resultList (selectionChange)="onResultSelected($event)" dense>
-      <mat-list-option *ngFor="let result of pagedResults" [value]="result">
-        <p matLine> {{result.id}} </p>
-        <p matLine> {{result.displayName}} </p>
+      <mat-list-option *ngFor="let result of pagedResults" [value]="result" class="hide-mat-checkbox">
+        <p matLine>
+          <mat-icon matPrefix>{{getIcon(result.entityType)}}</mat-icon>
+          {{result.displayName}}
+        </p>
+        <p matLine>{{result.listType}}</p>
       </mat-list-option>
     </mat-selection-list>
     <!-- pager -->
