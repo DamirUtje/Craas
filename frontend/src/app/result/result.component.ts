@@ -66,9 +66,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
         () => {}, // error handling in service class
         () => {
         this.results = this.allResults;
-        this.setPage(1);
-
-        console.log("loading done"); });
+        this.setPage(1); });
   }
 
   // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
