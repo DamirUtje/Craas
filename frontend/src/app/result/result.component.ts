@@ -1,14 +1,15 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 import {PagerService, ResultService} from '../_service';
 
 import {Result} from '../_model';
 import {SearchComponent} from "../search";
-import {MatListOption, MatSelectionList, MatSidenav} from "@angular/material";
+import {DateAdapter, MatListOption, MatSelectionList, MatSidenav} from "@angular/material";
 import {SelectionModel} from "@angular/cdk/collections";
 import {DetailComponent} from "../detail";
 import {FormControl} from "@angular/forms";
+import {UtilService} from "../_service/util.service";
 
 @Component({
   templateUrl: 'result.component.html',
@@ -30,17 +31,26 @@ export class ResultComponent implements OnInit, AfterViewInit {
   entities = new FormControl(this.entityTypes);
   listTypes: string[] = ["UN List", "EU_SANCTION_LIST", "US_TREASURY_SANCTION_LIST"];
   crimeLists = new FormControl(this.listTypes);
+  isMobile: boolean = false;
+
+  startDate = new FormControl(new Date(1990, 0, 1));
+  endDate = new FormControl(new Date());
 
   constructor(
     private resultService: ResultService,
     private activeRoute: ActivatedRoute,
     private pagerService: PagerService,
-    private router: Router) {
+    private router: Router,
+    private dateAdapter: DateAdapter<Date>,
+    private clientUtil: UtilService) {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
+        // fires when input has been submitted from SearchComponent
         this.loadResults();
       }
     });
+    this.dateAdapter.setLocale(this.clientUtil.getLocale());
+    this.isMobile = clientUtil.isMobile();
   }
 
   ngOnInit(): void {
@@ -63,22 +73,15 @@ export class ResultComponent implements OnInit, AfterViewInit {
     let term: string = this.searchComponent.getInput();
     this.resultService.loadResults(term)
       .subscribe(results => this.allResults = results,
-        () => {}, // error handling in service class
+        () => {}, // error handling in ResultService
         () => {
-        this.results = this.allResults;
-        this.setPage(1); });
+          this.results = this.allResults;
+          this.applyFilters(); });
   }
 
   // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
-  isMobile(): boolean {
-    if(window.innerWidth <= 800 && window.innerHeight <= 600) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  setPage(page: number) {
+  setPage(page: number): void {
     // get pager object from service
     this.pager = this.pagerService.getPager(this.results.length, page);
 
@@ -91,7 +94,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   onResultSelected(e): void {
     this.detailView.setSelection(e.option.value as Result);
-    if(this.isMobile())
+    if(this.clientUtil.isMobile())
       this.sideNav.toggle().then(/*nothing to do*/);
   }
 
@@ -113,20 +116,19 @@ export class ResultComponent implements OnInit, AfterViewInit {
     return icon;
   }
 
-  onFilterEntity(e): void {
-    this.results =
-      this.allResults.filter((result) =>
-        e.value.indexOf(result.entityType) > -1);
+  applyFilters(): void {
+    this.results = this.allResults
+      .filter((result) =>
+        this.entities.value.indexOf(result.entityType) > -1)
+      .filter((result) =>
+        this.crimeLists.value.indexOf(result.listType) > -1)
+      .filter((result) => {
+        let listed = Date.parse(result.listedOn);
+        return !isNaN(listed)
+          && this.startDate.value <= listed && listed <= this.endDate.value;
+      });
 
-    this.setPage(1);
-  }
-
-  onFilterList(e): void {
-    this.results =
-      this.allResults.filter((result) =>
-        e.value.indexOf(result.listType) > -1);
-
-    this.setPage(1);
+    this.setPage(1)
   }
 }
 

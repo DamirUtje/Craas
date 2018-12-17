@@ -4,9 +4,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatListModule,
+  MatInputModule, MatListModule, MatNativeDateModule,
   MatProgressSpinnerModule, MatSelectModule, MatSidenavModule
 } from "@angular/material";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -21,10 +22,11 @@ import {DetailComponent} from './detail';
 import {MessagesComponent} from './messages';
 import {SearchComponent} from "./search";
 
-import {ResultService} from './_service/result.service';
-import {HttpErrorHandler} from './_service/http-error-handler.service';
-import {MessageService} from './_service/message.service';
-import {PagerService} from "./_service/pager.service";
+import {ResultService} from './_service';
+import {HttpErrorHandler} from './_service';
+import {MessageService} from './_service';
+import {PagerService} from "./_service";
+import {UtilService} from "./_service/util.service";
 
 @NgModule({
   declarations: [
@@ -50,13 +52,17 @@ import {PagerService} from "./_service/pager.service";
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     ResultService,
     HttpErrorHandler,
     MessageService,
-    PagerService
+    PagerService,
+    UtilService,
+    MatDatepickerModule
   ],
   bootstrap: [AppComponent]
 })
