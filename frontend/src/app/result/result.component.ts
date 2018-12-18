@@ -47,6 +47,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
         this.loadResults();
+        this.searchComponent.resetSuggestions();
       }
     });
     this.dateAdapter.setLocale(this.clientUtil.getLocale());
@@ -86,7 +87,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.pager = this.pagerService.getPager(this.results.length, page);
 
     // get current page of items
-    this.pagedResults = this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    this.pagedResults =
+      this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
     // set current selection
     this.detailView.setSelection(this.pagedResults[0]);
@@ -99,21 +101,12 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   getIcon(entityType: string): string {
-    let icon: string;
     switch (entityType) {
-      case "Person":
-        icon = "person";
-        break;
-      case "Entity":
-        icon = "bubble_chart";
-        break;
-      case "Enterprise":
-        icon = "domain";
-        break;
-      default:
-        break;
+      case "Person": return "person";
+      case "Entity": return "bubble_chart";
+      case "Enterprise": return "domain"
+      default: return '';
     }
-    return icon;
   }
 
   applyFilters(): void {

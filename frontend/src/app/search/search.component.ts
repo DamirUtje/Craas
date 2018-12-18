@@ -68,7 +68,8 @@ export class SearchComponent implements OnInit {
   setInput(param: string): void {
     this.inputString = param;
     this.searchForm.get('userInput').setValue(this.inputString);
-    this.resetSearch();
+    this.resetSuggestions();
+    this.initSearch();
     this.changeDetector.detectChanges();
   }
 
@@ -76,8 +77,7 @@ export class SearchComponent implements OnInit {
     return this.inputString;
   }
 
-  resetSearch() {
+  resetSuggestions() {
     this.suggestions = of([]);
-    this.initSearch();
   }
 }
