@@ -22,4 +22,10 @@ export class UtilService {
     }
   }
 
+  camelCaseToRegular(text: string): string {
+    text = text.replace(/([A-Z])/g, ' $1').toLocaleLowerCase(); // insert a space before all capital letters
+    text = text.charAt(0).toUpperCase() + text.slice(1); // uppercase the first character
+    return text;
+  }
+
 }

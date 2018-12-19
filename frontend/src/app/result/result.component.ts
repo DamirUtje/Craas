@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 import {PagerService, ResultService} from '../_service';
@@ -46,8 +46,12 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
-        this.loadResults();
-        this.searchComponent.resetSuggestions();
+        if(!!this.results) {
+          // skip first load due to results will be loaded afterInit
+          this.loadResults();
+          this.searchComponent.resetSearch();
+        }
+
       }
     });
     this.dateAdapter.setLocale(this.clientUtil.getLocale());
@@ -90,12 +94,12 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.pagedResults =
       this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-    // set current selection
-    this.detailView.setSelection(this.pagedResults[0]);
+    // set initial selection
+    this.detailView.setResult(this.pagedResults[0]);
   }
 
   onResultSelected(e): void {
-    this.detailView.setSelection(e.option.value as Result);
+    this.detailView.setResult(e.option.value as Result);
     if(this.clientUtil.isMobile())
       this.sideNav.toggle().then(/*nothing to do*/);
   }
@@ -104,7 +108,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     switch (entityType) {
       case "Person": return "person";
       case "Entity": return "bubble_chart";
-      case "Enterprise": return "domain"
+      case "Enterprise": return "domain";
       default: return '';
     }
   }

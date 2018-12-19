@@ -12,7 +12,7 @@
   </a>
   <app-search #search></app-search>
   <mat-form-field>
-    <mat-select placeholder="Entity types" [formControl]="entities" multiple dense (selectionChange)="applyFilters()">
+    <mat-select placeholder="Entity type" [formControl]="entities" multiple dense (selectionChange)="applyFilters()">
       <mat-select-trigger>
         {{entities.value ? (entities.value.length >= entityTypes?.length ? 'All' : entities.value) : ''}}
       </mat-select-trigger>
@@ -23,7 +23,7 @@
     <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entities.value.length <= 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="List types" [formControl]="crimeLists" multiple dense (selectionChange)="applyFilters()">
+    <mat-select placeholder="List type" [formControl]="crimeLists" multiple dense (selectionChange)="applyFilters()">
       <mat-select-trigger>
         {{crimeLists.value ? (crimeLists.value.length >= listTypes?.length ? 'All' : crimeLists.value) : ''}}
       </mat-select-trigger>
@@ -32,12 +32,12 @@
     <mat-icon matPrefix matTooltip="You must select one option" *ngIf="crimeLists.value.length <= 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Choose a date" (dateChange)="applyFilters()">
+    <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Listed on from" (dateChange)="applyFilters()">
     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
     <mat-datepicker #startPicker></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="Choose a date" (dateChange)="applyFilters()">
+    <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="Listed on to" (dateChange)="applyFilters()">
     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
     <mat-datepicker #endPicker></mat-datepicker>
   </mat-form-field>
@@ -51,6 +51,7 @@
 
     <mat-selection-list #resultList (selectionChange)="onResultSelected($event)" dense>
       <mat-list-option *ngFor="let result of pagedResults" [value]="result" class="hide-mat-checkbox">
+
         <p matLine>
           <mat-icon matPrefix>{{getIcon(result.entityType)}}</mat-icon>
           {{result.displayName}}

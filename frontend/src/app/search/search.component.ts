@@ -1,11 +1,10 @@
-import {ChangeDetectorRef, Component, Injectable, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Injectable, OnInit} from '@angular/core';
 import {Result} from "../_model";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {Observable, of} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ResultService} from "../_service";
 import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
-import {MatListOption} from "@angular/material";
 
 @Component({
   selector: 'app-search',
@@ -62,14 +61,14 @@ export class SearchComponent implements OnInit {
 
   onSelect(e): void {
     this.selectedResult = e.option.value as Result;
+    this.setInput(this.selectedResult.displayName);
     this.onSubmit();
   }
 
   setInput(param: string): void {
     this.inputString = param;
     this.searchForm.get('userInput').setValue(this.inputString);
-    this.resetSuggestions();
-    this.initSearch();
+    this.resetSearch();
     this.changeDetector.detectChanges();
   }
 
@@ -77,7 +76,8 @@ export class SearchComponent implements OnInit {
     return this.inputString;
   }
 
-  resetSuggestions() {
+  resetSearch(): void {
     this.suggestions = of([]);
+    this.initSearch();
   }
 }
