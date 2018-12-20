@@ -12,24 +12,33 @@
   </a>
   <app-search #search></app-search>
   <mat-form-field>
-    <mat-select placeholder="Entity type" [formControl]="entities" multiple dense (selectionChange)="applyFilters()">
+    <mat-select placeholder="Select entity types..." [formControl]="entityCtrl" multiple dense (selectionChange)="applyFilters()">
       <mat-select-trigger>
-        {{entities.value ? (entities.value.length >= entityTypes?.length ? 'All' : entities.value) : ''}}
+        {{entityCtrl.value ? (entityCtrl.value.length >= entityTypes?.length ? 'All' : entityCtrl.value) : ''}}
       </mat-select-trigger>
       <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">
         <mat-icon>{{getIcon(entityType)}}</mat-icon>{{entityType}}
       </mat-option>
     </mat-select>
-    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entities.value.length <= 0">error</mat-icon>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entityCtrl.value?.length <= 0 && entityTypes > 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="List type" [formControl]="crimeLists" multiple dense (selectionChange)="applyFilters()">
+    <mat-select placeholder="Select list types..." [formControl]="listTypeCtrl" multiple dense (selectionChange)="applyFilters()">
       <mat-select-trigger>
-        {{crimeLists.value ? (crimeLists.value.length >= listTypes?.length ? 'All' : crimeLists.value) : ''}}
+        {{listTypeCtrl.value ? (listTypeCtrl.value.length >= listTypes?.length ? 'All' : listTypeCtrl.value) : ''}}
       </mat-select-trigger>
       <mat-option *ngFor="let listType of listTypes" [value]="listType">{{listType}}</mat-option>
     </mat-select>
-    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="crimeLists.value.length <= 0">error</mat-icon>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="listTypeCtrl.value?.length <= 0 && listTypes > 0">error</mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Select countries..." [formControl]="countryCtrl" multiple dense (selectionChange)="applyFilters()">
+      <mat-select-trigger>
+        {{countryCtrl.value ? (countryCtrl.value.length >= countries?.length ? 'All' : countryCtrl.value) : ''}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+    </mat-select>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="countryCtrl.value?.length <= 0 && countries > 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
     <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Listed on from" (dateChange)="applyFilters()">
