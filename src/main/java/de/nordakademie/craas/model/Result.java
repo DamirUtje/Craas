@@ -1,7 +1,7 @@
 package de.nordakademie.craas.model;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import de.nordakademie.craas.service.CustomResultAnalyzer;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 
@@ -14,11 +14,11 @@ import javax.persistence.*;
 @Indexed
 @Entity
 @Table(name = "CRIMINALS_NOW")
+@Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
-
     @Id
     @GeneratedValue
-    private int id;
+    private int id; // TODO: refactor to real id
     @Field
     @Column(name = "DISPLAY_NAME")
     private String displayName;
@@ -28,7 +28,6 @@ public class Result {
     private String listType;
     @Column(name = "REGULATION_TYPE")
     private String regulationType;
-    @Field
     @Column(name = "CATEGORY_LABEL")
     private String categoryLabel;
     @Column(name = "LISTED_ON")
@@ -41,26 +40,29 @@ public class Result {
     @Field
     @Column(name = "LAST_NAME")
     private String lastName;
-    @Field
     @Column(name = "PROFESSIONAL_FUNCTION")
     private String professionalFunction;
     @Column(name = "DATE_OF_BIRTH")
     private String dateOfBirth;
-    @Field
     @Column(name = "PLACE_OF_BIRTH")
     private String placeOfBirth;
     @Column(name = "PASSPORT_COUNTRY")
     private String passportCountry;
-    @Field
     @Column(name = "ADDRESS")
     private String address;
     @Column(name = "COUNTRY")
     private String country;
 
+    @Transient
+    private float score;
+
     protected Result() {
     }
 
-    public Result(String displayName, String entityType, String listType, String regulationType, String categoryLabel, String listedOn, String lastDayUpdated, String firstName, String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth, String passportCountry, String address, String country) {
+    public Result(String displayName, String entityType, String listType, String regulationType,
+                  String categoryLabel, String listedOn, String lastDayUpdated, String firstName,
+                  String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth,
+                  String passportCountry, String address, String country, float score) {
         this.displayName = displayName;
         this.entityType = entityType;
         this.listType = listType;
@@ -76,6 +78,7 @@ public class Result {
         this.passportCountry = passportCountry;
         this.address = address;
         this.country = country;
+        this.score = score;
     }
 
     public int getId() {
@@ -204,5 +207,13 @@ public class Result {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 }

@@ -119,7 +119,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   createFilters(): void {
-
     this.createEntityFilter();
     this.createListFilter();
     this.createCountryFilter();
@@ -148,8 +147,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   createCountryFilter(): void {
     let countries = [];
     this.allResults.filter(function(result) {
-      return result.country && result.country.toUpperCase() !== 'UNKNOWN'
-        && countries.indexOf(result.country) == -1 &&
+      return countries.indexOf(result.country) == -1 &&
         countries.push(result.country);
     });
     this.countries = countries;
@@ -166,8 +164,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
         this.countryCtrl.value.indexOf(result.country) > -1)
       .filter((result) => {
         let listed = Date.parse(result.listedOn);
-        return !isNaN(listed)
-          && this.startDate.value <= listed && listed <= this.endDate.value;
+        return this.startDate.value <= listed && listed <= this.endDate.value;
       });
 
     this.setPage(1);

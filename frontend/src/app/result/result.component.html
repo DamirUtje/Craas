@@ -52,7 +52,7 @@
   </mat-form-field>
 </nav>
 
-<div class="result-count">{{results?.length}} results found</div>
+<div class="result-count">{{results?.length}} filtered; {{allResults?.length}} results found</div>
 
 <!-- https://stackblitz.com/edit/navbar-stackoverflow?file=app%2Fapp.component.html -->
 <mat-drawer-container>
@@ -63,7 +63,7 @@
 
         <p matLine>
           <mat-icon matPrefix>{{getIcon(result.entityType)}}</mat-icon>
-          {{result.displayName}}
+          {{result.displayName}} score: {{result.score}}
         </p>
         <p matLine>{{result.listType}}</p>
       </mat-list-option>
