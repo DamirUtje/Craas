@@ -1,12 +1,12 @@
 <form [formGroup]='searchForm' class="sync-container" (ngSubmit)="onSubmit()"
       (keydown.esc)="resetSearch()">
   <mat-form-field class="form-input-field">
-    <input matInput #userInput placeholder="Search..." formControlName='userInput'>
+    <input matInput #userInput placeholder="Search..." formControlName='userInput' (focusout)="resetSearch()">
     <mat-icon matSuffix *ngIf="userInput.value" (click)="userInput.value = ''; resetSearch()">close</mat-icon>
     <mat-icon matSuffix (click)="onSubmit()">search</mat-icon>
   </mat-form-field>
   <mat-spinner *ngIf="loading" [diameter]="24"></mat-spinner>
-  <mat-selection-list class="wrap" (selectionChange)="onSelect($event)" dense>
+  <mat-selection-list (selectionChange)="onSelect($event)" dense>
     <mat-list-option *ngFor="let result of suggestions | async" [value]="result" class="hide-mat-checkbox">
       {{ result.displayName }}
     </mat-list-option>

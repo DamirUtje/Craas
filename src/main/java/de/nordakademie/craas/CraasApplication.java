@@ -33,8 +33,7 @@ public class CraasApplication extends SpringBootServletInitializer
 			fullTextEntityManager.createIndexer().startAndWait();
 		}
 		catch (InterruptedException e) {
-			System.out.println(
-					"Failed to create the search index: " +
+			System.out.println("Failed to create the search index: " +
 							e.toString());
 		}
 	}

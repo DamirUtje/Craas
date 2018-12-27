@@ -78,37 +78,33 @@ public class ResultDAO {
     }
 
     private FullTextQuery getFullTextQuery(String searchString, QueryType queryType) {
-        FullTextQuery fullTextQuery;
         FullTextEntityManager searchManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = searchManager.getSearchFactory()
                 .buildQueryBuilder().forEntity(Result.class).get();
 
-        Query query;
+        Query query = getQuery(queryBuilder, searchString, queryType);
+
+        return searchManager.createFullTextQuery(query, Result.class)
+                .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
+    }
+
+    private Query getQuery(QueryBuilder queryBuilder, String searchString, QueryType queryType) {
         switch (queryType){
             default:
             case DEFAULT:
-                query = queryBuilder
+                return queryBuilder
                         .keyword()
                         .onFields(getSearchFields())
                         .matching(searchString)
                         .createQuery();
-
-                fullTextQuery = searchManager.createFullTextQuery(query, Result.class)
-                        .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
-                break;
             case FUZZY:
-                query = queryBuilder
+                return queryBuilder
                         .keyword()
                         .fuzzy()
                         .onFields(getSearchFields())
                         .matching(searchString)
                         .createQuery();
-
-                fullTextQuery = searchManager.createFullTextQuery(query, Result.class)
-                        .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
-                break;
         }
-        return fullTextQuery;
     }
 
     private String[] getSearchFields() {
@@ -119,7 +115,6 @@ public class ResultDAO {
             if(field.getAnnotation(Field.class) != null)
                 retValue.add(field.getName());
         }
-
         return retValue.toArray(new String[0]);
     }
 

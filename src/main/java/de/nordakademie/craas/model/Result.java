@@ -34,10 +34,8 @@ public class Result {
     private String listedOn;
     @Column(name = "LAST_DAY_UPDATED")
     private String lastDayUpdated;
-    @Field
     @Column(name = "FIRST_NAME")
     private String firstName;
-    @Field
     @Column(name = "LAST_NAME")
     private String lastName;
     @Column(name = "PROFESSIONAL_FUNCTION")
