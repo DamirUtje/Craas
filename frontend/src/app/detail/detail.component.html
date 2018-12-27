@@ -1,5 +1,5 @@
-<div>
-  <ul *ngFor="let attribute of selectedResult | keyvalue">
-    {{attribute.key}}: {{attribute.value}}
+<div class="detail-container">
+  <ul *ngFor="let attribute of attributeNames">
+    {{getRegular(attribute)}}: {{selectedResult[attribute]}}
   </ul>
 </div>

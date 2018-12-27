@@ -9,24 +9,24 @@ import {UtilService} from "../_service/util.service";
 })
 export class DetailComponent {
 
-  selectedResult: { [id: string] : any; } = {};
+  selectedResult: Result;
+  attributeNames: string[] = [];
 
-  constructor(private utilService: UtilService) {
-
-  }
+  constructor(private utilService: UtilService) { }
 
   setResult(result: Result) {
+    this.attributeNames = [];
     if(result) {
+      this.selectedResult = result;
       for (let attribute in result) {
-
-        let value = result[attribute];
-        if(value)
-          this.selectedResult[this.utilService.camelCaseToRegular(attribute)] = value;
+        if (result[attribute])
+          this.attributeNames.push(attribute);
       }
-    } else {
-      this.selectedResult = {};
-      // todo message service log;
     }
+  }
+
+  getRegular(attribute: string): string {
+    return this.utilService.camelCaseToRegular(attribute);
   }
 }
 
