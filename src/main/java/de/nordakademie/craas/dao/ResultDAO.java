@@ -22,18 +22,13 @@ public class ResultDAO {
 
     @PersistenceContext
     protected EntityManager entityManager;
-    private enum QueryType { DEFAULT, FUZZY }
 
     public ResultDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     public List<Result> loadResults(String term) {
-        List<Result> results = new ArrayList<>(getResults(term, QueryType.DEFAULT));
-        if(results.size() <= 10)
-            results.addAll(new ArrayList<>(getResults(term, QueryType.FUZZY)));
-
-        return results;
+        return getResults(term);
     }
 
     public List<Result> loadSuggestions(String term) {
@@ -57,10 +52,10 @@ public class ResultDAO {
     }
 
     @Transactional
-    public List<Result> getResults(String searchString, QueryType queryType) {
+    public List<Result> getResults(String searchString) {
         List<Result> results = new ArrayList<>();
         try {
-            FullTextQuery jpaQuery = getFullTextQuery(searchString, queryType);
+            FullTextQuery jpaQuery = getFullTextQuery(searchString);
 
             @SuppressWarnings("unchecked")
             List<Object[]> qryResult = jpaQuery.getResultList();
@@ -77,34 +72,20 @@ public class ResultDAO {
         return results;
     }
 
-    private FullTextQuery getFullTextQuery(String searchString, QueryType queryType) {
+    private FullTextQuery getFullTextQuery(String searchString) {
         FullTextEntityManager searchManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = searchManager.getSearchFactory()
                 .buildQueryBuilder().forEntity(Result.class).get();
 
-        Query query = getQuery(queryBuilder, searchString, queryType);
+        Query query = queryBuilder
+                .keyword()
+                .fuzzy()
+                .onFields(getSearchFields())
+                .matching(searchString)
+                .createQuery();
 
         return searchManager.createFullTextQuery(query, Result.class)
                 .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
-    }
-
-    private Query getQuery(QueryBuilder queryBuilder, String searchString, QueryType queryType) {
-        switch (queryType){
-            default:
-            case DEFAULT:
-                return queryBuilder
-                        .keyword()
-                        .onFields(getSearchFields())
-                        .matching(searchString)
-                        .createQuery();
-            case FUZZY:
-                return queryBuilder
-                        .keyword()
-                        .fuzzy()
-                        .onFields(getSearchFields())
-                        .matching(searchString)
-                        .createQuery();
-        }
     }
 
     private String[] getSearchFields() {

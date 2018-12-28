@@ -53,7 +53,7 @@
 </nav>
 
 <div class="result-count">
-  {{results?.length + " results"}} {{results?.length !== allResults?.length ? " ("+ allResults?.length +")" : ""}}
+  {{results?.length + " results"}} {{results?.length !== allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
 </div>
 
 <mat-drawer-container>
@@ -64,9 +64,10 @@
 
         <p matLine>
           <mat-icon matPrefix>{{getIcon(result.entityType)}}</mat-icon>
-          {{result.displayName}} score: {{result.score}}
+          {{result.displayName}}
         </p>
         <p matLine>{{result.listType}}</p>
+        <p matLine> Score: {{result.score}}</p>
       </mat-list-option>
     </mat-selection-list>
     <!-- pager -->
