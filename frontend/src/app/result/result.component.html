@@ -67,7 +67,7 @@
           {{result.displayName}}
         </p>
         <p matLine>{{result.listType}}</p>
-        <p matLine> Score: {{result.score}}</p>
+        <p matLine> Score: {{result.score.toFixed(2)}}</p>
       </mat-list-option>
     </mat-selection-list>
     <!-- pager -->
@@ -76,7 +76,7 @@
         <ul class="pagination flex-sm-wrap">
           <div class="content-container">
             <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-              <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
                 <a class="page-link" (click)="setPage(1)"><mat-icon>first_page</mat-icon></a>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
@@ -85,10 +85,10 @@
               <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                 <a class="page-link" (click)="setPage(page)">{{page}}</a>
               </li>
-              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
                 <a class="page-link" (click)="setPage(pager.currentPage + 1)"><mat-icon>chevron_right</mat-icon></a>
               </li>
-              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
                 <a class="page-link" (click)="setPage(pager.totalPages)"><mat-icon>last_page</mat-icon></a>
               </li>
             </ul>

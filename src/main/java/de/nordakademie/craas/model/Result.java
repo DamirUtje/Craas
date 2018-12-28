@@ -17,8 +17,8 @@ import javax.persistence.*;
 @Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
     @Id
-    @GeneratedValue
-    private int id; // TODO: refactor to real id
+    @Column(name = "SOURCE_ID")
+    private String sourceId;
     @Field
     @Column(name = "DISPLAY_NAME")
     private String displayName;
@@ -79,12 +79,12 @@ public class Result {
         this.score = score;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return sourceId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.sourceId = id;
     }
 
     public String getFirstName() {
