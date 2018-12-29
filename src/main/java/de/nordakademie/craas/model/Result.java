@@ -60,7 +60,7 @@ public class Result {
     public Result(String displayName, String entityType, String listType, String regulationType,
                   String categoryLabel, String listedOn, String lastDayUpdated, String firstName,
                   String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth,
-                  String passportCountry, String address, String country, float score) {
+                  String passportCountry, String address, String country, float score, String sourceId) {
         this.displayName = displayName;
         this.entityType = entityType;
         this.listType = listType;
@@ -77,14 +77,15 @@ public class Result {
         this.address = address;
         this.country = country;
         this.score = score;
+        this.sourceId = sourceId;
     }
 
-    public String getId() {
+    public String getSourceId() {
         return sourceId;
     }
 
-    public void setId(String id) {
-        this.sourceId = id;
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getFirstName() {
