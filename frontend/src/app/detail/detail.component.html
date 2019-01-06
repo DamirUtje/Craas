@@ -1,5 +1,8 @@
 <div class="detail-container">
-  <ul *ngFor="let attribute of attributeNames">
-    {{getRegular(attribute)}}: {{selectedResult[attribute]}}
+  <ul style="list-style-type: none;" *ngFor="let attribute of attributeNames">
+    <li>
+      <span class="text-secondary">{{getRegular(attribute)}}:</span>
+      {{selectedResult[attribute]}}
+    </li>
   </ul>
 </div>

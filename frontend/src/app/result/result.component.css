@@ -48,3 +48,10 @@
 .page-link-ex {
   padding: 0.23rem 0.4rem !important;
 }
+
+.detail-bar {
+  border-bottom: 1px solid rgba(0,0,0,.42);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px
+}

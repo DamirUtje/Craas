@@ -111,6 +111,10 @@
     <div [hidden]="!isMobile">
       <mat-icon matSuffix (click)="sidenav.toggle()" class="mobile-toggle">close</mat-icon>
     </div>
+    <div class="detail-bar">
+      {{currentResult?.displayName}}
+      <mat-icon>picture_as_pdf</mat-icon>
+    </div>
     <app-detail #detail></app-detail>
   </mat-drawer>
 </mat-drawer-container>
