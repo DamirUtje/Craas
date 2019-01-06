@@ -1,5 +1,5 @@
 export class Result {
-  id: number;
+  sourceId: number;
   displayName: string;
   entityType: string;
   listType: string;

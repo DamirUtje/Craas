@@ -8,7 +8,7 @@ import {DetailComponent} from './detail';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'result', component: ResultComponent},
-  {path: 'detail', component: DetailComponent},
+  {path: 'result/detail', component: DetailComponent},
   // otherwise redirect to home
   {path: '**', redirectTo: ''}
 ];

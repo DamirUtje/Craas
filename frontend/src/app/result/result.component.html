@@ -12,7 +12,7 @@
   </a>
   <app-search #search></app-search>
   <mat-form-field>
-    <mat-select placeholder="Select entity types..." [formControl]="entityCtrl" multiple (selectionChange)="applyFilters()">
+    <mat-select placeholder="Entity types..." [formControl]="entityCtrl" multiple (selectionChange)="applyFilters()">
       <mat-select-trigger>
         {{entityCtrl.value ? (entityCtrl.value.length >= entityTypes?.length ? 'All' : entityCtrl.value) : ''}}
       </mat-select-trigger>
@@ -23,7 +23,7 @@
     <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entityCtrl.value?.length <= 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="Select list types..." [formControl]="listTypeCtrl" multiple (selectionChange)="applyFilters()">
+    <mat-select placeholder="List types..." [formControl]="listTypeCtrl" multiple (selectionChange)="applyFilters()">
       <mat-select-trigger>
         {{listTypeCtrl.value ? (listTypeCtrl.value.length >= listTypes?.length ? 'All' : listTypeCtrl.value) : ''}}
       </mat-select-trigger>
@@ -32,7 +32,7 @@
     <mat-icon matPrefix matTooltip="You must select one option" *ngIf="listTypeCtrl.value?.length <= 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="Select countries..." [formControl]="countryCtrl" multiple (selectionChange)="applyFilters()">
+    <mat-select placeholder="Countries..." [formControl]="countryCtrl" multiple (selectionChange)="applyFilters()">
       <mat-select-trigger>
         {{countryCtrl.value ? (countryCtrl.value.length >= countries?.length ? 'All' : countryCtrl.value) : ''}}
       </mat-select-trigger>
@@ -52,24 +52,33 @@
   </mat-form-field>
 </nav>
 
-<div class="result-count">
+<div class="result-count text-secondary">
   {{results?.length + " results"}} {{results?.length !== allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
 </div>
 
 <mat-drawer-container>
   <mat-drawer-content>
 
+    <!-- result list -->
     <mat-selection-list #resultList (selectionChange)="onResultSelected($event)" dense>
       <mat-list-option *ngFor="let result of pagedResults" [value]="result" class="hide-mat-checkbox">
-
-        <p matLine>
-          <mat-icon matPrefix>{{getIcon(result.entityType)}}</mat-icon>
-          {{result.displayName}}
+        <mat-icon matListIcon>{{getIcon(result.entityType)}}</mat-icon>
+        <div><a style="white-space: nowrap" [routerLink]="" (click)="showDetails(result)">{{result.displayName}}</a></div>
+        <p matLine class="text-secondary">
+          List type: {{result.listType}} Category: {{result.categoryLabel}}
         </p>
-        <p matLine>{{result.listType}}</p>
-        <p matLine> Score: {{result.score.toFixed(2)}}</p>
+        <p matLine>
+          <span [ngClass]="{'badge badge-pill' : true,
+          'badge-secondary' : result.score < 1,
+          'badge-warning' : result.score >= 1 && result.score <= 2,
+          'badge-success' : result.score > 2}">
+            {{result.score.toFixed(2)}}
+          </span>
+        </p>
       </mat-list-option>
     </mat-selection-list>
+    <!-- result list -->
+
     <!-- pager -->
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-center">

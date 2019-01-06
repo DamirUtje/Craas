@@ -27,14 +27,14 @@ public class CraasApplication extends SpringBootServletInitializer
 	@Transactional
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-//		try {
-//			FullTextEntityManager fullTextEntityManager =
-//					Search.getFullTextEntityManager(entityManager);
-//			fullTextEntityManager.createIndexer().startAndWait();
-//		}
-//		catch (InterruptedException e) {
-//			System.out.println("Failed to create the search index: " +
-//							e.toString());
-//		}
+		try {
+			FullTextEntityManager fullTextEntityManager =
+					Search.getFullTextEntityManager(entityManager);
+			fullTextEntityManager.createIndexer().startAndWait();
+		}
+		catch (InterruptedException e) {
+			System.out.println("Failed to create the search index: " +
+							e.toString());
+		}
 	}
 }

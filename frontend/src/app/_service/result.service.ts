@@ -13,6 +13,7 @@ export class ResultService {
 
   baseApiUrl: string = '/api/';
   handleError: HandleError;
+  result: Observable<Result>;
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -36,6 +37,14 @@ export class ResultService {
       .pipe(
         catchError(this.handleError('loadSuggestions', []))
       );
+  }
+
+  getSelectedResult(): Observable<Result> {
+    return this.result;
+  }
+
+  setSelectedResult(result: Result) {
+    this.result = of(result);
   }
 
   loadPopular(): Observable<Result[]> {

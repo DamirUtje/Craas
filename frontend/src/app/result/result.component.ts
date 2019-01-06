@@ -100,13 +100,18 @@ export class ResultComponent implements OnInit, AfterViewInit {
       this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
     // set initial selection
-    this.detailView.setResult(this.pagedResults[0]);
+    this.detailView.displayResult(this.pagedResults[0]);
   }
 
   onResultSelected(e): void {
-    this.detailView.setResult(e.option.value as Result);
+    this.detailView.displayResult(e.option.value as Result);
     if(this.clientUtil.isMobile())
       this.sideNav.toggle().then(/*nothing to do*/);
+  }
+
+  showDetails(result: Result): void {
+    this.resultService.setSelectedResult(result);
+    this.router.navigate(["result/detail"]).then(/*nothing to do*/);
   }
 
   getIcon(entityType: string): string {
