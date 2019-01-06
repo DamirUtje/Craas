@@ -34,8 +34,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
   isMobile: boolean = false;
   countries: string[];
   countryCtrl = new FormControl(this.countries);
-  currentResult: Result;
-
 
   startDate = new FormControl(new Date(1990, 0, 1));
   endDate = new FormControl(new Date());
@@ -101,13 +99,11 @@ export class ResultComponent implements OnInit, AfterViewInit {
       this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
     // set initial selection
-    this.currentResult = this.pagedResults[0];
-    this.detailView.displayResult(this.currentResult);
+    this.detailView.displayResult(this.pagedResults[0]);
   }
 
   onResultSelected(e): void {
-    this.currentResult = e.option.value as Result;
-    this.detailView.displayResult(this.currentResult);
+    this.detailView.displayResult(e.option.value as Result);
     if(this.clientUtil.isMobile())
       this.sideNav.toggle().then(/*nothing to do*/);
   }

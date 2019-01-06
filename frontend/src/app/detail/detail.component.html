@@ -1,4 +1,8 @@
-<div class="detail-container">
+<div class="detail-bar">
+  {{selectedResult?.displayName}}
+  <mat-icon (click)="pdfExport()">picture_as_pdf</mat-icon>
+</div>
+<div #detailContent class="detail-container">
   <ul style="list-style-type: none;" *ngFor="let attribute of attributeNames">
     <li>
       <span class="text-secondary">{{getRegular(attribute)}}:</span>

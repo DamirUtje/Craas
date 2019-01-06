@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Result} from "../_model";
 import {UtilService} from "../_service/util.service";
 import {ResultService} from "../_service";
 import {Observable} from "rxjs";
+import * as jsPDF from "jspdf";
 
 @Component({
   templateUrl: 'detail.component.html',
@@ -13,20 +14,18 @@ export class DetailComponent implements OnInit {
 
   selectedResult: Result;
   attributeNames: string[] = [];
+  @ViewChild('detailContent') detailContent: ElementRef;
 
   constructor(private utilService: UtilService, private resultService: ResultService) { }
 
   ngOnInit() {
-    //this.selectedResult
-
-    let res: Observable<Result> = this.resultService.getSelectedResult();
-
-    if(res) {
-    this.resultService.getSelectedResult().subscribe(
+    let result: Observable<Result> = this.resultService.getSelectedResult();
+    if(result) {
+      this.resultService.getSelectedResult().subscribe(
       result => this.selectedResult = result,
-      err => console.error('Observer got an error: ' + err),
+      _ => _,
       () => this.displayResult(this.selectedResult )
-    );
+      );
     }
   }
 
@@ -43,6 +42,24 @@ export class DetailComponent implements OnInit {
 
   getRegular(attribute: string): string {
     return this.utilService.camelCaseToRegular(attribute);
+  }
+
+  pdfExport() {
+    const doc = new jsPDF();
+    const specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    };
+
+    const content = this.detailContent.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save('Craas_' + this.utilService.getFormattedTime()  + '.pdf');
   }
 }
 
