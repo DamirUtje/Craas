@@ -17,6 +17,7 @@ import javax.persistence.*;
 @Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
     @Id
+    private long id;
     @Column(name = "SOURCE_ID")
     private String sourceId;
     @Field
@@ -78,6 +79,14 @@ public class Result {
         this.country = country;
         this.score = score;
         this.sourceId = sourceId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getSourceId() {
