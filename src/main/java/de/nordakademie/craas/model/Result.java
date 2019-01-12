@@ -10,10 +10,9 @@ import javax.persistence.*;
  * @author Frank, Damir
  *
  */
-
 @Indexed
 @Entity
-@Table(name = "CRIMINALS_NOW")
+@Table(name = "CONSOLIDATED_CRIMINALS")
 @Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
     @Id
@@ -35,9 +34,14 @@ public class Result {
     private String listedOn;
     @Column(name = "LAST_DAY_UPDATED")
     private String lastDayUpdated;
+    @Field
     @Column(name = "FIRST_NAME")
     private String firstName;
+    @Field
     @Column(name = "LAST_NAME")
+    @Field
+    private String nameAlias;
+    @Column(name = "NAME_ALIAS")
     private String lastName;
     @Column(name = "PROFESSIONAL_FUNCTION")
     private String professionalFunction;
@@ -58,10 +62,13 @@ public class Result {
     protected Result() {
     }
 
-    public Result(String displayName, String entityType, String listType, String regulationType,
-                  String categoryLabel, String listedOn, String lastDayUpdated, String firstName,
-                  String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth,
-                  String passportCountry, String address, String country, float score, String sourceId) {
+    public Result(long id, String sourceId, String displayName, String entityType, String listType,
+                  String regulationType, String categoryLabel, String listedOn, String lastDayUpdated,
+                  String firstName, String nameAlias, String lastName, String professionalFunction,
+                  String dateOfBirth, String placeOfBirth, String passportCountry, String address,
+                  String country, float score) {
+        this.id = id;
+        this.sourceId = sourceId;
         this.displayName = displayName;
         this.entityType = entityType;
         this.listType = listType;
@@ -70,6 +77,7 @@ public class Result {
         this.listedOn = listedOn;
         this.lastDayUpdated = lastDayUpdated;
         this.firstName = firstName;
+        this.nameAlias = nameAlias;
         this.lastName = lastName;
         this.professionalFunction = professionalFunction;
         this.dateOfBirth = dateOfBirth;
@@ -78,7 +86,6 @@ public class Result {
         this.address = address;
         this.country = country;
         this.score = score;
-        this.sourceId = sourceId;
     }
 
     public long getId() {
@@ -111,6 +118,14 @@ public class Result {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getNameAlias() {
+        return nameAlias;
+    }
+
+    public void setNameAlias(String nameAlias) {
+        this.nameAlias = nameAlias;
     }
 
     public String getDisplayName() {

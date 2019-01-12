@@ -40,16 +40,6 @@
     </mat-select>
     <mat-icon matPrefix matTooltip="You must select one option" *ngIf="countryCtrl.value?.length <= 0">error</mat-icon>
   </mat-form-field>
-  <mat-form-field>
-    <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Listed on from" (dateChange)="applyFilters()">
-    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-    <mat-datepicker #startPicker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="Listed on to" (dateChange)="applyFilters()">
-    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-    <mat-datepicker #endPicker></mat-datepicker>
-  </mat-form-field>
 </nav>
 
 <div class="result-count text-secondary">

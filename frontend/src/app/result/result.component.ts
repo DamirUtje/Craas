@@ -35,9 +35,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
   countries: string[];
   countryCtrl = new FormControl(this.countries);
 
-  startDate = new FormControl(new Date(1990, 0, 1));
-  endDate = new FormControl(new Date());
-
   constructor(
     private resultService: ResultService,
     private activeRoute: ActivatedRoute,
@@ -87,8 +84,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
           this.applyFilters();
       });
   }
-
-  // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
 
   setPage(page: number): void {
     // get pager object from service
@@ -165,12 +160,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
       .filter((result) =>
         this.listTypeCtrl.value.indexOf(result.listType) > -1)
       .filter((result) =>
-        this.countryCtrl.value.indexOf(result.country) > -1)
-      .filter((result) => {
-        let listed = Date.parse(result.listedOn);
-        return this.startDate.value <= listed && listed <= this.endDate.value;
-      });
-
+        this.countryCtrl.value.indexOf(result.country) > -1);
     this.setPage(1);
   }
 }
