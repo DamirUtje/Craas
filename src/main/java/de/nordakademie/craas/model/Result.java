@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Indexed
 @Entity
-@Table(name = "CONSOLIDATED_CRIMINALS")
+@Table(name = "CONSOLIDATED_CRIMINALS_NOW")
 @Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
     @Id
