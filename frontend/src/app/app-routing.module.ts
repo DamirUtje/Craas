@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {HomeComponent} from './home';
+import {StartComponent} from './start';
 import {ResultComponent} from './result';
 import {DetailComponent} from './detail';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: StartComponent},
   {path: 'result', component: ResultComponent},
   {path: 'result/detail', component: DetailComponent},
   // otherwise redirect to home

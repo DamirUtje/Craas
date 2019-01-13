@@ -16,7 +16,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {routing} from './app-routing.module';
 
-import {HomeComponent} from './home';
+import {StartComponent} from './start';
 import {ResultComponent} from './result';
 import {DetailComponent} from './detail';
 import {MessagesComponent} from './messages';
@@ -27,15 +27,17 @@ import {HttpErrorHandler} from './_service';
 import {MessageService} from './_service';
 import {PagerService} from "./_service";
 import {UtilService} from "./_service/util.service";
+import {FooterComponent} from "./footer";
 
 @NgModule({
   declarations: [
-    HomeComponent,
     AppComponent,
+    StartComponent,
     ResultComponent,
     DetailComponent,
     MessagesComponent,
-    SearchComponent
+    SearchComponent,
+    FooterComponent
   ],
   imports: [
     routing,
