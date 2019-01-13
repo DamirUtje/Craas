@@ -1,6 +1,6 @@
 <div class="detail-bar">
   {{selectedResult?.displayName}}
-  <mat-icon (click)="pdfExport()">picture_as_pdf</mat-icon>
+  <mat-icon *ngIf="attributeNames.length > 0" (click)="pdfExport()">picture_as_pdf</mat-icon>
 </div>
 <div #detailContent class="detail-container">
   <ul style="list-style-type: none;" *ngFor="let attribute of attributeNames">

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from "@angular/router";
 
-import {Observable, of, throwError} from "rxjs"
-import {map, switchMap, catchError} from "rxjs/operators"
+import {Observable, of} from "rxjs"
+import {catchError} from "rxjs/operators"
 
 import {Result} from '../_model';
 import {HandleError, HttpErrorHandler} from "./http-error-handler.service";
@@ -20,8 +20,6 @@ export class ResultService {
               httpErrorHandler: HttpErrorHandler) {
     this.handleError = httpErrorHandler.createHandleError('ResultService');
   }
-
-  // TODO: Documentation => https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
 
   loadResults(term: string): Observable<Result[]> {
     const options = { params: new HttpParams().set('term', term) };
