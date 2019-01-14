@@ -1,7 +1,25 @@
-<div *ngIf="messageService.messages.length" class="messages-container">
-  <h6>Messages</h6>
-  <mat-icon matSuffix (click)="messageService.clear()">delete</mat-icon>
-  <ol>
-    <li *ngFor='let message of messageService.messages'> {{message}} </li>
-  </ol>
+<!-- Invisible button trigger modal -->
+<button type="button" [hidden]="true" #openModal data-toggle="modal" data-target="#msg-modal"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="msg-modal" tabindex="-1" role="dialog" aria-labelledby="msg-modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="icon-box">
+          <mat-icon class="white-icon">error_outline</mat-icon>
+        </div>
+        <div id="modal-title"><h5>Ooops!</h5></div>
+        <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="modal-body">
+        The service may not be available at the moment. Please try again later.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Try again</button>
+      </div>
+    </div>
+  </div>
 </div>

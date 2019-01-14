@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { MessageService } from '../_service';
 
 @Component({
@@ -6,6 +6,14 @@ import { MessageService } from '../_service';
   templateUrl: 'messages.component.html',
   styleUrls: ['messages.component.css']
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnInit {
+
+  @ViewChild('openModal') openModal: ElementRef;
+
   constructor(public messageService: MessageService) {}
+
+  ngOnInit(): void {
+    if(this.messageService.messages.length > 0)
+      this.openModal.nativeElement.click();
+  }
 }

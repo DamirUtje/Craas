@@ -9,7 +9,6 @@ import { MessageService } from './message.service';
 export type HandleError =
   <T> (operation?: string, result?: T) => (error: HttpErrorResponse) => Observable<T>;
 
-/** Handles HttpClient errors */
 @Injectable()
 export class HttpErrorHandler {
   constructor(private messageService: MessageService) { }

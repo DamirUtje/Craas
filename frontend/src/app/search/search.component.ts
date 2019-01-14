@@ -15,6 +15,7 @@ import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 export class SearchComponent implements OnInit {
   selectedResult: Result;
   suggestions: Observable<Result[]>;
+  favorites: Result[];
   searchForm: FormGroup;
   inputString: string;
 
@@ -41,6 +42,13 @@ export class SearchComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(input => input ?
           this.resultService.loadSuggestions(input) : of([]))
+      );
+
+    this.resultService.loadPopular()
+      .subscribe(
+        result => this.favorites = result,
+        error1 => {},
+        () => {}
       );
   }
 
