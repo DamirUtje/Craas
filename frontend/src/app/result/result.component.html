@@ -55,7 +55,7 @@
         <mat-icon matListIcon>{{getIcon(result.entityType)}}</mat-icon>
         <div><a style="white-space: nowrap" [routerLink]="" (click)="showDetails(result)">{{result.displayName}}</a></div>
         <p matLine class="text-secondary">
-          List type: {{result.listType}} Category: {{result.categoryLabel}}
+          {{result.listType}}
         </p>
         <p matLine>
           <span [ngClass]="{'badge badge-pill' : true,

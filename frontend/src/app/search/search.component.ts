@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ResultService} from "../_service";
-import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-search',
@@ -15,7 +15,6 @@ import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators
 export class SearchComponent implements OnInit {
   selectedResult: Result;
   suggestions: Observable<Result[]>;
-  loading: boolean = false;
   searchForm: FormGroup;
   inputString: string;
 
@@ -40,10 +39,8 @@ export class SearchComponent implements OnInit {
       .pipe(
         debounceTime(100),
         distinctUntilChanged(),
-        tap(_ => (this.loading = true)),
         switchMap(input => input ?
-          this.resultService.loadSuggestions(input) : of([])),
-        tap(_ => (this.loading = false))
+          this.resultService.loadSuggestions(input) : of([]))
       );
   }
 
