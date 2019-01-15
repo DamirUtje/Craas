@@ -76,7 +76,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
   loadResults(): void {
     let term: string = this.searchComponent.getInput();
     this.resultService.loadResults(term)
-      .subscribe(results => this.allResults = results,
+      .subscribe(
+        results => this.allResults = results,
         () => {}, // error handling in ResultService
         () => {
           this.results = this.allResults;

@@ -79,12 +79,24 @@ public class ResultDAO {
 
         Query query = queryBuilder
                 .keyword()
+                .onFields(getSearchFields())
+                .matching(searchString)
+                .createQuery();
+
+        Query queryFuzzy = queryBuilder
+                .keyword()
                 .fuzzy()
                 .onFields(getSearchFields())
                 .matching(searchString)
                 .createQuery();
 
-        return searchManager.createFullTextQuery(query, Result.class)
+        Query luceneFull = queryBuilder
+                .bool()
+                .should(query)
+                .must(queryFuzzy)
+                .createQuery();
+
+        return searchManager.createFullTextQuery(luceneFull, Result.class)
                 .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
     }
 

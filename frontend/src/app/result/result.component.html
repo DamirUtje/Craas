@@ -43,7 +43,9 @@
 </nav>
 
 <div class="result-count text-secondary">
-  {{results?.length + " results"}} {{results?.length !== allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
+  <span>
+    {{results?.length + " results"}} {{results?.length !== allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
+  </span>
 </div>
 <app-messages></app-messages>
 <mat-drawer-container>

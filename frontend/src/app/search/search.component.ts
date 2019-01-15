@@ -47,13 +47,12 @@ export class SearchComponent implements OnInit {
     this.resultService.loadPopular()
       .subscribe(
         result => this.favorites = result,
-        error1 => {},
+        error => {},
         () => {}
       );
   }
 
   onSubmit(): void {
-    // https://stackblitz.com/angular/ooqemvjyqkb?file=src%2Fapp%2Fheroes%2Fheroes.service.ts
     this.inputString = this.selectedResult ?
       this.selectedResult.displayName :
       this.searchForm.get('userInput').value;
