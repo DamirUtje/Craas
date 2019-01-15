@@ -1,5 +1,5 @@
 export class Result {
-  id: number;
+  sourceId: number;
   displayName: string;
   entityType: string;
   listType: string;
@@ -17,7 +17,9 @@ export class Result {
   professionalFunction: string;
   passportCountry: string;
 
-  //..and so on
+  // calculated, not stored property
+  score: number;
+
 }
 
 

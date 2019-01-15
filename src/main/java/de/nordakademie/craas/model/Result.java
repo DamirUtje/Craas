@@ -1,7 +1,7 @@
 package de.nordakademie.craas.model;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+import de.nordakademie.craas.service.CustomResultAnalyzer;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 
@@ -10,15 +10,15 @@ import javax.persistence.*;
  * @author Frank, Damir
  *
  */
-
 @Indexed
 @Entity
-@Table(name = "CRIMINALS_NOW")
+@Table(name = "CONSOLIDATED_CRIMINALS_NOW")
+@Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
-
     @Id
-    @GeneratedValue
-    private int id;
+    private long id;
+    @Column(name = "SOURCE_ID")
+    private String sourceId;
     @Field
     @Column(name = "DISPLAY_NAME")
     private String displayName;
@@ -28,7 +28,6 @@ public class Result {
     private String listType;
     @Column(name = "REGULATION_TYPE")
     private String regulationType;
-    @Field
     @Column(name = "CATEGORY_LABEL")
     private String categoryLabel;
     @Column(name = "LISTED_ON")
@@ -40,27 +39,36 @@ public class Result {
     private String firstName;
     @Field
     @Column(name = "LAST_NAME")
-    private String lastName;
     @Field
+    private String nameAlias;
+    @Column(name = "NAME_ALIAS")
+    private String lastName;
     @Column(name = "PROFESSIONAL_FUNCTION")
     private String professionalFunction;
     @Column(name = "DATE_OF_BIRTH")
     private String dateOfBirth;
-    @Field
     @Column(name = "PLACE_OF_BIRTH")
     private String placeOfBirth;
     @Column(name = "PASSPORT_COUNTRY")
     private String passportCountry;
-    @Field
     @Column(name = "ADDRESS")
     private String address;
     @Column(name = "COUNTRY")
     private String country;
 
+    @Transient
+    private float score;
+
     protected Result() {
     }
 
-    public Result(String displayName, String entityType, String listType, String regulationType, String categoryLabel, String listedOn, String lastDayUpdated, String firstName, String lastName, String professionalFunction, String dateOfBirth, String placeOfBirth, String passportCountry, String address, String country) {
+    public Result(long id, String sourceId, String displayName, String entityType, String listType,
+                  String regulationType, String categoryLabel, String listedOn, String lastDayUpdated,
+                  String firstName, String nameAlias, String lastName, String professionalFunction,
+                  String dateOfBirth, String placeOfBirth, String passportCountry, String address,
+                  String country, float score) {
+        this.id = id;
+        this.sourceId = sourceId;
         this.displayName = displayName;
         this.entityType = entityType;
         this.listType = listType;
@@ -69,6 +77,7 @@ public class Result {
         this.listedOn = listedOn;
         this.lastDayUpdated = lastDayUpdated;
         this.firstName = firstName;
+        this.nameAlias = nameAlias;
         this.lastName = lastName;
         this.professionalFunction = professionalFunction;
         this.dateOfBirth = dateOfBirth;
@@ -76,14 +85,23 @@ public class Result {
         this.passportCountry = passportCountry;
         this.address = address;
         this.country = country;
+        this.score = score;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getFirstName() {
@@ -100,6 +118,14 @@ public class Result {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getNameAlias() {
+        return nameAlias;
+    }
+
+    public void setNameAlias(String nameAlias) {
+        this.nameAlias = nameAlias;
     }
 
     public String getDisplayName() {
@@ -204,5 +230,13 @@ public class Result {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 }

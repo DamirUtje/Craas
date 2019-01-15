@@ -1,0 +1,14 @@
+.detail-container {
+  overflow-wrap: break-word;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-right: 24px;
+}
+
+.detail-bar {
+  border-bottom: 1px solid rgba(0,0,0,.42);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f8f9fa;
+}

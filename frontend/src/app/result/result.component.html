@@ -12,72 +12,83 @@
   </a>
   <app-search #search></app-search>
   <mat-form-field>
-    <mat-select placeholder="Entity types" [formControl]="entities" multiple dense (selectionChange)="applyFilters()">
+    <mat-select placeholder="Entity types..." [formControl]="entityCtrl" multiple (selectionChange)="applyFilters()">
       <mat-select-trigger>
-        {{entities.value ? (entities.value.length >= entityTypes?.length ? 'All' : entities.value) : ''}}
+        {{entityCtrl.value ? (entityCtrl.value.length >= entityTypes?.length ? 'All' : entityCtrl.value) : ''}}
       </mat-select-trigger>
-      <mat-option *ngFor="let entityType of entityTypes" [value]="entityType">
+      <mat-option *ngFor="let entityType of entityTypes" [value]="entityType" dense>
         <mat-icon>{{getIcon(entityType)}}</mat-icon>{{entityType}}
       </mat-option>
     </mat-select>
-    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entities.value.length <= 0">error</mat-icon>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="entityCtrl.value?.length <= 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="List types" [formControl]="crimeLists" multiple dense (selectionChange)="applyFilters()">
+    <mat-select placeholder="List types..." [formControl]="listTypeCtrl" multiple (selectionChange)="applyFilters()">
       <mat-select-trigger>
-        {{crimeLists.value ? (crimeLists.value.length >= listTypes?.length ? 'All' : crimeLists.value) : ''}}
+        {{listTypeCtrl.value ? (listTypeCtrl.value.length >= listTypes?.length ? 'All' : listTypeCtrl.value) : ''}}
       </mat-select-trigger>
-      <mat-option *ngFor="let listType of listTypes" [value]="listType">{{listType}}</mat-option>
+      <mat-option *ngFor="let listType of listTypes" [value]="listType" dense>{{listType}}</mat-option>
     </mat-select>
-    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="crimeLists.value.length <= 0">error</mat-icon>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="listTypeCtrl.value?.length <= 0">error</mat-icon>
   </mat-form-field>
   <mat-form-field>
-    <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Choose a date" (dateChange)="applyFilters()">
-    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-    <mat-datepicker #startPicker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="Choose a date" (dateChange)="applyFilters()">
-    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-    <mat-datepicker #endPicker></mat-datepicker>
+    <mat-select placeholder="Countries..." [formControl]="countryCtrl" multiple (selectionChange)="applyFilters()">
+      <mat-select-trigger>
+        {{countryCtrl.value ? (countryCtrl.value.length >= countries?.length ? 'All' : countryCtrl.value) : ''}}
+      </mat-select-trigger>
+      <mat-option *ngFor="let country of countries" [value]="country" dense>{{country}}</mat-option>
+    </mat-select>
+    <mat-icon matPrefix matTooltip="You must select one option" *ngIf="countryCtrl.value?.length <= 0">error</mat-icon>
   </mat-form-field>
 </nav>
 
-<div class="result-count">{{results?.length}} results found</div>
-
-<!-- https://stackblitz.com/edit/navbar-stackoverflow?file=app%2Fapp.component.html -->
+<div class="result-count text-secondary">
+  {{results?.length + " results"}} {{results?.length !== allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
+</div>
+<app-messages></app-messages>
 <mat-drawer-container>
   <mat-drawer-content>
 
+    <!-- result list -->
     <mat-selection-list #resultList (selectionChange)="onResultSelected($event)" dense>
       <mat-list-option *ngFor="let result of pagedResults" [value]="result" class="hide-mat-checkbox">
-        <p matLine>
-          <mat-icon matPrefix>{{getIcon(result.entityType)}}</mat-icon>
-          {{result.displayName}}
+        <mat-icon matListIcon>{{getIcon(result.entityType)}}</mat-icon>
+        <div><a style="white-space: nowrap" [routerLink]="" (click)="showDetails(result)">{{result.displayName}}</a></div>
+        <p matLine class="text-secondary">
+          {{result.listType}}
         </p>
-        <p matLine>{{result.listType}}</p>
+        <p matLine>
+          <span [ngClass]="{'badge badge-pill' : true,
+          'badge-secondary' : result.score < 1,
+          'badge-warning' : result.score >= 1 && result.score <= 2,
+          'badge-success' : result.score > 2}">
+            {{result.score.toFixed(2)}}
+          </span>
+        </p>
       </mat-list-option>
     </mat-selection-list>
+    <!-- result list -->
+
     <!-- pager -->
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-center">
         <ul class="pagination flex-sm-wrap">
           <div class="content-container">
             <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-              <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                <a class="page-link" (click)="setPage(1)"><mat-icon>first_page</mat-icon></a>
+              <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a class="page-link page-link-ex" (click)="setPage(1)"><mat-icon>first_page</mat-icon></a>
               </li>
               <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-                <a class="page-link" (click)="setPage(pager.currentPage - 1)"><mat-icon>chevron_left</mat-icon></a>
+                <a class="page-link page-link-ex" (click)="setPage(pager.currentPage - 1)"><mat-icon>chevron_left</mat-icon></a>
               </li>
               <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                 <a class="page-link" (click)="setPage(page)">{{page}}</a>
               </li>
-              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a class="page-link" (click)="setPage(pager.currentPage + 1)"><mat-icon>chevron_right</mat-icon></a>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a class="page-link page-link-ex" (click)="setPage(pager.currentPage + 1)"><mat-icon>chevron_right</mat-icon></a>
               </li>
-              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                <a class="page-link" (click)="setPage(pager.totalPages)"><mat-icon>last_page</mat-icon></a>
+              <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a class="page-link page-link-ex" (click)="setPage(pager.totalPages)"><mat-icon>last_page</mat-icon></a>
               </li>
             </ul>
           </div>

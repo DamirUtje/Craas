@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 import {PagerService, ResultService} from '../_service';
@@ -27,14 +27,13 @@ export class ResultComponent implements OnInit, AfterViewInit {
   pagedResults: Result[];
   results: Result[];
   pager: any = {};
-  entityTypes: string[] = ["Person", "Enterprise", "Entity"];
-  entities = new FormControl(this.entityTypes);
-  listTypes: string[] = ["UN List", "EU_SANCTION_LIST", "US_TREASURY_SANCTION_LIST"];
-  crimeLists = new FormControl(this.listTypes);
+  entityTypes: string[];
+  entityCtrl = new FormControl();
+  listTypes: string[];
+  listTypeCtrl = new FormControl();
   isMobile: boolean = false;
-
-  startDate = new FormControl(new Date(1990, 0, 1));
-  endDate = new FormControl(new Date());
+  countries: string[];
+  countryCtrl = new FormControl(this.countries);
 
   constructor(
     private resultService: ResultService,
@@ -46,8 +45,12 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
-        this.loadResults();
-        this.searchComponent.resetSuggestions();
+        if(!!this.results) {
+          // skip first load due to results will be loaded afterInit
+          this.loadResults();
+          this.searchComponent.resetSearch();
+        }
+
       }
     });
     this.dateAdapter.setLocale(this.clientUtil.getLocale());
@@ -77,10 +80,10 @@ export class ResultComponent implements OnInit, AfterViewInit {
         () => {}, // error handling in ResultService
         () => {
           this.results = this.allResults;
-          this.applyFilters(); });
+          this.createFilters();
+          this.applyFilters();
+      });
   }
-
-  // https://stackblitz.com/edit/angular-material-autocomplete-async1?file=src%2Fapp%2Fapp.service.ts
 
   setPage(page: number): void {
     // get pager object from service
@@ -90,38 +93,75 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.pagedResults =
       this.results.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-    // set current selection
-    this.detailView.setSelection(this.pagedResults[0]);
+    // set initial selection
+    this.detailView.displayResult(this.pagedResults[0]);
   }
 
   onResultSelected(e): void {
-    this.detailView.setSelection(e.option.value as Result);
+    this.detailView.displayResult(e.option.value as Result);
     if(this.clientUtil.isMobile())
       this.sideNav.toggle().then(/*nothing to do*/);
+  }
+
+  showDetails(result: Result): void {
+    this.resultService.setSelectedResult(result);
+    this.router.navigate(["result/detail"]).then(/*nothing to do*/);
   }
 
   getIcon(entityType: string): string {
     switch (entityType) {
       case "Person": return "person";
       case "Entity": return "bubble_chart";
-      case "Enterprise": return "domain"
+      case "Enterprise": return "domain";
       default: return '';
     }
+  }
+
+  createFilters(): void {
+    this.createEntityFilter();
+    this.createListFilter();
+    this.createCountryFilter();
+  }
+
+  createEntityFilter(): void {
+    let entities = [];
+    this.allResults.filter(function(result) {
+      return entities.indexOf(result.entityType) == -1 &&
+        entities.push(result.entityType);
+    });
+    this.entityTypes = entities;
+    this.entityCtrl.setValue(entities);
+  }
+
+  createListFilter(): void {
+    let listTypes = [];
+    this.allResults.filter(function(result) {
+      return listTypes.indexOf(result.listType) == -1 &&
+        listTypes.push(result.listType);
+    });
+    this.listTypes = listTypes;
+    this.listTypeCtrl.setValue(listTypes);
+  }
+
+  createCountryFilter(): void {
+    let countries = [];
+    this.allResults.filter(function(result) {
+      return countries.indexOf(result.country) == -1 &&
+        countries.push(result.country);
+    });
+    this.countries = countries;
+    this.countryCtrl.setValue(countries);
   }
 
   applyFilters(): void {
     this.results = this.allResults
       .filter((result) =>
-        this.entities.value.indexOf(result.entityType) > -1)
+        this.entityCtrl.value.indexOf(result.entityType) > -1)
       .filter((result) =>
-        this.crimeLists.value.indexOf(result.listType) > -1)
-      .filter((result) => {
-        let listed = Date.parse(result.listedOn);
-        return !isNaN(listed)
-          && this.startDate.value <= listed && listed <= this.endDate.value;
-      });
-
-    this.setPage(1)
+        this.listTypeCtrl.value.indexOf(result.listType) > -1)
+      .filter((result) =>
+        this.countryCtrl.value.indexOf(result.country) > -1);
+    this.setPage(1);
   }
 }
 

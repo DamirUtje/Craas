@@ -1,3 +1,21 @@
+/* selection list style */
+.mat-selection-list {
+  max-height: 265px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+  padding-top: initial;
+  margin-top: -1.15em;
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  background: white;
+}
+
+.mat-list-base[dense] {
+  padding-top: initial;
+}
+
 /* option text alignment */
 .mat-list-option {
   text-align: left;
@@ -8,27 +26,20 @@
   display: none !important;
 }
 
-/* selection list style */
-.mat-selection-list {
-  max-height: 265px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
-  padding-top: 0px;
-  position: absolute;
-  z-index: 999;
+.sync-container {
+  position: relative;
+  display: inline-block;
   width: 100%;
-  background: white;
 }
 
-/* remove strange form-field padding */
 .form-input-field {
   width: 100%;
-  margin-bottom: -1.25em;
-  marginTop: -1em;
+  display: inline-block;
 }
 
-.mat-list-base[dense] {
-  padding-top: 0px;
+.no-wrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
