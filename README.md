@@ -1,5 +1,5 @@
-# craas
-NORDAKADEMIE Master Project
+# Craas
+NORDAKADEMIE Master Project for zapliance
 
 ## Getting Started
 
