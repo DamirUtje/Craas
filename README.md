@@ -51,11 +51,19 @@ npm install angular-material --save
 ```
 npm install jsdpf --save
 ```
-### Build
+### Development
+
+Navigate to the frontend folder and execute
+
+```
+npm start
+```
+### Build for production purposes
 
 Navigate to the frontend folder and execute
 
 ```
 ng build --prod
 ```
-prod = production mode
+
+
