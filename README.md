@@ -5,44 +5,33 @@ NORDAKADEMIE Master Project for zapliance
 
 These instructions will get you a copy of the project up and running on your local machine for development purposes.
 
-### Prerequisites
+### Angular Prerequisites
 
-What things you need to install the software and how to install them
-
-Install Angular https://angular.io/guide/quickstart
+What things you need to install the software and how to install them. See also https://angular.io/guide/quickstart. Instructions for Debian based Linux OS. Please note the the logged in user has sudo privileges.
 #### Git 
-* Download: https://git-scm.com/downloads
-* Install (Debian based Linux command): 
+* Download
+https://git-scm.com/downloads
+* Install
 ```
 sudo apt-get install git
 ```
-* Check if installed:
+* Check if installed
 ```
 git --version
 ```
 #### NodeJs and NPM
-* Download: https://nodejs.org/en/download/
-* Install (Debian based Linux command) node and npm:
-
-See also: https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/
+* Download
+https://nodejs.org/en/download/
+* Install
+For older Linux distribution please see: https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/
 
 ```
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt-get install nodejs
-sudo apt-get install npm
 ```
-* Check if installed: 
-
-NodeJs
+* Check if installed
 ```
 node --version
-```
-or
-```
-nodejs --version
-```
-
-npm
-```
 npm --version
 ```
 #### Install Craas dependencies
