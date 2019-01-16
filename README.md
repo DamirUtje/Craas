@@ -1,5 +1,5 @@
-# craas
-NORDAKADEMIE Master Project
+# Craas
+NORDAKADEMIE Master Project for zapliance
 
 ## Getting Started
 
@@ -10,22 +10,25 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 Install Angular https://angular.io/guide/quickstart
-* Git
-* NodeJs
-* npm
-
-Check if installed:
-
+#### Git 
+* Download: https://git-scm.com/downloads
+* Check if installed:
 ```
 git --version
 ```
+#### NodeJs and NPM
+* Download: https://nodejs.org/en/download/
+* Install (Debian based Linux command) node and npm:
+```
+sudo apt install nodejs npm
+```
+* Check if installed: 
 ```
 node --version
 ```
 ```
 npm --version
 ```
-
 #### Install Craas dependencies
 * Angular Cli 
 ```
@@ -48,11 +51,19 @@ npm install angular-material --save
 ```
 npm install jsdpf --save
 ```
-### Build
+### Development
+
+Navigate to the frontend folder and execute
+
+```
+npm start
+```
+### Build for production purposes
 
 Navigate to the frontend folder and execute
 
 ```
 ng build --prod
 ```
-prod = production mode
+
+
