@@ -10,20 +10,19 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 Install Angular https://angular.io/guide/quickstart
-* Git 
-Download: https://git-scm.com/downloads
-Check if installed:
+#### Git 
+* Download: https://git-scm.com/downloads
+* Check if installed:
 ```
 git --version
 ```
-* NodeJs and NPM (Node package manager)
-Download: https://nodejs.org/en/download/
-Install (Debian based Linux command):
-Should install node and npm
+#### NodeJs and NPM
+* Download: https://nodejs.org/en/download/
+* Install (Debian based Linux command) node and npm:
 ```
 sudo apt install nodejs npm
 ```
-Check if installed: 
+* Check if installed: 
 ```
 node --version
 ```
