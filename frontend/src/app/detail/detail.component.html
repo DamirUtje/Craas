@@ -1,5 +1,5 @@
 <div class="detail-bar">
-  {{selectedResult?.displayName}}
+  {{selectedResult ? selectedResult?.displayName : 'The search query returned no results.'}}
   <mat-icon *ngIf="attributeNames.length > 0" (click)="pdfExport()">picture_as_pdf</mat-icon>
 </div>
 <div #detailContent class="detail-container">
