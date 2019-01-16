@@ -12,6 +12,10 @@ What things you need to install the software and how to install them
 Install Angular https://angular.io/guide/quickstart
 #### Git 
 * Download: https://git-scm.com/downloads
+* Install (Debian based Linux command): 
+```
+sudo apt-get install git
+```
 * Check if installed:
 ```
 git --version
@@ -19,13 +23,25 @@ git --version
 #### NodeJs and NPM
 * Download: https://nodejs.org/en/download/
 * Install (Debian based Linux command) node and npm:
+
+See also: https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/
+
 ```
-sudo apt install nodejs npm
+sudo apt-get install nodejs
+sudo apt-get install npm
 ```
 * Check if installed: 
+
+NodeJs
 ```
 node --version
 ```
+or
+```
+nodejs --version
+```
+
+npm
 ```
 npm --version
 ```
