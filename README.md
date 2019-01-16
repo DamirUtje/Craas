@@ -54,7 +54,7 @@ npm install angular-material --save
 
 * JavaScript Pdf
 ```
-npm install jsdpf --save
+npm install @types/jspdf --save
 ```
 ### Development
 
