@@ -44,12 +44,8 @@ export class SearchComponent implements OnInit {
           this.resultService.loadSuggestions(input) : of([]))
       );
 
-    this.resultService.loadPopular()
-      .subscribe(
-        result => this.favorites = result,
-        error => {},
-        () => {}
-      );
+    // TODO: implement api path
+    //this.resultService.loadPopular().subscribe(result => this.favorites = result);
   }
 
   onSubmit(): void {
