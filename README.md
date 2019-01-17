@@ -34,6 +34,13 @@ sudo apt-get install nodejs
 node --version
 npm --version
 ```
+Nodejs version output should be greater or equal than v11.6.*
+ If this is not the case, try:
+```
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+```
 #### Install Craas dependencies
 * Angular Cli 
 ```
