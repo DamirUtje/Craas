@@ -77,5 +77,10 @@ Navigate to the frontend folder and execute
 ```
 ng build --prod
 ```
+### Start in production
+
+```
+ng serve --prod
+```
 
 
