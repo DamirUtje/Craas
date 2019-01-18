@@ -16,6 +16,11 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO for the ResultService.
+ * @author Frank, Damir
+ *
+ */
 @Repository
 @Transactional
 public class ResultDAO {
@@ -27,10 +32,19 @@ public class ResultDAO {
         this.entityManager = entityManager;
     }
 
+    /**
+    * Returns a list of results which matches the passed term
+    */
+    @Transactional
     public List<Result> loadResults(String term) {
         return getResults(term);
     }
 
+    /**
+    * Returns a list of results with max. item size of 10.
+    * Each item display name starts with the passed term
+    */
+    @Transactional
     public List<Result> loadSuggestions(String term) {
         String hql =
                 String.format("FROM Result as R WHERE lower(R.displayName) LIKE '%s%%'",
@@ -39,6 +53,9 @@ public class ResultDAO {
         return getByQuery(hql, 10);
     }
 
+    /**
+    * Get results by hibernate query statement
+    */
     private List<Result> getByQuery(String hql, int maxResults) {
         List<Result> results = new ArrayList<>();
         try {
@@ -51,8 +68,10 @@ public class ResultDAO {
         return results;
     }
 
-    @Transactional
-    public List<Result> getResults(String searchString) {
+    /**
+    * Get results by term from lucene index
+    */
+    private List<Result> getResults(String searchString) {
         List<Result> results = new ArrayList<>();
         try {
             FullTextQuery jpaQuery = getFullTextQuery(searchString);
@@ -72,6 +91,9 @@ public class ResultDAO {
         return results;
     }
 
+    /**
+    * Get full text query
+    */
     private FullTextQuery getFullTextQuery(String searchString) {
         FullTextEntityManager searchManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = searchManager.getSearchFactory()
@@ -100,6 +122,9 @@ public class ResultDAO {
                 .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
     }
 
+    /**
+    * Get relevant field names for search
+    */
     private String[] getSearchFields() {
         List<String> retValue = new ArrayList<>();
 

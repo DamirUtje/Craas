@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ * Application
+ * @author Frank, Damir
+ *
+ */
 @SpringBootApplication
 public class CraasApplication extends SpringBootServletInitializer
         implements ApplicationListener<ApplicationReadyEvent> {

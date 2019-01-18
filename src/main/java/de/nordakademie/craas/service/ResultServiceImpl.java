@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Service impl for the Result entity.
+ * @author Frank, Damir
+ *
+ */
 @Component
 public class ResultServiceImpl implements ResultService {
 
