@@ -18,7 +18,7 @@ export class DetailComponent implements OnInit {
 
   constructor(private utilService: UtilService, private resultService: ResultService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     let result: Observable<Result> = this.resultService.getSelectedResult();
     if(result) {
       this.resultService.getSelectedResult().subscribe(
@@ -29,7 +29,7 @@ export class DetailComponent implements OnInit {
     }
   }
 
-  displayResult(result: Result) {
+  displayResult(result: Result): void {
     this.attributeNames = [];
     if(result) {
       this.selectedResult = result;
@@ -44,7 +44,7 @@ export class DetailComponent implements OnInit {
     return this.utilService.camelCaseToRegular(attribute);
   }
 
-  pdfExport() {
+  pdfExport(): void {
     const doc = new jsPDF();
     const specialElementHandlers = {
       '#editor': function (element, renderer) {

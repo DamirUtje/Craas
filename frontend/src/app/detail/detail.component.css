@@ -12,3 +12,7 @@
   padding: 10px;
   background-color: #f8f9fa;
 }
+
+#main-list {
+  list-style-type: none;
+}

@@ -4,6 +4,7 @@ import de.nordakademie.craas.service.CustomResultAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Model for the Result.
@@ -12,7 +13,7 @@ import javax.persistence.*;
  */
 @Indexed
 @Entity
-@Table(name = "CONSOLIDATED_CRIMINALS_NOW")
+@Table(name = "CONSOLIDATED_CRIMINALS")
 @Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
     @Id
@@ -54,18 +55,22 @@ public class Result {
     private String address;
     @Column(name = "COUNTRY")
     private String country;
-
+    @Column(name = "IS_DELETED")
+    private boolean isDeleted;
+    @Column(name = "LOAD_END_DATE")
+    private Date loadedOn;
     @Transient
     private float score;
 
     protected Result() {
     }
 
-    public Result(long id, String sourceId, String displayName, String entityType, String listType,
-                  String regulationType, String categoryLabel, String listedOn, String lastDayUpdated,
-                  String firstName, String nameAlias, String lastName, String professionalFunction,
-                  String dateOfBirth, String placeOfBirth, String passportCountry, String address,
-                  String country, float score) {
+    public Result(
+            String sourceId, String displayName, String entityType, String listType,
+            String regulationType, String categoryLabel, String listedOn, String lastDayUpdated,
+            String firstName, String nameAlias, String lastName, String professionalFunction,
+            String dateOfBirth, String placeOfBirth, String passportCountry, String address,
+            String country, boolean isDeleted, Date loadedOn, float score) {
         this.sourceId = sourceId;
         this.displayName = displayName;
         this.entityType = entityType;
@@ -83,6 +88,8 @@ public class Result {
         this.passportCountry = passportCountry;
         this.address = address;
         this.country = country;
+        this.isDeleted = isDeleted;
+        this.loadedOn = loadedOn;
         this.score = score;
     }
 
@@ -94,36 +101,12 @@ public class Result {
         this.sourceId = sourceId;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getNameAlias() {
-        return nameAlias;
-    }
-
-    public void setNameAlias(String nameAlias) {
-        this.nameAlias = nameAlias;
-    }
-
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String fullName) {
-        this.displayName = fullName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getEntityType() {
@@ -166,6 +149,38 @@ public class Result {
         this.listedOn = listedOn;
     }
 
+    public String getLastDayUpdated() {
+        return lastDayUpdated;
+    }
+
+    public void setLastDayUpdated(String lastDayUpdated) {
+        this.lastDayUpdated = lastDayUpdated;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getNameAlias() {
+        return nameAlias;
+    }
+
+    public void setNameAlias(String nameAlias) {
+        this.nameAlias = nameAlias;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getProfessionalFunction() {
         return professionalFunction;
     }
@@ -206,14 +221,6 @@ public class Result {
         this.address = address;
     }
 
-    public String getLastDateUpdated() {
-        return lastDayUpdated;
-    }
-
-    public void setLastDateUpdated(String lastDateUpdated) {
-        this.lastDayUpdated = lastDateUpdated;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -222,7 +229,23 @@ public class Result {
         this.country = country;
     }
 
-    public double getScore() {
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Date getLoadedOn() {
+        return loadedOn;
+    }
+
+    public void setLoadedOn(Date loadedOn) {
+        this.loadedOn = loadedOn;
+    }
+
+    public float getScore() {
         return score;
     }
 

@@ -33,7 +33,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   listTypeCtrl = new FormControl();
   isMobile: boolean = false;
   countries: string[];
-  countryCtrl = new FormControl(this.countries);
+  countryCtrl = new FormControl();
 
   startDate = new FormControl(new Date());
   endDate = new FormControl(new Date());

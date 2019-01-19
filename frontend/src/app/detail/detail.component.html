@@ -3,7 +3,7 @@
   <mat-icon *ngIf="attributeNames.length > 0" (click)="pdfExport()">picture_as_pdf</mat-icon>
 </div>
 <div #detailContent class="detail-container">
-  <ul style="list-style-type: none;" *ngFor="let attribute of attributeNames">
+  <ul id="main-list" *ngFor="let attribute of attributeNames">
     <li>
       <span class="text-secondary">{{getRegular(attribute)}}:</span>
       {{selectedResult[attribute]}}

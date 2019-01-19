@@ -3,23 +3,49 @@ export class Result {
   displayName: string;
   entityType: string;
   listType: string;
-  listedOn: string;
-  lastDateUpdated: string;
-  country: string;
   regulationType: string;
   categoryLabel: string;
-
+  listedOn: string;
+  lastDateUpdated: string;
   firstName: string;
   lastName: string;
+  nameAlias: string;
+  professionalFunction: string;
   dateOfBirth: string;
   placeOfBirth: string;
-  address: string;
-  professionalFunction: string;
   passportCountry: string;
-
-  // calculated, not stored property
+  address: string;
+  country: string;
+  isDeleted: boolean;
+  loadedOn: Date;
   score: number;
 
+  constructor(
+    sourceId: number, displayName: string, entityType: string, listType: string,
+    regulationType: string, categoryLabel: string, listedOn: string, lastDateUpdated: string,
+    firstName: string, lastName: string, nameAlias: string, professionalFunction: string,
+    dateOfBirth: string, placeOfBirth: string, passportCountry: string, address: string,
+    country: string, isDeleted: boolean, loadedOn: Date, score: number) {
+    this.sourceId = sourceId;
+    this.displayName = displayName;
+    this.entityType = entityType;
+    this.listType = listType;
+    this.regulationType = regulationType;
+    this.categoryLabel = categoryLabel;
+    this.listedOn = listedOn;
+    this.lastDateUpdated = lastDateUpdated;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.nameAlias = nameAlias;
+    this.professionalFunction = professionalFunction;
+    this.dateOfBirth = dateOfBirth;
+    this.placeOfBirth = placeOfBirth;
+    this.passportCountry = passportCountry;
+    this.address = address;
+    this.country = country;
+    this.isDeleted = isDeleted;
+    this.loadedOn = loadedOn;
+    this.score = score;
+  }
 }
-
 
