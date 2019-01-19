@@ -35,6 +35,9 @@ export class ResultComponent implements OnInit, AfterViewInit {
   countries: string[];
   countryCtrl = new FormControl(this.countries);
 
+  startDate = new FormControl(new Date());
+  endDate = new FormControl(new Date());
+
   constructor(
     private resultService: ResultService,
     private activeRoute: ActivatedRoute,
@@ -163,6 +166,15 @@ export class ResultComponent implements OnInit, AfterViewInit {
       .filter((result) =>
         this.countryCtrl.value.indexOf(result.country) > -1);
     this.setPage(1);
+  }
+
+  resetAllFilters(): void {
+    this.entityCtrl.reset();
+    this.listTypeCtrl.reset();
+    this.countryCtrl.reset();
+
+    this.createFilters();
+    this.applyFilters();
   }
 }
 

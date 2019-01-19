@@ -16,8 +16,7 @@ import javax.persistence.*;
 @Analyzer(impl = CustomResultAnalyzer.class)
 public class Result {
     @Id
-    private long id;
-    @Column(name = "SOURCE_ID")
+    @Column(name = "ID")
     private String sourceId;
     @Field
     @Column(name = "DISPLAY_NAME")
@@ -67,7 +66,6 @@ public class Result {
                   String firstName, String nameAlias, String lastName, String professionalFunction,
                   String dateOfBirth, String placeOfBirth, String passportCountry, String address,
                   String country, float score) {
-        this.id = id;
         this.sourceId = sourceId;
         this.displayName = displayName;
         this.entityType = entityType;
@@ -86,14 +84,6 @@ public class Result {
         this.address = address;
         this.country = country;
         this.score = score;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getSourceId() {

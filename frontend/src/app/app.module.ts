@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MatButtonModule,
   MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
@@ -56,7 +57,8 @@ import {FooterComponent} from "./footer";
     MatSelectModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule
   ],
   providers: [
     ResultService,
