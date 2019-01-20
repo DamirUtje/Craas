@@ -48,9 +48,10 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
-        if(!!this.results == null) {
+        if(!!this.results) {
           // skip first load due to results will be loaded afterInit
           this.loadResults();
+          console.log("try load data after enter");
           this.searchComponent.resetSearch();
         }
       }
