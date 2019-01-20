@@ -9,7 +9,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatListModule, MatNativeDateModule,
-  MatProgressSpinnerModule, MatSelectModule, MatSidenavModule
+  MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatTooltipModule
 } from "@angular/material";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
@@ -58,7 +58,8 @@ import {FooterComponent} from "./footer";
     MatListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [
     ResultService,

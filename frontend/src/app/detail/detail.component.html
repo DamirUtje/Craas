@@ -1,6 +1,8 @@
 <div class="detail-bar">
   {{selectedResult ? selectedResult?.displayName : 'The search query returned no results.'}}
-  <mat-icon *ngIf="attributeNames.length > 0" (click)="pdfExport()">picture_as_pdf</mat-icon>
+  <button *ngIf="attributeNames.length > 0" mat-icon-button (click)="pdfExport()">
+    <mat-icon>picture_as_pdf</mat-icon>
+  </button>
 </div>
 <div #detailContent class="detail-container">
   <ul id="main-list" *ngFor="let attribute of attributeNames">

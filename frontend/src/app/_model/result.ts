@@ -16,7 +16,8 @@ export class Result {
   passportCountry: string;
   address: string;
   country: string;
-  isDeleted: boolean;
+  deleted: boolean;
+  deletedOn: Date;
   loadedOn: Date;
   score: number;
 
@@ -25,7 +26,7 @@ export class Result {
     regulationType: string, categoryLabel: string, listedOn: string, lastDateUpdated: string,
     firstName: string, lastName: string, nameAlias: string, professionalFunction: string,
     dateOfBirth: string, placeOfBirth: string, passportCountry: string, address: string,
-    country: string, isDeleted: boolean, loadedOn: Date, score: number) {
+    country: string, deleted: boolean, deletedOn: Date, loadedOn: Date, score: number) {
     this.sourceId = sourceId;
     this.displayName = displayName;
     this.entityType = entityType;
@@ -43,7 +44,8 @@ export class Result {
     this.passportCountry = passportCountry;
     this.address = address;
     this.country = country;
-    this.isDeleted = isDeleted;
+    this.deleted = deleted;
+    this.deletedOn = deletedOn;
     this.loadedOn = loadedOn;
     this.score = score;
   }

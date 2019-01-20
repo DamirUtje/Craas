@@ -56,8 +56,11 @@ public class Result {
     @Column(name = "COUNTRY")
     private String country;
     @Column(name = "IS_DELETED")
-    private boolean isDeleted;
+    private boolean deleted;
     @Column(name = "LOAD_END_DATE")
+    private Date deletedOn;
+
+    @Column(name = "LOAD_DATE")
     private Date loadedOn;
     @Transient
     private float score;
@@ -70,7 +73,7 @@ public class Result {
             String regulationType, String categoryLabel, String listedOn, String lastDayUpdated,
             String firstName, String nameAlias, String lastName, String professionalFunction,
             String dateOfBirth, String placeOfBirth, String passportCountry, String address,
-            String country, boolean isDeleted, Date loadedOn, float score) {
+            String country, boolean deleted, Date deletedOn, Date loadedOn, float score) {
         this.sourceId = sourceId;
         this.displayName = displayName;
         this.entityType = entityType;
@@ -88,7 +91,8 @@ public class Result {
         this.passportCountry = passportCountry;
         this.address = address;
         this.country = country;
-        this.isDeleted = isDeleted;
+        this.deleted = deleted;
+        this.deletedOn = deletedOn;
         this.loadedOn = loadedOn;
         this.score = score;
     }
@@ -230,11 +234,19 @@ public class Result {
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
+    }
+
+    public Date getDeletedOn() {
+        return deletedOn;
+    }
+
+    public void setDeletedOn(Date deletedOn) {
+        this.deletedOn = deletedOn;
     }
 
     public Date getLoadedOn() {

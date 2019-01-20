@@ -34,9 +34,10 @@ export class ResultComponent implements OnInit, AfterViewInit {
   isMobile: boolean = false;
   countries: string[];
   countryCtrl = new FormControl();
-
   startDate = new FormControl(new Date());
   endDate = new FormControl(new Date());
+  deletedCount: number = 0;
+  isHistFilter: boolean = false;
 
   constructor(
     private resultService: ResultService,
@@ -164,7 +165,18 @@ export class ResultComponent implements OnInit, AfterViewInit {
       .filter((result) =>
         this.listTypeCtrl.value.indexOf(result.listType) > -1)
       .filter((result) =>
-        this.countryCtrl.value.indexOf(result.country) > -1);
+        this.countryCtrl.value.indexOf(result.country) > -1)
+      .filter((result) => {
+        if(result.deleted === true) {
+          this.deletedCount++;
+          let deletedDate: Date = new Date(result.deletedOn);
+          return this.startDate.value <= deletedDate
+            && deletedDate <= this.endDate.value;
+        }
+        else {
+          return true;
+        }
+      });
     this.setPage(1);
   }
 
@@ -172,6 +184,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.entityCtrl.reset();
     this.listTypeCtrl.reset();
     this.countryCtrl.reset();
+    this.startDate.setValue(new Date());
+    this.endDate.setValue(new Date());
 
     this.createFilters();
     this.applyFilters();
