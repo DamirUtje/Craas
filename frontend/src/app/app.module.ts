@@ -5,7 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatDatepickerModule,
+  MatDatepickerModule, MatDividerModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatListModule, MatNativeDateModule,
@@ -59,7 +59,8 @@ import {FooterComponent} from "./footer";
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDividerModule
   ],
   providers: [
     ResultService,
