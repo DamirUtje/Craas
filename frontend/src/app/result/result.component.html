@@ -132,10 +132,12 @@
     </div>
     <!-- pager -->
   </mat-drawer-content>
-  <mat-drawer mode="side" opened #sidenav position="end" class="sidenav-ex">
-    <div [hidden]="!isMobile">
-      <mat-icon matSuffix (click)="sidenav.toggle()" class="mobile-toggle">close</mat-icon>
-    </div>
+  <mat-drawer id="mat-drawer-ex" mode="side" opened #sidenav position="end"
+              [ngClass]="{'sidenav-ex': !isMobile, 'sidenav-ex-mobile': isMobile}">
+
+    <button class="mobile-toggle" *ngIf="isMobile" mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>close</mat-icon>
+    </button>
     <app-detail #detail></app-detail>
   </mat-drawer>
 </mat-drawer-container>

@@ -37,7 +37,6 @@ export class ResultComponent implements OnInit, AfterViewInit {
   startDate = new FormControl(new Date());
   endDate = new FormControl(new Date());
   deletedCount: number = 0;
-  isHistFilter: boolean = false;
 
   constructor(
     private resultService: ResultService,
@@ -49,12 +48,11 @@ export class ResultComponent implements OnInit, AfterViewInit {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
-        if(!!this.results) {
+        if(!!this.results == null) {
           // skip first load due to results will be loaded afterInit
           this.loadResults();
           this.searchComponent.resetSearch();
         }
-
       }
     });
     this.dateAdapter.setLocale(this.clientUtil.getLocale());
@@ -75,6 +73,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
       this.searchComponent.setInput(searchParam);
       this.loadResults();
     }
+    if(this.isMobile && this.sideNav.opened)
+      this.sideNav.toggle().then(/*nothing to do*/);
   }
 
   loadResults(): void {
