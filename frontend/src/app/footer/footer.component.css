@@ -16,3 +16,8 @@ footer {
   flex-flow: row wrap;
   padding: 8px;
 }
+
+#hidden-link {
+  text-decoration: none !important;
+  color: white;
+}
