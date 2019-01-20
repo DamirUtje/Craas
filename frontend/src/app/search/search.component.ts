@@ -25,7 +25,6 @@ export class SearchComponent implements OnInit {
               private changeDetector: ChangeDetectorRef) {
   }
 
-  // https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
   ngOnInit(): void {
 
     this.searchForm = this.formBuilder.group({
@@ -53,10 +52,9 @@ export class SearchComponent implements OnInit {
       this.selectedResult.displayName :
       this.searchForm.get('userInput').value;
 
-    if (this.inputString && this.inputString.trim()) {
+    if (this.inputString && this.inputString.trim())
       this.router.navigate(["/result", {term: this.inputString}])
-        .then(/*nothing to do*/);
-    }
+        .then(() => this.selectedResult = null);
   }
 
   onSelect(e): void {
