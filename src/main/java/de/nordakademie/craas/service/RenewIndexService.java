@@ -1,10 +1,10 @@
 package de.nordakademie.craas.service;
 
 /**
- * Service for the Result entity.
+ * Service for the Rebuild of the Result Index.
  * @author Frank, Damir
  *
  */
 public interface RenewIndexService {
-    void RenewIndex();
+    String renewIndex();
 }
