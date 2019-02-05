@@ -52,7 +52,8 @@ public class ResultDAO {
 
         return getByQuery(hql, 10);
     }
-
+    
+    
     /**
     * Get results by hibernate query statement
     */
@@ -135,5 +136,6 @@ public class ResultDAO {
         }
         return retValue.toArray(new String[0]);
     }
+
 
 }
