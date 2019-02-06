@@ -14,22 +14,23 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Component
-public class RenewIndexServiceImpl implements RenewIndexService {
+public class IndexBuilderServiceImpl implements IndexBuilderService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
     @Transactional
 	@Override
-	public void renewIndex() {
+	public void buildIndex() {
 		try {
-			System.out.println("Renewing index...");
+			System.out.println("Building index...");
 			FullTextEntityManager fullTextEntityManager =
 					Search.getFullTextEntityManager(entityManager);
 			fullTextEntityManager.createIndexer().startAndWait();
-			System.out.println("Index renewed...");
+
+			System.out.println("Index build completed successfully...");
 		} catch (InterruptedException e) {
-			System.out.println("Failed to create the search index: " + e.toString());
+			System.out.println("Failed to build the search index: " + e.toString());
 		}
 	}
 }

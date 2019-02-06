@@ -1,6 +1,6 @@
 package de.nordakademie.craas;
 
-import de.nordakademie.craas.service.RenewIndexService;
+import de.nordakademie.craas.service.IndexBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +18,7 @@ public class CraasApplication extends SpringBootServletInitializer
         implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Autowired
-	private RenewIndexService renewIndexService;
+	private IndexBuilderService indexBuilderService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CraasApplication.class, args);
@@ -26,6 +26,6 @@ public class CraasApplication extends SpringBootServletInitializer
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-		renewIndexService.renewIndex();
+		indexBuilderService.buildIndex();
 	}
 }

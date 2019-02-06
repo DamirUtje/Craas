@@ -4,18 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.nordakademie.craas.service.RenewIndexService;
+import de.nordakademie.craas.service.IndexBuilderService;
 
 @RestController
 @RequestMapping("/api")
 public class IndexController {
 
 	@Autowired
-	private RenewIndexService renewIndexService;
+	private IndexBuilderService indexBuilderService;
 	
-	@RequestMapping(value="/renew-index")
+	@RequestMapping(value="/build-index")
 	public void renewIndex(){
-		
-		renewIndexService.renewIndex();
+
+        indexBuilderService.buildIndex();
 	}
 }

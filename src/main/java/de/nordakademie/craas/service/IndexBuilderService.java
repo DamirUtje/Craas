@@ -5,6 +5,6 @@ package de.nordakademie.craas.service;
  * @author Frank, Damir
  *
  */
-public interface RenewIndexService {
-    void renewIndex();
+public interface IndexBuilderService {
+    void buildIndex();
 }
