@@ -1,7 +1,9 @@
 package de.nordakademie.craas;
 
+import de.nordakademie.craas.service.RenewIndexService;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -21,24 +23,15 @@ import javax.persistence.PersistenceContext;
 public class CraasApplication extends SpringBootServletInitializer
         implements ApplicationListener<ApplicationReadyEvent> {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private RenewIndexService renewIndexService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CraasApplication.class, args);
 	}
 
-	@Transactional
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-		try {
-			FullTextEntityManager fullTextEntityManager =
-					Search.getFullTextEntityManager(entityManager);
-			fullTextEntityManager.createIndexer().startAndWait();
-		}
-		catch (InterruptedException e) {
-			System.out.println("Failed to create the search index: " +
-							e.toString());
-		}
+		renewIndexService.renewIndex();
 	}
 }

@@ -6,5 +6,5 @@ package de.nordakademie.craas.service;
  *
  */
 public interface RenewIndexService {
-    String renewIndex();
+    void renewIndex();
 }

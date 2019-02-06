@@ -7,16 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 import de.nordakademie.craas.service.RenewIndexService;
 
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/api")
 public class IndexController {
-	
-	 @Autowired
+
+	@Autowired
 	private RenewIndexService renewIndexService;
 	
-	@RequestMapping(value="/renewIndex")
-	public String renewIndex(){
+	@RequestMapping(value="/renew-index")
+	public void renewIndex(){
 		
-		return renewIndexService.renewIndex();
-
+		renewIndexService.renewIndex();
 	}
 }

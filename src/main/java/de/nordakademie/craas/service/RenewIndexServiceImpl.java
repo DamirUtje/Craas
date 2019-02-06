@@ -6,6 +6,7 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service impl for the rebuild of the Result Index.
@@ -17,21 +18,18 @@ public class RenewIndexServiceImpl implements RenewIndexService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
+    @Transactional
 	@Override
-	public String renewIndex() {
+	public void renewIndex() {
 		try {
-			System.out.println("renewing index ...");			
+			System.out.println("Renewing index...");
 			FullTextEntityManager fullTextEntityManager =
 					Search.getFullTextEntityManager(entityManager);
 			fullTextEntityManager.createIndexer().startAndWait();
-			System.out.println("index renewed");
-		}
-			catch (InterruptedException e) {
+			System.out.println("Index renewed...");
+		} catch (InterruptedException e) {
 			System.out.println("Failed to create the search index: " + e.toString());
 		}
-		// TODO Auto-generated method stub
-		return "index renewed";
-		
 	}
 }
