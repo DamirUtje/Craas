@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Result} from "../_model";
 import {UtilService} from "../_service/util.service";
-import {ResultService} from "../_service";
+import {DataService} from "../_service";
 import {Observable} from "rxjs";
 import * as jsPDF from "jspdf";
 
@@ -16,7 +16,7 @@ export class DetailComponent implements OnInit {
   attributeNames: string[] = [];
   @ViewChild('detailContent') detailContent: ElementRef;
 
-  constructor(private utilService: UtilService, private resultService: ResultService) { }
+  constructor(private utilService: UtilService, private resultService: DataService) { }
 
   ngOnInit(): void {
     let result: Observable<Result> = this.resultService.getSelectedResult();

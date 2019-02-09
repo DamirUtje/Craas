@@ -28,5 +28,4 @@ public class ResultServiceImpl implements ResultService {
     public List<Result> getSuggestions(String term) {
         return resultDAO.loadSuggestions(term);
     }
-
 }

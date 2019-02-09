@@ -1,10 +1,11 @@
 import {ChangeDetectorRef, Component, Injectable, OnInit} from '@angular/core';
-import {Result} from "../_model";
+import {Result, SearchInquiry} from "../_model";
 import {Observable, of} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
-import {ResultService} from "../_service";
+import {DataService} from "../_service";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
+import {UtilService} from "../_service/util.service";
 
 @Component({
   selector: 'app-search',
@@ -15,14 +16,15 @@ import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 export class SearchComponent implements OnInit {
   selectedResult: Result;
   suggestions: Observable<Result[]>;
-  favorites: Result[];
+  favorites: SearchInquiry[];
   searchForm: FormGroup;
   inputString: string;
 
   constructor(private router: Router,
-              private resultService: ResultService,
+              private resultService: DataService,
               private formBuilder: FormBuilder,
-              private changeDetector: ChangeDetectorRef) {
+              private changeDetector: ChangeDetectorRef,
+              private clientUtil: UtilService) {
   }
 
   ngOnInit(): void {
@@ -43,8 +45,7 @@ export class SearchComponent implements OnInit {
           this.resultService.loadSuggestions(input) : of([]))
       );
 
-    // TODO: implement api path
-    //this.resultService.loadPopular().subscribe(result => this.favorites = result);
+    //this.resultService.loadFavorites().subscribe(result => this.favorites = result);
   }
 
   onSubmit(): void {
@@ -53,8 +54,20 @@ export class SearchComponent implements OnInit {
       this.searchForm.get('userInput').value;
 
     if (this.inputString && this.inputString.trim())
-      this.router.navigate(["/result", {term: this.inputString}])
-        .then(() => this.selectedResult = null);
+      this.router.navigate(["/result", { term: this.inputString }])
+        .then(() => {
+          // reset search
+          this.selectedResult = null;
+
+          // save search inquiry
+          const newInquiry: SearchInquiry = {
+            id: undefined,
+            keyword: this.inputString,
+            browserLanguage: this.clientUtil.getLocale(),
+            mobileDevice: this.clientUtil.isMobile()
+          };
+          this.resultService.saveInquiry(newInquiry);
+        });
   }
 
   onSelect(e): void {

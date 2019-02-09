@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from "@angular/router";
 
 import {Observable, of} from "rxjs"
@@ -7,11 +7,16 @@ import {catchError} from "rxjs/operators"
 
 import {Result} from '../_model';
 import {HandleError, HttpErrorHandler} from "./http-error-handler.service";
+import {SearchInquiry} from "../_model";
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
-export class ResultService {
+export class DataService {
 
-  baseApiUrl: string = '/api/';
+  baseApiUrl: string = '/api';
   handleError: HandleError;
   result: Observable<Result>;
 
@@ -23,7 +28,7 @@ export class ResultService {
 
   loadResults(term: string): Observable<Result[]> {
     const options = { params: new HttpParams().set('term', term) };
-    return this.http.get<Result[]>(this.baseApiUrl + 'query', options)
+    return this.http.get<Result[]>(this.baseApiUrl + '/query', options)
       .pipe(
         catchError(this.handleError('loadResults', []))
       );
@@ -31,7 +36,7 @@ export class ResultService {
 
   loadSuggestions(term: string): Observable<Result[]> {
     const options = { params: new HttpParams().set('term', term) };
-    return this.http.get<Result[]>(this.baseApiUrl + 'suggest', options)
+    return this.http.get<Result[]>(this.baseApiUrl + '/suggest', options)
       .pipe(
         catchError(this.handleError('loadSuggestions', []))
       );
@@ -45,11 +50,18 @@ export class ResultService {
     this.result = of(result);
   }
 
-  loadPopular(): Observable<Result[]> {
-    return this.http.get<Result[]>(this.baseApiUrl + 'popular')
+  loadFavorites(): Observable<SearchInquiry[]> {
+    return this.http.get<SearchInquiry[]>(this.baseApiUrl + '/favorites')
       .pipe(
-        catchError(this.handleError('loadPopular', []))
+        catchError(this.handleError('loadFavorites', []))
       );
+  }
+
+  saveInquiry(inquiry: SearchInquiry): void {
+    this.http.post(this.baseApiUrl + '/inquiry', inquiry, httpOptions)
+      .pipe(
+        catchError(this.handleError('saveInquiry'))
+      ).subscribe();
   }
 }
 

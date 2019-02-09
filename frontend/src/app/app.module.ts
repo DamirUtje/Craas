@@ -23,7 +23,7 @@ import {DetailComponent} from './detail';
 import {MessagesComponent} from './messages';
 import {SearchComponent} from "./search";
 
-import {ResultService} from './_service';
+import {DataService} from './_service/data.service';
 import {HttpErrorHandler} from './_service';
 import {MessageService} from './_service';
 import {PagerService} from "./_service";
@@ -63,7 +63,7 @@ import {FooterComponent} from "./footer";
     MatDividerModule
   ],
   providers: [
-    ResultService,
+    DataService,
     HttpErrorHandler,
     MessageService,
     PagerService,

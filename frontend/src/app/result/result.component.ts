@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
-import {PagerService, ResultService} from '../_service';
+import {PagerService, DataService} from '../_service';
 
 import {Result} from '../_model';
 import {SearchComponent} from "../search";
@@ -39,7 +39,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   deletedCount: number = 0;
 
   constructor(
-    private resultService: ResultService,
+    private resultService: DataService,
     private activeRoute: ActivatedRoute,
     private pagerService: PagerService,
     private router: Router,
