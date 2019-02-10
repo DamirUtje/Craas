@@ -14,7 +14,7 @@ public class SearchInquiry {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
-    @Column(name = "KEYWORD")
+    @Column(name = "DISPLAY_NAME")
     private String displayName;
     @Column(name = "BROWSER_LANGUAGE")
     private String browserLanguage;

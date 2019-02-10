@@ -27,7 +27,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.searchForm = this.formBuilder.group({
       userInput: null
     });
