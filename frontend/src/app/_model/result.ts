@@ -1,4 +1,6 @@
-export class Result {
+import {ISuggestion} from "./searchSuggestion";
+
+export class Result implements ISuggestion {
   sourceId: number;
   displayName: string;
   entityType: string;

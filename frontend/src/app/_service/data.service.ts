@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {Observable, of} from "rxjs"
 import {catchError} from "rxjs/operators"
 
-import {Result} from '../_model';
+import {ISuggestion, Result} from '../_model';
 import {HandleError, HttpErrorHandler} from "./http-error-handler.service";
 import {SearchInquiry} from "../_model";
 
@@ -34,9 +34,9 @@ export class DataService {
       );
   }
 
-  loadSuggestions(term: string): Observable<Result[]> {
+  loadSuggestions(term: string): Observable<ISuggestion[]> {
     const options = { params: new HttpParams().set('term', term) };
-    return this.http.get<Result[]>(this.baseApiUrl + '/suggest', options)
+    return this.http.get<ISuggestion[]>(this.baseApiUrl + '/suggest', options)
       .pipe(
         catchError(this.handleError('loadSuggestions', []))
       );
@@ -50,8 +50,8 @@ export class DataService {
     this.result = of(result);
   }
 
-  loadFavorites(): Observable<SearchInquiry[]> {
-    return this.http.get<SearchInquiry[]>(this.baseApiUrl + '/favorites')
+  loadFavorites(): Observable<ISuggestion[]> {
+    return this.http.get<ISuggestion[]>(this.baseApiUrl + '/favorites')
       .pipe(
         catchError(this.handleError('loadFavorites', []))
       );

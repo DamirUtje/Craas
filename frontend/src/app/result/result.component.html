@@ -97,7 +97,7 @@
     <!-- result list -->
 
     <!-- pager -->
-    <div class="nav-scroller py-1 mb-2">
+    <div *ngIf="pager.totalPages > 1" class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-center">
         <ul class="pagination flex-sm-wrap">
           <div class="content-container">

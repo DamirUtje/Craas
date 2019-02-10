@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Injectable, OnInit} from '@angular/core';
-import {Result, SearchInquiry} from "../_model";
+import {ISuggestion, SearchInquiry} from "../_model";
 import {Observable, of} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -14,14 +14,13 @@ import {UtilService} from "../_service/util.service";
 })
 @Injectable()
 export class SearchComponent implements OnInit {
-  selectedResult: Result;
-  suggestions: Observable<Result[]>;
-  favorites: SearchInquiry[];
+  selectedResult: ISuggestion;
+  suggestions: Observable<ISuggestion[]>;
   searchForm: FormGroup;
   inputString: string;
 
   constructor(private router: Router,
-              private resultService: DataService,
+              private dataService: DataService,
               private formBuilder: FormBuilder,
               private changeDetector: ChangeDetectorRef,
               private clientUtil: UtilService) {
@@ -41,11 +40,15 @@ export class SearchComponent implements OnInit {
       .pipe(
         debounceTime(100),
         distinctUntilChanged(),
-        switchMap(input => input ?
-          this.resultService.loadSuggestions(input) : of([]))
-      );
-
-    //this.resultService.loadFavorites().subscribe(result => this.favorites = result);
+        switchMap(input => {
+          if(input) {
+            return this.dataService.loadSuggestions(input);
+          }
+          else{
+            return this.dataService.loadFavorites();
+          }
+        }
+      ));
   }
 
   onSubmit(): void {
@@ -53,7 +56,7 @@ export class SearchComponent implements OnInit {
       this.selectedResult.displayName :
       this.searchForm.get('userInput').value;
 
-    if (this.inputString && this.inputString.trim())
+    if(this.inputString && this.inputString.trim())
       this.router.navigate(["/result", { term: this.inputString }])
         .then(() => {
           // reset search
@@ -62,16 +65,16 @@ export class SearchComponent implements OnInit {
           // save search inquiry
           const newInquiry: SearchInquiry = {
             id: undefined,
-            keyword: this.inputString,
+            displayName: this.inputString,
             browserLanguage: this.clientUtil.getLocale(),
             mobileDevice: this.clientUtil.isMobile()
           };
-          this.resultService.saveInquiry(newInquiry);
+          this.dataService.saveInquiry(newInquiry);
         });
   }
 
   onSelect(e): void {
-    this.selectedResult = e.option.value as Result;
+    this.selectedResult = e.option.value as ISuggestion;
     this.setInput(this.selectedResult.displayName);
     this.onSubmit();
   }
@@ -90,5 +93,15 @@ export class SearchComponent implements OnInit {
   resetSearch(): void {
     this.suggestions = of([]);
     this.initSearch();
+  }
+
+  onSuggest(): void {
+    let currentInput = this.searchForm.get('userInput').value;
+    if(currentInput) {
+      // input already entered, no favorite suggestions needed
+    } else {
+      this.suggestions = this.dataService.loadFavorites();
+      this.initSearch();
+    }
   }
 }

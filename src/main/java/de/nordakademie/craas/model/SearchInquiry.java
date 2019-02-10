@@ -13,38 +13,38 @@ public class SearchInquiry {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
-    private long id;
+    private Long id;
     @Column(name = "KEYWORD")
-    private String keyword;
+    private String displayName;
     @Column(name = "BROWSER_LANGUAGE")
     private String browserLanguage;
     @Column(name = "MOBILE_DEVICE")
-    private boolean mobileDevice;
+    private Boolean mobileDevice;
    
     protected SearchInquiry() {
     }
 
-    public SearchInquiry(long id, String keyword, String browserLanguage, boolean mobileDevice) {
+    public SearchInquiry(Long id, String displayName, String browserLanguage, Boolean mobileDevice) {
         this.id = id;
-        this.keyword = keyword;
+        this.displayName = displayName;
         this.browserLanguage = browserLanguage;
         this.mobileDevice = mobileDevice;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getBrowserLanguage() {
@@ -55,11 +55,11 @@ public class SearchInquiry {
         this.browserLanguage = browserLanguage;
     }
 
-    public boolean isMobileDevice() {
+    public Boolean isMobileDevice() {
         return mobileDevice;
     }
 
-    public void setMobileDevice(boolean mobileDevice) {
+    public void setMobileDevice(Boolean mobileDevice) {
         this.mobileDevice = mobileDevice;
     }
 }

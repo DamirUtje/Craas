@@ -39,7 +39,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   deletedCount: number = 0;
 
   constructor(
-    private resultService: DataService,
+    private dataService: DataService,
     private activeRoute: ActivatedRoute,
     private pagerService: PagerService,
     private router: Router,
@@ -79,7 +79,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   loadResults(): void {
     let term: string = this.searchComponent.getInput();
-    this.resultService.loadResults(term)
+    this.dataService.loadResults(term)
       .subscribe(
         results => this.allResults = results,
         () => {}, // error handling in ResultService
@@ -109,7 +109,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   showDetails(result: Result): void {
-    this.resultService.setSelectedResult(result);
+    this.dataService.setSelectedResult(result);
     this.router.navigate(["result/detail"]).then(/*nothing to do*/);
   }
 
