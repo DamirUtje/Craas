@@ -69,8 +69,8 @@
   <span>
     {{results?.length + " results"}} {{results?.length + deletedCount < allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
   </span>
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 </div>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 <app-messages></app-messages>
 <mat-drawer-container>
   <mat-drawer-content>
