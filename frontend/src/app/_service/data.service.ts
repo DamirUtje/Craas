@@ -42,14 +42,6 @@ export class DataService {
       );
   }
 
-  getSelectedResult(): Observable<Result> {
-    return this.result;
-  }
-
-  setSelectedResult(result: Result) {
-    this.result = of(result);
-  }
-
   loadFavorites(): Observable<ISuggestion[]> {
     return this.http.get<ISuggestion[]>(this.baseApiUrl + '/favorites')
       .pipe(
@@ -57,11 +49,12 @@ export class DataService {
       );
   }
 
-  saveInquiry(inquiry: SearchInquiry): void {
-    this.http.post(this.baseApiUrl + '/inquiry', inquiry, httpOptions)
-      .pipe(
-        catchError(this.handleError('saveInquiry'))
-      ).subscribe();
+  getSelectedResult(): Observable<Result> {
+    return this.result;
+  }
+
+  setSelectedResult(result: Result) {
+    this.result = of(result);
   }
 }
 

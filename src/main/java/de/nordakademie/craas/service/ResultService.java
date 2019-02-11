@@ -11,5 +11,4 @@ import java.util.List;
  */
 public interface ResultService {
     List<Result> getResults(String term);
-    List<Result> getSuggestions(String term);
 }

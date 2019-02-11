@@ -1,6 +1,7 @@
 package de.nordakademie.craas.dao;
 
 import de.nordakademie.craas.model.Result;
+import de.nordakademie.craas.model.Suggestion;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.engine.ProjectionConstants;
@@ -37,48 +38,17 @@ public class ResultDAO {
     */
     @Transactional
     public List<Result> loadResults(String term) {
-        return getResults(term);
-    }
+        Suggestion inquiry = new Suggestion(null, term);
+        entityManager.persist(inquiry);
 
-    /**
-    * Returns a list of results with max. item size of 10.
-    * Each item display name starts with the passed term
-    */
-    @Transactional
-    public List<Result> loadSuggestions(String term) {
-        String hql =
-                String.format("FROM Result as R WHERE lower(R.displayName) LIKE '%s%%'",
-                        term.toLowerCase());
-
-        return getByQuery(hql, 10);
-    }
-
-    /**
-    * Get results by hibernate query statement
-    */
-    private List<Result> getByQuery(String hql, int maxResults) {
         List<Result> results = new ArrayList<>();
         try {
-            results = entityManager.createQuery(hql, Result.class)
-                    .setMaxResults(maxResults).getResultList();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return results;
-    }
-
-    /**
-    * Get results by term from lucene index
-    */
-    private List<Result> getResults(String searchString) {
-        List<Result> results = new ArrayList<>();
-        try {
-            FullTextQuery jpaQuery = getFullTextQuery(searchString);
+            FullTextQuery jpaQuery = getFullTextQuery(term);
 
             @SuppressWarnings("unchecked")
             List<Object[]> qryResult = jpaQuery.getResultList();
 
+            // set score property
             for (Object[] item : qryResult) {
                 Result result = (Result) item[0];
                 result.setScore((float)item[1]);
@@ -118,12 +88,13 @@ public class ResultDAO {
                 .must(queryFuzzy)
                 .createQuery();
 
-        return searchManager.createFullTextQuery(luceneFull, Result.class)
+        return searchManager
+                .createFullTextQuery(luceneFull, Result.class)
                 .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
     }
 
     /**
-    * Get relevant field names for search
+    * Get relevant field names for search (with Field annotation)
     */
     private String[] getSearchFields() {
         List<String> retValue = new ArrayList<>();
@@ -135,6 +106,4 @@ public class ResultDAO {
         }
         return retValue.toArray(new String[0]);
     }
-
-
 }

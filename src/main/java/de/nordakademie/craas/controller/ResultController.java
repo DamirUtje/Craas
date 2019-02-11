@@ -14,18 +14,16 @@ import java.util.List;
 @RequestMapping("/api")
 public class ResultController {
 
+    private final ResultService resultService;
+
     @Autowired
-    private ResultService resultService;
+    public ResultController(ResultService resultService) {
+        this.resultService = resultService;
+    }
 
     @GetMapping(value="/query")
     public List<Result> getResults(@RequestParam("term") String term){
 
         return resultService.getResults(term);
-    }
-
-    @GetMapping(value="/suggest")
-    public List<Result> getSuggestions(@RequestParam("term") String term){
-
-        return resultService.getSuggestions(term);
     }
 }

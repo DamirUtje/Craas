@@ -1,10 +1,9 @@
 import {ChangeDetectorRef, Component, Injectable, OnInit} from '@angular/core';
-import {ISuggestion, SearchInquiry} from "../_model";
+import {ISuggestion} from "../_model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {DataService} from "../_service";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
-import {UtilService} from "../_service/util.service";
 
 @Component({
   selector: 'app-search',
@@ -21,8 +20,7 @@ export class SearchComponent implements OnInit {
   constructor(private router: Router,
               private dataService: DataService,
               private formBuilder: FormBuilder,
-              private changeDetector: ChangeDetectorRef,
-              private clientUtil: UtilService) {
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -54,15 +52,6 @@ export class SearchComponent implements OnInit {
         .then(() => {
           // reset search
           this.selectedResult = null;
-
-          // save search inquiry
-          const newInquiry: SearchInquiry = {
-            id: undefined,
-            displayName: this.inputString,
-            browserLanguage: this.clientUtil.getLocale(),
-            mobileDevice: this.clientUtil.isMobile()
-          };
-          this.dataService.saveInquiry(newInquiry);
         });
   }
 
