@@ -29,6 +29,7 @@ import {MessageService} from './_service';
 import {PagerService} from "./_service";
 import {UtilService} from "./_service/util.service";
 import {FooterComponent} from "./footer";
+import {LicenseComponent} from "./license";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {FooterComponent} from "./footer";
     DetailComponent,
     MessagesComponent,
     SearchComponent,
-    FooterComponent
+    FooterComponent,
+    LicenseComponent
   ],
   imports: [
     routing,

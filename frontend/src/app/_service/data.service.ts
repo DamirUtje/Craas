@@ -7,11 +7,6 @@ import {catchError} from "rxjs/operators"
 
 import {ISuggestion, Result} from '../_model';
 import {HandleError, HttpErrorHandler} from "./http-error-handler.service";
-import {SearchInquiry} from "../_model";
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class DataService {
