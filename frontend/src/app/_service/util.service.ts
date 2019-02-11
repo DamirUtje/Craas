@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Utils service
+ * @author Frank, Damir
+ */
 @Injectable()
 export class UtilService {
 

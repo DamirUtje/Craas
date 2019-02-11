@@ -1,3 +1,8 @@
+/**
+ * Model for Result
+ * @author Frank, Damir
+ *
+ */
 export class Result {
   sourceId: number;
   displayName: string;

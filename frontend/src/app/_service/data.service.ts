@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Router} from "@angular/router";
 
 import {Observable, of} from "rxjs"
@@ -8,6 +8,10 @@ import {catchError} from "rxjs/operators"
 import {ISuggestion, Result} from '../_model';
 import {HandleError, HttpErrorHandler} from "./http-error-handler.service";
 
+/**
+ * Data service
+ * @author Frank, Damir
+ */
 @Injectable()
 export class DataService {
 

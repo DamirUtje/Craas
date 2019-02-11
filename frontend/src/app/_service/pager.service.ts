@@ -1,3 +1,7 @@
+/**
+ * Pager service
+ * @author Frank, Damir
+ */
 export class PagerService {
 
   getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
