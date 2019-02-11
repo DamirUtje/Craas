@@ -37,6 +37,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   startDate = new FormControl(new Date());
   endDate = new FormControl(new Date());
   deletedCount: number = 0;
+  loading: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -78,6 +79,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   loadResults(): void {
+    this.loading = true;
     let term: string = this.searchComponent.getInput();
     this.dataService.loadResults(term)
       .subscribe(
@@ -87,6 +89,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
           this.results = this.allResults;
           this.createFilters();
           this.applyFilters();
+          this.loading = false;
       });
   }
 

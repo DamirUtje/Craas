@@ -2,13 +2,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatDatepickerModule, MatDividerModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatListModule, MatNativeDateModule,
+  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule,
   MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatTooltipModule
 } from "@angular/material";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -22,14 +22,11 @@ import {ResultComponent} from './result';
 import {DetailComponent} from './detail';
 import {MessagesComponent} from './messages';
 import {SearchComponent} from "./search";
-
-import {DataService} from './_service/data.service';
-import {HttpErrorHandler} from './_service';
-import {MessageService} from './_service';
-import {PagerService} from "./_service";
-import {UtilService} from "./_service/util.service";
 import {FooterComponent} from "./footer";
 import {LicenseComponent} from "./license";
+
+import {DataService, HttpErrorHandler, MessageService, PagerService} from './_service';
+import {UtilService} from "./_service/util.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +46,7 @@ import {LicenseComponent} from "./license";
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -62,7 +59,8 @@ import {LicenseComponent} from "./license";
     MatNativeDateModule,
     MatButtonModule,
     MatTooltipModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressBarModule
   ],
   providers: [
     DataService,
