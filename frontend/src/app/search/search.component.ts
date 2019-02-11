@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, Injectable, OnInit} from '@angular/core';
 import {ISuggestion, SearchInquiry} from "../_model";
-import {Observable, of} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {DataService} from "../_service";
@@ -15,7 +14,7 @@ import {UtilService} from "../_service/util.service";
 @Injectable()
 export class SearchComponent implements OnInit {
   selectedResult: ISuggestion;
-  suggestions: Observable<ISuggestion[]>;
+  suggestions: ISuggestion[];
   searchForm: FormGroup;
   inputString: string;
 
@@ -31,23 +30,18 @@ export class SearchComponent implements OnInit {
       userInput: null
     });
 
-    this.initSearch();
+    this.initSuggestions();
   }
 
-  initSearch(): void {
-    this.suggestions = this.searchForm.get('userInput').valueChanges
+  initSuggestions(): void {
+    this.searchForm.get('userInput').valueChanges
       .pipe(
         debounceTime(100),
         distinctUntilChanged(),
-        switchMap(input => {
-          if(input) {
-            return this.dataService.loadSuggestions(input);
-          }
-          else{
-            return this.dataService.loadFavorites();
-          }
-        }
-      ));
+        switchMap(input => input ?
+          this.dataService.loadSuggestions(input) :
+          this.dataService.loadFavorites())
+      ).subscribe(result => this.suggestions = result);
   }
 
   onSubmit(): void {
@@ -80,8 +74,8 @@ export class SearchComponent implements OnInit {
 
   setInput(param: string): void {
     this.inputString = param;
-    this.searchForm.get('userInput').setValue(this.inputString);
-    this.resetSearch();
+    this.searchForm.get('userInput')
+      .setValue(this.inputString, { emitEvent: false });
     this.changeDetector.detectChanges();
   }
 
@@ -89,18 +83,16 @@ export class SearchComponent implements OnInit {
     return this.inputString;
   }
 
-  resetSearch(): void {
-    this.suggestions = of([]);
-    this.initSearch();
+  hideSuggestions(): void {
+    this.suggestions = [];
   }
 
-  onSuggest(): void {
-    let currentInput = this.searchForm.get('userInput').value;
-    if(currentInput) {
-      // input already entered, no favorite suggestions needed
+  onFocusInput(): void {
+    if(this.searchForm.get('userInput').value) {
+      // input already tipped in, no favorite suggestions needed
     } else {
-      this.suggestions = this.dataService.loadFavorites();
-      this.initSearch();
+      this.dataService.loadFavorites()
+        .subscribe(res => this.suggestions = res);
     }
   }
 }

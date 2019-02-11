@@ -16,3 +16,7 @@
 #main-list {
   list-style-type: none;
 }
+
+#result-display-name {
+  padding: inherit;
+}

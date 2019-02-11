@@ -51,7 +51,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
         if(!!this.results) {
           // skip first load due to results will be loaded afterInit
           this.loadResults();
-          this.searchComponent.resetSearch();
+          this.searchComponent.hideSuggestions();
         }
       }
     });
