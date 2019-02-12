@@ -3,17 +3,9 @@
 }
 
 .result-count {
-  margin-top: 10px;
-  margin-bottom: 10px;
   font-size: 12px;
   border-bottom: 1px solid rgba(0,0,0,.42);
-  padding: 10px;
-}
-
-@media only screen and (max-width : 320px) {
-  .result-count {
-    text-align: center;
-  }
+  padding: 5px 5px 5px 25px;
 }
 
 .logo-link {
@@ -37,18 +29,44 @@
   width: 60%;
 }
 
+.sidenav-ex-mobile {
+  width: 100%;
+}
+
 @media only screen and (max-width : 320px) {
   .sidenav-ex {
     width: 100%;
   }
 }
 
-.mobile-toggle {
-  float: right;
-  margin-right: 20px;
+#mat-drawer-ex {
+  background-color: #f8f9fa;
 }
 
 .page-link-ex {
   padding: 0.23rem 0.4rem !important;
 }
 
+.page-item.active .page-link {
+  background: #0075a4;
+  border-color: #0075a4;
+}
+
+
+.search-input {
+  width: 50%;
+}
+
+.search-input {
+  width: 50%;
+}
+
+@media only screen and (max-width : 850px) {
+  .search-input {
+    width: 100%;
+  }
+}
+
+.accordion-ex {
+  background-color: transparent;
+}

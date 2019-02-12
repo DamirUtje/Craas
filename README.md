@@ -80,7 +80,7 @@ ng build --prod
 ### Start in production
 
 ```
-ng serve --prod
+ng serve --proxy-config proxy.conf.json --prod
 ```
 
 

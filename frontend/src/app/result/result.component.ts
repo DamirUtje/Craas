@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
-import {PagerService, ResultService} from '../_service';
+import {PagerService, DataService} from '../_service';
 
 import {Result} from '../_model';
 import {SearchComponent} from "../search";
@@ -22,6 +22,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sidenav') sideNav: MatSidenav;
   @ViewChild('resultList') selectionList: MatSelectionList;
+  @ViewChild('navBar') navBar: ElementRef;
 
   allResults: Result[];
   pagedResults: Result[];
@@ -33,28 +34,34 @@ export class ResultComponent implements OnInit, AfterViewInit {
   listTypeCtrl = new FormControl();
   isMobile: boolean = false;
   countries: string[];
-  countryCtrl = new FormControl(this.countries);
+  countryCtrl = new FormControl();
+  startDate = new FormControl(new Date());
+  endDate = new FormControl(new Date());
+  deletedCount: number = 0;
+  loading: boolean = false;
+  filtersExpanded: boolean = true;
 
   constructor(
-    private resultService: ResultService,
+    private dataService: DataService,
     private activeRoute: ActivatedRoute,
     private pagerService: PagerService,
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
-    private clientUtil: UtilService) {
+    private clientUtil: UtilService,
+    private changeDetector: ChangeDetectorRef) {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
         if(!!this.results) {
           // skip first load due to results will be loaded afterInit
           this.loadResults();
-          this.searchComponent.resetSearch();
+          this.searchComponent.hideSuggestions();
         }
-
       }
     });
     this.dateAdapter.setLocale(this.clientUtil.getLocale());
     this.isMobile = clientUtil.isMobile();
+    this.filtersExpanded = !this.isMobile;
   }
 
   ngOnInit(): void {
@@ -71,11 +78,16 @@ export class ResultComponent implements OnInit, AfterViewInit {
       this.searchComponent.setInput(searchParam);
       this.loadResults();
     }
+    if(this.isMobile && this.sideNav.opened)
+      this.sideNav.toggle().then(/*nothing to do*/);
+
+    this.changeDetector.detectChanges();
   }
 
   loadResults(): void {
+    this.loading = true;
     let term: string = this.searchComponent.getInput();
-    this.resultService.loadResults(term)
+    this.dataService.loadResults(term)
       .subscribe(
         results => this.allResults = results,
         () => {}, // error handling in ResultService
@@ -83,12 +95,17 @@ export class ResultComponent implements OnInit, AfterViewInit {
           this.results = this.allResults;
           this.createFilters();
           this.applyFilters();
+          this.loading = false;
       });
   }
 
   setPage(page: number): void {
+
+    let navBarHeight: number = this.navBar.nativeElement.clientHeight;
+    let pageSize = this.clientUtil.getOptimumPageSize(navBarHeight);
+
     // get pager object from service
-    this.pager = this.pagerService.getPager(this.results.length, page);
+    this.pager = this.pagerService.getPager(this.results.length, page, pageSize);
 
     // get current page of items
     this.pagedResults =
@@ -105,7 +122,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   }
 
   showDetails(result: Result): void {
-    this.resultService.setSelectedResult(result);
+    this.dataService.setSelectedResult(result);
     this.router.navigate(["result/detail"]).then(/*nothing to do*/);
   }
 
@@ -161,8 +178,30 @@ export class ResultComponent implements OnInit, AfterViewInit {
       .filter((result) =>
         this.listTypeCtrl.value.indexOf(result.listType) > -1)
       .filter((result) =>
-        this.countryCtrl.value.indexOf(result.country) > -1);
+        this.countryCtrl.value.indexOf(result.country) > -1)
+      .filter((result) => {
+        if(result.deleted === true) {
+          this.deletedCount++;
+          let deletedDate: Date = new Date(result.deletedOn);
+          return this.startDate.value <= deletedDate
+            && deletedDate <= this.endDate.value;
+        }
+        else {
+          return true;
+        }
+      });
     this.setPage(1);
+  }
+
+  resetAllFilters(): void {
+    this.entityCtrl.reset();
+    this.listTypeCtrl.reset();
+    this.countryCtrl.reset();
+    this.startDate.setValue(new Date());
+    this.endDate.setValue(new Date());
+
+    this.createFilters();
+    this.applyFilters();
   }
 }
 

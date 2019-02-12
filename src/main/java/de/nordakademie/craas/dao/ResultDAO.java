@@ -1,6 +1,7 @@
 package de.nordakademie.craas.dao;
 
 import de.nordakademie.craas.model.Result;
+import de.nordakademie.craas.model.Suggestion;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.engine.ProjectionConstants;
@@ -16,6 +17,11 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO for the ResultService.
+ * @author Frank, Damir
+ *
+ */
 @Repository
 @Transactional
 public class ResultDAO {
@@ -27,39 +33,22 @@ public class ResultDAO {
         this.entityManager = entityManager;
     }
 
-    public List<Result> loadResults(String term) {
-        return getResults(term);
-    }
-
-    public List<Result> loadSuggestions(String term) {
-        String hql =
-                String.format("FROM Result as R WHERE lower(R.displayName) LIKE '%s%%'",
-                        term.toLowerCase());
-
-        return getByQuery(hql, 10);
-    }
-
-    private List<Result> getByQuery(String hql, int maxResults) {
-        List<Result> results = new ArrayList<>();
-        try {
-            results = entityManager.createQuery(hql, Result.class)
-                    .setMaxResults(maxResults).getResultList();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return results;
-    }
-
+    /**
+    * Returns a list of results which matches the passed term
+    */
     @Transactional
-    public List<Result> getResults(String searchString) {
+    public List<Result> loadResults(String term) {
+        Suggestion inquiry = new Suggestion(null, term);
+        entityManager.persist(inquiry);
+
         List<Result> results = new ArrayList<>();
         try {
-            FullTextQuery jpaQuery = getFullTextQuery(searchString);
+            FullTextQuery jpaQuery = getFullTextQuery(term);
 
             @SuppressWarnings("unchecked")
             List<Object[]> qryResult = jpaQuery.getResultList();
 
+            // set score property
             for (Object[] item : qryResult) {
                 Result result = (Result) item[0];
                 result.setScore((float)item[1]);
@@ -72,6 +61,9 @@ public class ResultDAO {
         return results;
     }
 
+    /**
+    * Get full text query
+    */
     private FullTextQuery getFullTextQuery(String searchString) {
         FullTextEntityManager searchManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = searchManager.getSearchFactory()
@@ -96,10 +88,14 @@ public class ResultDAO {
                 .must(queryFuzzy)
                 .createQuery();
 
-        return searchManager.createFullTextQuery(luceneFull, Result.class)
+        return searchManager
+                .createFullTextQuery(luceneFull, Result.class)
                 .setProjection(ProjectionConstants.THIS, ProjectionConstants.SCORE);
     }
 
+    /**
+    * Get relevant field names for search (with Field annotation)
+    */
     private String[] getSearchFields() {
         List<String> retValue = new ArrayList<>();
 
@@ -110,5 +106,4 @@ public class ResultDAO {
         }
         return retValue.toArray(new String[0]);
     }
-
 }

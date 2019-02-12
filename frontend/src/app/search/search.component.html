@@ -1,13 +1,14 @@
 <form [formGroup]='searchForm' class="sync-container" (ngSubmit)="onSubmit()"
-      (keydown.esc)="resetSearch()">
+      (keydown.esc)="hideSuggestions()">
   <mat-form-field class="form-input-field">
-    <input matInput #userInput placeholder="Search..." formControlName='userInput'>
-    <mat-icon matSuffix *ngIf="userInput.value" (click)="userInput.value = ''; resetSearch()">close</mat-icon>
-    <mat-icon matSuffix (click)="onSubmit()">search</mat-icon>
+    <input matInput #userInput placeholder="Search..."
+           formControlName='userInput' (focus)="onFocusInput()" autocomplete="off">
+    <mat-icon matSuffix *ngIf="userInput.value" (click)="userInput.value = ''; hideSuggestions()">close</mat-icon>
+    <mat-icon matSuffix *ngIf="!userInput.value" (click)="onSubmit()">search</mat-icon>
   </mat-form-field>
   <mat-selection-list (selectionChange)="onSelect($event)" dense>
-    <mat-list-option *ngFor="let result of suggestions | async" [value]="result" class="hide-mat-checkbox no-wrap">
-      {{ result.displayName }}
+    <mat-list-option *ngFor="let suggestion of suggestions" [value]="suggestion" class="hide-mat-checkbox no-wrap">
+      {{ suggestion.displayName }}
     </mat-list-option>
   </mat-selection-list>
 </form>

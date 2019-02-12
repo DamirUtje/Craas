@@ -5,13 +5,17 @@ import {Router} from "@angular/router";
 import {Observable, of} from "rxjs"
 import {catchError} from "rxjs/operators"
 
-import {Result} from '../_model';
+import {ISuggestion, Result} from '../_model';
 import {HandleError, HttpErrorHandler} from "./http-error-handler.service";
 
+/**
+ * Data service
+ * @author Frank, Damir
+ */
 @Injectable()
-export class ResultService {
+export class DataService {
 
-  baseApiUrl: string = '/api/';
+  baseApiUrl: string = '/api';
   handleError: HandleError;
   result: Observable<Result>;
 
@@ -23,17 +27,24 @@ export class ResultService {
 
   loadResults(term: string): Observable<Result[]> {
     const options = { params: new HttpParams().set('term', term) };
-    return this.http.get<Result[]>(this.baseApiUrl + 'query', options)
+    return this.http.get<Result[]>(this.baseApiUrl + '/query', options)
       .pipe(
         catchError(this.handleError('loadResults', []))
       );
   }
 
-  loadSuggestions(term: string): Observable<Result[]> {
+  loadSuggestions(term: string): Observable<ISuggestion[]> {
     const options = { params: new HttpParams().set('term', term) };
-    return this.http.get<Result[]>(this.baseApiUrl + 'suggest', options)
+    return this.http.get<ISuggestion[]>(this.baseApiUrl + '/suggest', options)
       .pipe(
         catchError(this.handleError('loadSuggestions', []))
+      );
+  }
+
+  loadFavorites(): Observable<ISuggestion[]> {
+    return this.http.get<ISuggestion[]>(this.baseApiUrl + '/favorites')
+      .pipe(
+        catchError(this.handleError('loadFavorites', []))
       );
   }
 
@@ -43,13 +54,6 @@ export class ResultService {
 
   setSelectedResult(result: Result) {
     this.result = of(result);
-  }
-
-  loadPopular(): Observable<Result[]> {
-    return this.http.get<Result[]>(this.baseApiUrl + 'popular')
-      .pipe(
-        catchError(this.handleError('loadPopular', []))
-      );
   }
 }
 

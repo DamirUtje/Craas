@@ -1,9 +1,8 @@
 import {ChangeDetectorRef, Component, Injectable, OnInit} from '@angular/core';
-import {Result} from "../_model";
-import {Observable, of} from "rxjs";
+import {ISuggestion} from "../_model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
-import {ResultService} from "../_service";
+import {DataService} from "../_service";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
@@ -13,39 +12,34 @@ import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 })
 @Injectable()
 export class SearchComponent implements OnInit {
-  selectedResult: Result;
-  suggestions: Observable<Result[]>;
-  favorites: Result[];
+  selectedResult: ISuggestion;
+  suggestions: ISuggestion[];
   searchForm: FormGroup;
   inputString: string;
 
   constructor(private router: Router,
-              private resultService: ResultService,
+              private dataService: DataService,
               private formBuilder: FormBuilder,
               private changeDetector: ChangeDetectorRef) {
   }
 
-  // https://juristr.com/blog/2016/11/configure-proxy-api-angular-cli/
   ngOnInit(): void {
-
     this.searchForm = this.formBuilder.group({
       userInput: null
     });
 
-    this.initSearch();
+    this.initSuggestions();
   }
 
-  initSearch(): void {
-    this.suggestions = this.searchForm.get('userInput').valueChanges
+  initSuggestions(): void {
+    this.searchForm.get('userInput').valueChanges
       .pipe(
         debounceTime(100),
         distinctUntilChanged(),
         switchMap(input => input ?
-          this.resultService.loadSuggestions(input) : of([]))
-      );
-
-    // TODO: implement api path
-    //this.resultService.loadPopular().subscribe(result => this.favorites = result);
+          this.dataService.loadSuggestions(input) :
+          this.dataService.loadFavorites())
+      ).subscribe(result => this.suggestions = result);
   }
 
   onSubmit(): void {
@@ -53,22 +47,24 @@ export class SearchComponent implements OnInit {
       this.selectedResult.displayName :
       this.searchForm.get('userInput').value;
 
-    if (this.inputString && this.inputString.trim()) {
-      this.router.navigate(["/result", {term: this.inputString}])
-        .then(/*nothing to do*/);
-    }
+    if(this.inputString && this.inputString.trim())
+      this.router.navigate(["/result", { term: this.inputString }])
+        .then(() => {
+          // reset search
+          this.selectedResult = null;
+        });
   }
 
   onSelect(e): void {
-    this.selectedResult = e.option.value as Result;
+    this.selectedResult = e.option.value as ISuggestion;
     this.setInput(this.selectedResult.displayName);
     this.onSubmit();
   }
 
   setInput(param: string): void {
     this.inputString = param;
-    this.searchForm.get('userInput').setValue(this.inputString);
-    this.resetSearch();
+    this.searchForm.get('userInput')
+      .setValue(this.inputString, { emitEvent: false });
     this.changeDetector.detectChanges();
   }
 
@@ -76,8 +72,16 @@ export class SearchComponent implements OnInit {
     return this.inputString;
   }
 
-  resetSearch(): void {
-    this.suggestions = of([]);
-    this.initSearch();
+  hideSuggestions(): void {
+    this.suggestions = [];
+  }
+
+  onFocusInput(): void {
+    if(this.searchForm.get('userInput').value) {
+      // input already tipped in, no favorite suggestions needed
+    } else {
+      this.dataService.loadFavorites()
+        .subscribe(res => this.suggestions = res);
+    }
   }
 }

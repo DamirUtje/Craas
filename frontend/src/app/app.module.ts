@@ -2,13 +2,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatDatepickerModule,
+  MatButtonModule,
+  MatDatepickerModule, MatDividerModule, MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatListModule, MatNativeDateModule,
-  MatProgressSpinnerModule, MatSelectModule, MatSidenavModule
+  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule,
+  MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatTooltipModule
 } from "@angular/material";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
@@ -21,13 +22,11 @@ import {ResultComponent} from './result';
 import {DetailComponent} from './detail';
 import {MessagesComponent} from './messages';
 import {SearchComponent} from "./search";
-
-import {ResultService} from './_service';
-import {HttpErrorHandler} from './_service';
-import {MessageService} from './_service';
-import {PagerService} from "./_service";
-import {UtilService} from "./_service/util.service";
 import {FooterComponent} from "./footer";
+import {LicenseComponent} from "./license";
+
+import {DataService, HttpErrorHandler, MessageService, PagerService} from './_service';
+import {UtilService} from "./_service/util.service";
 
 @NgModule({
   declarations: [
@@ -37,7 +36,8 @@ import {FooterComponent} from "./footer";
     DetailComponent,
     MessagesComponent,
     SearchComponent,
-    FooterComponent
+    FooterComponent,
+    LicenseComponent
   ],
   imports: [
     routing,
@@ -46,7 +46,7 @@ import {FooterComponent} from "./footer";
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -56,10 +56,15 @@ import {FooterComponent} from "./footer";
     MatSelectModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    MatExpansionModule
   ],
   providers: [
-    ResultService,
+    DataService,
     HttpErrorHandler,
     MessageService,
     PagerService,

@@ -9,6 +9,14 @@
   border-bottom: 1px solid rgba(0,0,0,.42);
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
   background-color: #f8f9fa;
+}
+
+#main-list {
+  list-style-type: none;
+}
+
+#result-display-name {
+  padding: inherit;
 }
