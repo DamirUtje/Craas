@@ -47,6 +47,12 @@
   padding: 0.23rem 0.4rem !important;
 }
 
+.page-item.active .page-link {
+  background: #0075a4;
+  border-color: #0075a4;
+}
+
+
 .search-input {
   width: 50%;
 }
