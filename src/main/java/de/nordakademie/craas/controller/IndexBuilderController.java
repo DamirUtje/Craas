@@ -11,8 +11,12 @@ import de.nordakademie.craas.service.IndexBuilderService;
 @RequestMapping("/api")
 public class IndexBuilderController {
 
+	private final IndexBuilderService indexBuilderService;
+
 	@Autowired
-	private IndexBuilderService indexBuilderService;
+	public IndexBuilderController(IndexBuilderService indexBuilderService) {
+		this.indexBuilderService = indexBuilderService;
+	}
 
 	@GetMapping(value="/build-index")
 	public void renewIndex(){

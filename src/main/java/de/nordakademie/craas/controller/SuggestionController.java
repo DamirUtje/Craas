@@ -11,8 +11,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class SuggestionController {
 
+    private final SuggestionService suggestionService;
+
     @Autowired
-    SuggestionService suggestionService;
+    public SuggestionController(SuggestionService suggestionService) {
+        this.suggestionService = suggestionService;
+    }
 
     @GetMapping(value="/suggest")
     public List<Suggestion> getSuggestions(@RequestParam("term") String term){
