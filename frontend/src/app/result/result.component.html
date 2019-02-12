@@ -52,7 +52,7 @@
       <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults > 0 && countryCtrl.value?.length <= 0">error</mat-icon>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Deleted on from.."
+      <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Exclude deleted from.."
              (dateChange)="applyFilters()">
       <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
       <mat-datepicker #startPicker></mat-datepicker>
@@ -61,7 +61,7 @@
       </mat-icon>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="Deleted on to..."
+      <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="Exclude deleted to..."
              (dateChange)="applyFilters()">
       <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
       <mat-datepicker #endPicker></mat-datepicker>
