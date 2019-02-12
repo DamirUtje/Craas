@@ -23,8 +23,8 @@ export class DetailComponent implements OnInit {
     if(result) {
       this.resultService.getSelectedResult().subscribe(
       result => this.selectedResult = result,
-      _ => _,
-      () => this.displayResult(this.selectedResult )
+      _ => _, // will be handled in service
+      () => this.displayResult(this.selectedResult)
       );
     }
   }
@@ -33,9 +33,21 @@ export class DetailComponent implements OnInit {
     this.attributeNames = [];
     if(result) {
       this.selectedResult = result;
-      for (let attribute in result) {
-        if (result[attribute])
-          this.attributeNames.push(attribute);
+      for(let attribute in result) {
+        let value = result[attribute];
+        if(value) {
+          if(!isNaN(Date.parse(value))) { // if date property
+            let dateValue: Date = new Date(value); // covert to date
+            if(dateValue.getFullYear() < 2500) { // display only if not deleted flag
+              let locale = this.utilService.getLocale();
+              this.attributeNames.push(attribute);
+              this.selectedResult[attribute] = dateValue.toLocaleDateString(locale);
+            }
+          }
+          else {
+            this.attributeNames.push(attribute);
+          }
+        }
       }
     }
   }

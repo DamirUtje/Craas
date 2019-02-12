@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 import {PagerService, DataService} from '../_service';
@@ -45,7 +45,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
     private pagerService: PagerService,
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
-    private clientUtil: UtilService) {
+    private clientUtil: UtilService,
+    private changeDetector: ChangeDetectorRef) {
     this.router.events.subscribe((event)  => {
       if (event instanceof NavigationEnd) {
         // fires when input has been submitted from SearchComponent
@@ -91,6 +92,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
           this.applyFilters();
           this.loading = false;
       });
+    this.changeDetector.detectChanges();
   }
 
   setPage(page: number): void {
