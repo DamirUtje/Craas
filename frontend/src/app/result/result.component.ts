@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 import {PagerService, DataService} from '../_service';
@@ -22,6 +22,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sidenav') sideNav: MatSidenav;
   @ViewChild('resultList') selectionList: MatSelectionList;
+  @ViewChild('navBar') navBar: ElementRef;
 
   allResults: Result[];
   pagedResults: Result[];
@@ -77,6 +78,8 @@ export class ResultComponent implements OnInit, AfterViewInit {
     }
     if(this.isMobile && this.sideNav.opened)
       this.sideNav.toggle().then(/*nothing to do*/);
+
+    this.changeDetector.detectChanges();
   }
 
   loadResults(): void {
@@ -92,12 +95,15 @@ export class ResultComponent implements OnInit, AfterViewInit {
           this.applyFilters();
           this.loading = false;
       });
-    this.changeDetector.detectChanges();
   }
 
   setPage(page: number): void {
+
+    let navBarHeight: number = this.navBar.nativeElement.clientHeight;
+    let pageSize = this.clientUtil.getOptimumPageSize(navBarHeight);
+
     // get pager object from service
-    this.pager = this.pagerService.getPager(this.results.length, page);
+    this.pager = this.pagerService.getPager(this.results.length, page, pageSize);
 
     // get current page of items
     this.pagedResults =

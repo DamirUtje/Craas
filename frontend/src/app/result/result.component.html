@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav #navBar class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <p class="navbar-brand paragraphLogo paragraphLogoResult">
       <a href="#" class="logo-link">
@@ -66,9 +66,11 @@
   </button>
 </nav>
 <div class="result-count text-secondary">
-  <span>
-    {{results?.length + " results"}} {{results?.length + deletedCount < allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
+  <span *ngIf="!loading">
+    {{results?.length + " results"}}
+    {{results?.length + deletedCount < allResults?.length ? " of " + allResults?.length + "  matches" : ""}}
   </span>
+  <span *ngIf="loading">Loading...</span>
 </div>
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 <app-messages></app-messages>

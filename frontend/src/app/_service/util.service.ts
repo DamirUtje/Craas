@@ -19,7 +19,7 @@ export class UtilService {
   }
 
   isMobile(): boolean {
-    return window.innerWidth <= 800 && window.innerHeight <= 600;
+    return window.innerWidth <= 850 && window.innerHeight <= 850;
   }
 
   camelCaseToRegular(text: string): string {
@@ -29,14 +29,20 @@ export class UtilService {
   }
 
   getFormattedTime(): string {
-    var today = new Date();
-    var y = today.getFullYear();
+    let today = new Date();
+    let y = today.getFullYear();
     // JavaScript months are 0-based.
-    var m = today.getMonth() + 1;
-    var d = today.getDate();
-    var h = today.getHours();
-    var mi = today.getMinutes();
-    var s = today.getSeconds();
+    let m = today.getMonth() + 1;
+    let d = today.getDate();
+    let h = today.getHours();
+    let mi = today.getMinutes();
+    let s = today.getSeconds();
     return y + "-" + m + "-" + d + "-" + h + "-" + mi + "-" + s;
+  }
+
+  getOptimumPageSize(navBarHeight: number): number {
+    let pageSize = (window.innerHeight - navBarHeight) / 60;
+
+    return Math.max(Math.floor(pageSize), 10);
   }
 }
