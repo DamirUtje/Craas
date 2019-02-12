@@ -149,7 +149,7 @@
   <mat-drawer id="mat-drawer-ex" mode="side" opened #sidenav position="end"
               [ngClass]="{'sidenav-ex': !isMobile, 'sidenav-ex-mobile': isMobile}">
 
-    <button class="mobile-toggle" *ngIf="isMobile" mat-icon-button (click)="sidenav.toggle()">
+    <button *ngIf="isMobile" mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>close</mat-icon>
     </button>
     <app-detail #detail></app-detail>
