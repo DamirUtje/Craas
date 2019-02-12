@@ -39,6 +39,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
   endDate = new FormControl(new Date());
   deletedCount: number = 0;
   loading: boolean = false;
+  filtersExpanded: boolean = true;
 
   constructor(
     private dataService: DataService,
@@ -60,6 +61,7 @@ export class ResultComponent implements OnInit, AfterViewInit {
     });
     this.dateAdapter.setLocale(this.clientUtil.getLocale());
     this.isMobile = clientUtil.isMobile();
+    this.filtersExpanded = !this.isMobile;
   }
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatDatepickerModule, MatDividerModule,
+  MatDatepickerModule, MatDividerModule, MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule,
@@ -60,7 +60,8 @@ import {UtilService} from "./_service/util.service";
     MatButtonModule,
     MatTooltipModule,
     MatDividerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatExpansionModule
   ],
   providers: [
     DataService,
