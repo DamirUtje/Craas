@@ -31,8 +31,8 @@ export class DetailComponent implements OnInit {
 
   displayResult(result: Result): void {
     this.attributeNames = [];
+    this.selectedResult = result;
     if(result) {
-      this.selectedResult = result;
       for(let attribute in result) {
         let value = result[attribute];
         if(value) {
