@@ -31,7 +31,7 @@
           {{entityType}}
         </mat-option>
       </mat-select>
-      <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults.length > 0 && entityCtrl.value?.length <= 0">error</mat-icon>
+      <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults?.length > 0 && entityCtrl.value?.length <= 0">error</mat-icon>
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="List types..." [formControl]="listTypeCtrl" multiple (selectionChange)="applyFilters()">
@@ -40,7 +40,7 @@
         </mat-select-trigger>
         <mat-option *ngFor="let listType of listTypes" [value]="listType" dense>{{listType}}</mat-option>
       </mat-select>
-      <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults.length > 0 && listTypeCtrl.value?.length <= 0">error</mat-icon>
+      <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults?.length > 0 && listTypeCtrl.value?.length <= 0">error</mat-icon>
     </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Countries..." [formControl]="countryCtrl" multiple (selectionChange)="applyFilters()">
@@ -49,7 +49,7 @@
         </mat-select-trigger>
         <mat-option *ngFor="let country of countries" [value]="country" dense>{{country}}</mat-option>
       </mat-select>
-      <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults.length > 0 && countryCtrl.value?.length <= 0">error</mat-icon>
+      <mat-icon matPrefix matTooltip="You must select one option" *ngIf="allResults?.length > 0 && countryCtrl.value?.length <= 0">error</mat-icon>
     </mat-form-field>
     <mat-form-field>
       <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="Exclude deleted from.."
